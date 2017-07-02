@@ -1,0 +1,24 @@
+{
+  "name": "bnb2018",
+  "version": "1.0.0",
+  "description": "Virtual Stock Market Game",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cd bnb && ng build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nkmishra1997/bnb2018.git"
+  },
+  "author": "IEEE DTU",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nkmishra1997/bnb2018/issues"
+  },
+  "homepage": "https://github.com/nkmishra1997/bnb2018#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3"
+  }
+}
