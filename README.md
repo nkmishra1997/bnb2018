@@ -2,7 +2,7 @@
 Virtual Stock Market Game
 
 # Instructions to run
-`npm run build`
+`npm run build`  
 `nodemon`
 
 # Instructions to Contribute
