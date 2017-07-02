@@ -2,8 +2,12 @@
 Virtual Stock Market Game
 
 # Instructions to run
-`npm run build`  
-`nodemon`
+`npm install` This will install express dependencies      
+`cd bnb` Moving to Angular folder  
+`npm install`  This will install angular dependencies  
+`cd ..`   
+`npm run build`     
+`nodemon`   
 
 # Instructions to Contribute
 * fork this repo.
