@@ -13,7 +13,7 @@ var morgan       = require('morgan');
 var cookieParser = require('cookie-parser');
 var session      = require('express-session');
 
-var configDB = require('./bnb/AuthFB/config/database.js');
+var configDB = require('./config/database.js');
 
 // configuration ===============================================================
 mongoose.connect(configDB.url,function(err){
@@ -21,7 +21,7 @@ mongoose.connect(configDB.url,function(err){
     else console.log('Connected to DB');
 }); // connect to our database
 
-require('./bnb/AuthFB/config/passport')(passport); // pass passport for configuration
+require('./config/passport')(passport); // pass passport for configuration
 
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
@@ -46,7 +46,7 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
 // routes ======================================================================
-require('./bnb/AuthFB/app/routesfb.js')(app, passport); // load our routes and pass in our app and fully configured passport
+require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
 
 // Catch all other routes and return the index file
