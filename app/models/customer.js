@@ -11,9 +11,9 @@ var userSchema = mongoose.Schema({
         token        : String,
         email        : String,
         name         : String
-    }
+    },
 
-    accountBalance: {
+    accountBalance : {
       type : Number,
       default: 0
     },
@@ -47,7 +47,7 @@ var userSchema = mongoose.Schema({
       takeOutTime:{
         type: Date,
         default: Date.now()
-      }
+      },
       repayTime: {
         type: Date,
         default: Date.now()
@@ -55,16 +55,6 @@ var userSchema = mongoose.Schema({
     }
 });
 
-// methods ======================
-// generating a hash
-userSchema.methods.generateHash = function(password) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-};
-
-// checking if password is valid
-userSchema.methods.validPassword = function(password) {
-    return bcrypt.compareSync(password, this.local.password);
-};
 
 // create the model for users and expose it to our app
 module.exports = mongoose.model('User', userSchema);
