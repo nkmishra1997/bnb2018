@@ -12,6 +12,47 @@ var userSchema = mongoose.Schema({
         email        : String,
         name         : String
     }
+
+    accountBalance: {
+      type : Number,
+      default: 0
+    },
+
+    activity :{
+      company: [String],
+      timeStamp: {
+        type: Date,
+        default: Date.now()
+      },
+      action: String, // Subject to change, as I was unclear of the data type this variable represents
+      quantity: Number,
+      price: Number
+    },
+
+    stockHoldings :{
+      company: [String],
+      quantity: Number
+    },
+
+    stockShorted:{
+      company: [String],
+      quantity: Number
+    },
+
+    loan :{
+      taken:{
+        type: Boolean
+      },
+      amount: Number,
+      takeOutTime:{
+        type: Date,
+        default: Date.now()
+      }
+      repayTime: {
+        type: Date,
+        default: Date.now()
+      }
+    }
 });
 
 // methods ======================
