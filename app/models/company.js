@@ -18,7 +18,7 @@ const companySchema = new Schema({
   availableQuantitiy: {
     type: Number,
     min: 0,
-    max: totalQuantity
+    //max: company.totalQuantity
   },
 
   totalQuantity: {
@@ -45,7 +45,7 @@ const companySchema = new Schema({
     availableQuantity:
     { type: Number,
       min: 0,
-      max: totalQuantity
+      //max: company.totalQuantity
     }
   },
 
