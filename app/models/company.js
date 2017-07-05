@@ -17,7 +17,8 @@ const companySchema = new Schema({
 
   availableQuantitiy: {
     type: Number,
-    min: 0
+    min: 0,
+    max: totalQuantity
   },
 
   totalQuantity: {
@@ -41,7 +42,11 @@ const companySchema = new Schema({
     type: Number,
     min: 0
   },
-    availableQuantity: Number
+    availableQuantity:
+    { type: Number,
+      min: 0,
+      max: totalQuantity
+    }
   },
 
   complementaryCompany:{
