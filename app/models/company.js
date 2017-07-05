@@ -5,25 +5,59 @@ const companySchema = new Schema({
   name:{
     type: String,
   },
+
   symbol: String,
+
   description: String,
-  stockPrice: Number,
-  availableQuantitiy: Number,
-  totalQuantity: Number,
-  annualGrowthRate: Number,
-  marketcap: Number,
+
+  stockPrice: {
+    type: Number,
+    min: 0
+  },
+
+  availableQuantitiy: {
+    type: Number,
+    min: 0
+  },
+
+  totalQuantity: {
+    type: Number,
+    min: 0
+  },
+
+  annualGrowthRate: {
+    type: Number,
+    min: 0
+  },
+
+  marketcap: {
+    type: Number,
+    min: 0
+  },
+
   history:{
     timeStamp: Date.now(),
-    stockPrice: Number,
+    stockPrice: {
+    type: Number,
+    min: 0
+  },
     availableQuantity: Number
   },
+
   complementaryCompany:{
     comapny: [String],
-    factor: Number
+    factor: {
+    type: Number,
+    min: 0
+  }
   },
+
   supplimentaryCompany:{
     comapny: [String],
-    factor: Number
+    factor: {
+    type: Number,
+    min: 0
+  }
   },
 });
 

@@ -1,14 +1,14 @@
 // config/passport.js
 
 // load all the things we need
-var LocalStrategy    = require('passport-local').Strategy;
-var FacebookStrategy = require('passport-facebook').Strategy;
+const LocalStrategy    = require('passport-local').Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
 
 // load up the user model
-var User       = require('../app/models/customer');
+const User       = require('../app/models/customer');
 
-// load the auth variables
-var configAuth = require('./auth');
+// load the auth constiables
+const configAuth = require('./auth');
 
 module.exports = function(passport) {
 
@@ -60,7 +60,7 @@ module.exports = function(passport) {
                     return done(null, user); // user found, return that user
                 } else {
                     // if there is no user found with that facebook id, create them
-                    var newUser            = new User();
+                    const newUser            = new User();
 
                     // set all of the facebook information in our user model
                     newUser.facebook.id    = profile.id; // set the users facebook id                   
