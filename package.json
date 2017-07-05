@@ -4,6 +4,7 @@
   "description": "Virtual Stock Market Game",
   "main": "server.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cd bnb && ng build"
   },
   "repository": {
