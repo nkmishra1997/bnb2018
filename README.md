@@ -1,3 +1,6 @@
+[![Build Status](https://circleci.com/gh/nkmishra1997/bnb2018.svg?style=shield&circle-token=:circle-token)
+
+
 # bnb2018
 Virtual Stock Market Game
 
