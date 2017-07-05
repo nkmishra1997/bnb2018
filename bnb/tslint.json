@@ -32,7 +32,7 @@
     "member-ordering": [
       true,
       "static-before-instance",
-      "constiables-before-functions"
+      "variables-before-functions"
     ],
     "no-arg": true,
     "no-bitwise": true,
@@ -56,7 +56,7 @@
     ],
     "no-misused-new": true,
     "no-non-null-assertion": true,
-    "no-shadowed-constiable": true,
+    "no-shadowed-variable": true,
     "no-string-literal": false,
     "no-string-throw": true,
     "no-switch-case-fall-through": true,
@@ -64,7 +64,7 @@
     "no-unnecessary-initializer": true,
     "no-unused-expression": true,
     "no-use-before-declare": true,
-    "no-const-keyword": true,
+    "no-var-keyword": true,
     "object-literal-sort-keys": false,
     "one-line": [
       true,
@@ -93,12 +93,12 @@
         "index-signature": "nospace",
         "parameter": "nospace",
         "property-declaration": "nospace",
-        "constiable-declaration": "nospace"
+        "variable-declaration": "nospace"
       }
     ],
     "typeof-compare": true,
     "unified-signatures": true,
-    "constiable-name": false,
+    "variable-name": false,
     "whitespace": [
       true,
       "check-branch",
