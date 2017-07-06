@@ -1,6 +1,7 @@
 // app/models/user.js
 // load the things we need
 var mongoose = require('mongoose');
+var Company = require('./company');
 
 // define the schema for our user model
 var userSchema = mongoose.Schema({
@@ -18,7 +19,7 @@ var userSchema = mongoose.Schema({
     },
 
     activity :{
-      company: [String],
+      company: [{ type: Schema.Types.ObjectId, ref: 'Company' }],
       timeStamp: {
         type: Date,
         default: Date.now()
@@ -29,12 +30,12 @@ var userSchema = mongoose.Schema({
     },
 
     stockHoldings :{
-      company: [String],
+      company: [{ type: Schema.Types.ObjectId, ref: 'Company' }],
       quantity: Number
     },
 
     stockShorted:{
-      company: [String],
+      company: [{ type: Schema.Types.ObjectId, ref: 'Company' }],
       quantity: Number
     },
 
