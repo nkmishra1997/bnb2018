@@ -52,21 +52,15 @@ const companySchema = new Schema({
     }
   }],
 
-  complementaryCompany:{
-    comapny: [String],
-    factor: {
-    type: Number,
-    min: 0
-  }
-  },
+  complementaryCompany : [{
+		company : mongoose.Schema.Types.ObjectId,
+		factor : {type: Number, min: 0.0, default: 0.0},
+	}],
 
-  supplimentaryCompany:{
-    comapny: [String],
-    factor: {
-    type: Number,
-    min: 0
-  }
-  },
+	supplementaryCompany : [{
+		company : mongoose.Schema.Types.ObjectId,
+		factor : {type: Number, min: 0.0, default: 0.0},
+	}]
 });
 
 const company = mongoose.model('company', companySchema);
