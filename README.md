@@ -1,3 +1,6 @@
+![Build Status](https://circleci.com/gh/nkmishra1997/bnb2018.svg?style=shield&circle-token=:circle-token)
+[![NSP Status](https://nodesecurity.io/orgs/bnb/projects/f7b3f0b2-5957-467a-8239-2119145287ac/badge)](https://nodesecurity.io/orgs/bnb/projects/f7b3f0b2-5957-467a-8239-2119145287ac)
+
 # bnb2018
 Virtual Stock Market Game
 

@@ -67,3 +67,11 @@ function isLoggedIn(req, res, next) {
     // if they aren't redirect them to the home page
     res.redirect('/');
 }
+/*
+  app.get('/customerdetail',(request,response)=>{
+      User.findOne({_id:user.facebook._id}).populate('stockHoldings.company').exec((error,user)=>{
+        if (error) throw error;
+        response.send(user);
+      });
+    });
+*/ 
