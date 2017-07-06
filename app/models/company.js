@@ -37,7 +37,10 @@ const companySchema = new Schema({
   },
 
   history:{
-    timeStamp: Date.now(),
+    timeStamp:{
+      type: Date,
+      default: Date.now()
+    },
     stockPrice: {
     type: Number,
     min: 0
