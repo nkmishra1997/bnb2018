@@ -1,7 +1,7 @@
 // app/models/user.js
 // load the things we need
 const mongoose = require('mongoose');
-
+const company = require('./company.js');
 // define the schema for our user model
 var userSchema = mongoose.Schema({
 

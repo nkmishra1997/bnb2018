@@ -18,7 +18,7 @@ const companySchema = new Schema({
   availableQuantitiy: {
     type: Number,
     min: 0,
-    max: totalQuantity
+    //max: company.totalQuantity
   },
 
   totalQuantity: {
@@ -37,7 +37,10 @@ const companySchema = new Schema({
   },
 
   history:{
-    timeStamp: Date.now(),
+    timeStamp:{
+      type: Date,
+      default: Date.now()
+    },
     stockPrice: {
     type: Number,
     min: 0
@@ -45,7 +48,7 @@ const companySchema = new Schema({
     availableQuantity:
     { type: Number,
       min: 0,
-      max: totalQuantity
+      //max: company.totalQuantity
     }
   },
 
