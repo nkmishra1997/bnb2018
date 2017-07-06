@@ -1,8 +1,8 @@
 // config/passport.js
 
 // load all the things we need
-var LocalStrategy    = require('passport-local').Strategy;
-var FacebookStrategy = require('passport-facebook').Strategy;
+const LocalStrategy    = require('passport-local').Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
 
 // load up the user model
 var User       = require('../app/models/customer');
@@ -23,7 +23,7 @@ module.exports = function(passport) {
             done(err, user);
         });
     });
-    
+
     // code for login (use('local-login', new LocalStategy))
     // code for signup (use('local-signup', new LocalStategy))
 
@@ -63,8 +63,8 @@ module.exports = function(passport) {
                     var newUser            = new User();
 
                     // set all of the facebook information in our user model
-                    newUser.facebook.id    = profile.id; // set the users facebook id                   
-                    newUser.facebook.token = token; // we will save the token that facebook provides to the user                    
+                    newUser.facebook.id    = profile.id; // set the users facebook id
+                    newUser.facebook.token = token; // we will save the token that facebook provides to the user
                     newUser.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName; // look at the passport user profile to see how names are returned
                     newUser.facebook.email = profile.emails[0].value; // facebook can return multiple emails so we'll take the first
 

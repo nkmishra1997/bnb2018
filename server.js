@@ -5,24 +5,26 @@ const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
 const port = process.env.PORT || '3000';
-var mongoose = require('mongoose');
-var passport = require('passport');
-var flash    = require('connect-flash');
+const mongoose = require('mongoose');
+const passport = require('passport');
+const flash    = require('connect-flash');
 
-var morgan       = require('morgan');
-var cookieParser = require('cookie-parser');
-var session      = require('express-session');
+const morgan       = require('morgan');
+const cookieParser = require('cookie-parser');
+const session      = require('express-session');
+const routes = require('./app/req_routes.js');
 
-var configDB = require('./config/database.js');
+const configDB = require('./config/database.js');
 
 // configuration ===============================================================
 mongoose.connect(configDB.url,function(err){
     if(err) console.log('Error');
-    else console.log('Connected to DB');
+    else console.log('MongoDB is live');
 }); // connect to our database
 
 require('./config/passport')(passport); // pass passport for configuration
 
+app.use(routes);
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
