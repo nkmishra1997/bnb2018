@@ -24,7 +24,7 @@ var userSchema = mongoose.Schema({
     },
 
     activity :{
-      company: {type: mongoose.Schema.Types.ObjectId, ref:'company'},
+      company: [{type: mongoose.Schema.Types.ObjectId, ref:'company'}],
       timeStamp: {
         type: Date,
         default: Date.now()
@@ -43,21 +43,21 @@ var userSchema = mongoose.Schema({
     },
 
     stockHoldings :{
-      company: {type: mongoose.Schema.Types.ObjectId, ref:'company'},
-      quantity:{
+      company: [{type: mongoose.Schema.Types.ObjectId, ref:'company'}],
+      quantity:[{
       type : Number,
       //default: 0,
       min: 0
-    }
+    }]
     },
 
     stockShorted:{
-      company: {type: mongoose.Schema.Types.ObjectId, ref:'company'},
-      quantity: {
+      company: [{type: mongoose.Schema.Types.ObjectId, ref:'company'}],
+      quantity: [{
       type : Number,
       //default: 0,
       min: 0
-    }
+    }]
     },
 
     loan :{

@@ -36,7 +36,7 @@ const companySchema = new Schema({
     min: 0
   },
 
-  history:{
+  history:[{
     timeStamp:{
       type: Date,
       default: Date.now()
@@ -50,7 +50,7 @@ const companySchema = new Schema({
       min: 0,
       //max: company.totalQuantity
     }
-  },
+  }],
 
   complementaryCompany:{
     comapny: [String],
