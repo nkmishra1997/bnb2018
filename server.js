@@ -12,7 +12,7 @@ const flash    = require('connect-flash');
 const morgan       = require('morgan');
 const cookieParser = require('cookie-parser');
 const session      = require('express-session');
-const routes = require('./app/req_routes.js');
+const routes = require('./app/api.js');
 
 const configDB = require('./config/database.js');
 
