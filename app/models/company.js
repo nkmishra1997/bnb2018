@@ -18,7 +18,7 @@ const companySchema = new Schema({
   availableQuantitiy: {
     type: Number,
     min: 0,
-    max: totalQuantity
+    //max: company.totalQuantity
   },
 
   totalQuantity: {
@@ -36,8 +36,11 @@ const companySchema = new Schema({
     min: 0
   },
 
-  history:{
-    timeStamp: Date.now(),
+  history:[{
+    timeStamp:{
+      type: Date,
+      default: Date.now()
+    },
     stockPrice: {
     type: Number,
     min: 0
@@ -45,25 +48,19 @@ const companySchema = new Schema({
     availableQuantity:
     { type: Number,
       min: 0,
-      max: totalQuantity
+      //max: company.totalQuantity
     }
-  },
+  }],
 
-  complementaryCompany:{
-    comapny: [String],
-    factor: {
-    type: Number,
-    min: 0
-  }
-  },
+  complementaryCompany : [{
+		company : mongoose.Schema.Types.ObjectId,
+		factor : {type: Number, min: 0.0, default: 0.0},
+	}],
 
-  supplimentaryCompany:{
-    comapny: [String],
-    factor: {
-    type: Number,
-    min: 0
-  }
-  },
+	supplementaryCompany : [{
+		company : mongoose.Schema.Types.ObjectId,
+		factor : {type: Number, min: 0.0, default: 0.0},
+	}]
 });
 
 const company = module.exports = mongoose.model('company', companySchema);
