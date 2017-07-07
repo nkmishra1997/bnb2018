@@ -22,7 +22,7 @@ process.env.NODE_ENV = 'test';
     });
 
     //A test company
-    let test_company = new testCompany({
+    var test_company = new testCompany({
   			name : 'ABC',
   			symbol : 'ABC',
   			description : 'XYZ',
