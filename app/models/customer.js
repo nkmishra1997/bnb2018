@@ -1,7 +1,8 @@
 // app/models/user.js
 // load the things we need
 const mongoose = require('mongoose');
-
+const company = require('./company.js');
+const parameters = require('../parameters');
 // define the schema for our user model
 var userSchema = mongoose.Schema({
 
@@ -17,48 +18,25 @@ var userSchema = mongoose.Schema({
         name         : String
     },
 
-    accountBalance : {
-      type : Number,
-      default: 0,
-      min: 0
-    },
+    accountBalance : { type : Number, default: parameters.accountBalance, min: 0 },
 
-    activity :{
+    activity :[{
       company: {type: mongoose.Schema.Types.ObjectId, ref:'company'},
-      timeStamp: {
-        type: Date,
-        default: Date.now()
-      },
+      timeStamp: { type: Date, default: Date.now()},
       action: String, // Subject to change, as I was unclear of the data type this constiable represents
-      quantity: {
-      type : Number,
-      //default: 0,
-      min: 0
-    },
-      price: {
-      type : Number,
-      //default: 0,
-      min: 0
-    }
-    },
+      quantity: {type : Number, default: 0,min: 0},
+      price: { type : Number, default: 0, min: 0}
+    }],
 
-    stockHoldings :{
+    stockHoldings :[{
       company: {type: mongoose.Schema.Types.ObjectId, ref:'company'},
-      quantity:{
-      type : Number,
-      //default: 0,
-      min: 0
-    }
-    },
+      quantity: {type : Number, default: 0,min: 0}
+    }],
 
-    stockShorted:{
+    stockShorted:[{
       company: {type: mongoose.Schema.Types.ObjectId, ref:'company'},
-      quantity: {
-      type : Number,
-      //default: 0,
-      min: 0
-    }
-    },
+      quantity: {type : Number, default: 0,min: 0},
+    }],
 
     loan :{
       taken:{
@@ -66,7 +44,7 @@ var userSchema = mongoose.Schema({
       },
       amount: {
       type : Number,
-      //default: 0,
+      default: 0,
       min: 0
     },
       takeOutTime:{
