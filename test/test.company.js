@@ -18,8 +18,7 @@ before(function(done){
         console.log('Connection to DB successful');
         setTimeout(done,10000);
        }
-  done();
-  };
+  });
   });
   describe('Saving a company to the database',function(){
   beforeEach((done) => {
