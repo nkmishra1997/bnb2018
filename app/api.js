@@ -36,6 +36,13 @@ router.get('/newslist',(request,response)=>{
   });
 });
 
+router.get('/companylist',(request,response)=>{
+  User.findById(request.user._id).populate('company').exec((err,user)=>{
+      if(err){console.log(err);}
+    else{response.json(user).pretty();}
+  });
+});
+
 router.get('/leaderboard',(request,response)=>{
   response.send('Leaderboard goes here');
 });
