@@ -4,7 +4,11 @@
   "description": "Virtual Stock Market Game",
   "main": "server.js",
   "scripts": {
+<<<<<<< HEAD
     "test": "mocha",
+=======
+    "test": "mocha --timeout 10000",
+>>>>>>> b5f9b9ffb8ebf0a484d6015f6cb1361f8d9b398b
     "build": "cd bnb && ng build"
   },
   "repository": {
