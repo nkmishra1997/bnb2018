@@ -17,22 +17,24 @@
     "url": "https://github.com/nkmishra1997/bnb2018/issues"
   },
   "homepage": "https://github.com/nkmishra1997/bnb2018#readme",
-    "dependencies" : {
+  "dependencies": {
     "express": "~4.14.0",
     "ejs": "~2.5.2",
     "mongoose": "~4.6.1",
     "passport": "~0.3.2",
-    "passport-local" : "~1.0.0",
+    "passport-local": "~1.0.0",
     "passport-facebook": "~2.1.1",
     "passport-twitter": "~1.0.4",
-    "passport-google-oauth" : "~1.0.0",
+    "passport-google-oauth": "~1.0.0",
     "connect-flash": "~0.1.1",
-    
-
     "morgan": "~1.7.0",
     "body-parser": "~1.15.2",
     "cookie-parser": "~1.4.3",
     "method-override": "~2.3.6",
     "express-session": "~1.14.1"
+  },
+  "devDependencies": {
+    "chai": "^4.0.2",
+    "mocha": "^3.4.2"
   }
 }
