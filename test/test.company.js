@@ -1,5 +1,5 @@
 //Require the modules
-//const MongoClient = require('mongodb').MongoClient;
+const mongoose = require('mongoose');
 const testCompany = require('../app/models/company.js');
 const dt = require('../config/database.js');
 
@@ -10,10 +10,17 @@ const expect = require('chai').expect;
 //During the test the env variable is set to test
 process.env.NODE_ENV = 'test';
 
-
-//MongoClient.connect(dt.url, function(err, db) {
-
-//  if (err) throw err;
+before(function(done){
+  mongoose.connect(dt.url, function(err, db) {
+  if (err)
+        console.log('Unable to connect to DB' + err);
+  else {
+        console.log('Connection to DB successful');
+        setTimeout(done,10000);
+       }
+  done();
+  };
+  });
   describe('Saving a company to the database',function(){
   beforeEach((done) => {
         testCompany.remove({}, (err) => {
@@ -36,11 +43,9 @@ process.env.NODE_ENV = 'test';
        test_company.save((err, test_company) => {
            describe('#name()', function(){
            it('should return the value as String', function(){
-           // UserBan = db.collection('company').find(User.ban);
            assert.isString(test_company.name , 'Yeah it works');
            });
        });
        });
+    db.close();
 });
-//    db.close();
-//});
