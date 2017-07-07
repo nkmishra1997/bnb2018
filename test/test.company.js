@@ -29,7 +29,7 @@ before(function(done){
     });
 
     //A test company
-    let test_company = new testCompany({
+    var test_company = new testCompany({
   			name : 'ABC',
   			symbol : 'ABC',
   			description : 'XYZ',

@@ -11,6 +11,8 @@ Virtual Stock Market Game
 `cd ..`   
 `npm run build`     
 `nodemon`   
+TO run tests:  
+`npm test`  
 
 # Instructions to Contribute
 * fork this repo.
