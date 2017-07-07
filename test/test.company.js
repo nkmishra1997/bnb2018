@@ -46,5 +46,4 @@ before(function(done){
            });
        });
        });
-    db.close();
 });
