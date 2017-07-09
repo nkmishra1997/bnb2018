@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
+//=========Profile Page Details=============
 router.get('/customerdetail',(request,response)=>{
   User.findById(request.user._id).populate('stockHoldings.company').populate('stockShorted.company').populate('activity.company').exec((err,user)=>{
     if(err){console.log(err);}
@@ -15,17 +16,30 @@ router.get('/customerdetail',(request,response)=>{
   });
 });
 
+
+//==========For Market Page===================
+router.get('/companylist',(request,response)=>{
+  User.findById(request.user._id).populate('company').exec((err,user)=>{
+      if(err){console.log(err);}
+    else{response.json(user).pretty();}
+  });
+});
+
+
+//=======For Company Portfolio============
+router.get('/companydetail/:id',(request,response)=>{
+  Company.findById(request.params.id,(err,company)=>{
+    if(err){console.log(err);}
+    else{response.json(comapany).pretty();}
+  });
+});
+
+
+//===============News Page================
 router.get('/newsdetail/:id',(request,response)=>{
   News.findById(request.params.id,(err,news)=>{
     if (err){console.log(err);}
     else{response.json(news).pretty();}
-  });
-});
-
-router.get('/companydetail',(request,response)=>{
-  Company.findById(request.company._id,(err,company)=>{
-    if(err){console.log(err);}
-    else{response.json(comapany).pretty();}
   });
 });
 
@@ -36,7 +50,11 @@ router.get('/newslist',(request,response)=>{
   });
 });
 
+
+//==============Leaderboard page=================
 router.get('/leaderboard',(request,response)=>{
   response.send('Leaderboard goes here');
 });
+
+
 module.exports = router;

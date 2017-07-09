@@ -17,10 +17,12 @@ const routes = require('./app/api.js');
 const configDB = require('./config/database.js');
 
 // configuration ===============================================================
-mongoose.connect(configDB.url,function(err){
+before((done)=>{
+    mongoose.connect(configDB.url,function(err){
     if(err) console.log('Error');
     else console.log('MongoDB is live');
-}); // connect to our database
+    done();
+}); // connect to our database});
 
 require('./config/passport')(passport); // pass passport for configuration
 
