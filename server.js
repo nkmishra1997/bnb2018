@@ -1,7 +1,6 @@
 // Get dependencies
 const express = require('express');
 const app = express();
-
 const path = require('path');
 const bodyParser = require('body-parser');
 const port = process.env.PORT || '3000';
@@ -17,10 +16,18 @@ const routes = require('./app/api.js');
 const configDB = require('./config/database.js');
 
 // configuration ===============================================================
-mongoose.connect(configDB.url,function(err){
-    if(err) console.log('Error');
-    else console.log('MongoDB is live');
-}); // connect to our database});
+
+var Connection = function(configDB, callback){
+  mongoose.connect(configDB.url);
+  mongoose.connection.once('open', callback);
+};
+
+Connection(configDB, ()=>{
+  console.log('MongoDB is live');
+  app.listen(port);
+  console.log('Magic happens on port ' + port);
+});
+ // connect to our database});
 
 require('./config/passport')(passport); // pass passport for configuration
 
@@ -55,6 +62,3 @@ require('./app/routes.js')(app, passport); // load our routes and pass in our ap
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'bnb/dist/index.html'));
 });
-
-app.listen(port);
-console.log('The magic happens on port ' + port);
