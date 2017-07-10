@@ -4,7 +4,8 @@
 # bnb2018
 Virtual Stock Market Game
 
-# Instructions to run
+# Instructions to run  
+You need to have  `npm` , `nodejs` and `angular/cli` installed to run the project  
 `npm install` This will install express dependencies      
 `cd bnb` Moving to Angular folder  
 `npm install`  This will install angular dependencies  
