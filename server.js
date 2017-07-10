@@ -17,11 +17,9 @@ const routes = require('./app/api.js');
 const configDB = require('./config/database.js');
 
 // configuration ===============================================================
-before((done)=>{
-    mongoose.connect(configDB.url,function(err){
+mongoose.connect(configDB.url,function(err){
     if(err) console.log('Error');
     else console.log('MongoDB is live');
-    done();
 }); // connect to our database});
 
 require('./config/passport')(passport); // pass passport for configuration
