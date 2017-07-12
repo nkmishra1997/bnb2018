@@ -4,7 +4,7 @@ module.exports = function(app, passport) {
 
     // route for home page
     app.get('/', function(req, res) {
-        res.render('index.ejs'); // load the index.ejs file
+        res.send('index'); // load the index.ejs file
     });
 
     // route for login form
@@ -14,7 +14,7 @@ module.exports = function(app, passport) {
 
     // route for showing the profile page
     app.get('/profile', isLoggedIn, function(req, res) {
-        res.render('profile.ejs', {
+        res.send('profile', {
             user : req.user // get the user out of session and pass to template
         });
     });
@@ -74,4 +74,4 @@ function isLoggedIn(req, res, next) {
         response.send(user);
       });
     });
-*/ 
+*/
