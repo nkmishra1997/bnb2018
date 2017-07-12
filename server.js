@@ -42,7 +42,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // Point static path to dist
 app.use(express.static(path.join(__dirname, 'bnb/dist')));
-app.set('view engine', 'ejs'); // set up ejs for templating
 
 // required for passport
 app.use(session({

@@ -12,7 +12,7 @@ mongoose.Promise = global.Promise;
 router.get('/customerdetail',(request,response)=>{
   User.findById(request.user._id).populate('stockHoldings.company').populate('stockShorted.company').populate('activity.company').exec((err,user)=>{
     if(err){console.log(err);}
-    else{response.json(user).pretty();}
+    else{response.json(user);}
   });
 });
 
@@ -21,7 +21,7 @@ router.get('/customerdetail',(request,response)=>{
 router.get('/companylist',(request,response)=>{
   User.findById(request.user._id).populate('company').exec((err,user)=>{
       if(err){console.log(err);}
-    else{response.json(user).pretty();}
+    else{response.json(user);}
   });
 });
 
@@ -30,7 +30,7 @@ router.get('/companylist',(request,response)=>{
 router.get('/companydetail/:id',(request,response)=>{
   Company.findById(request.params.id,(err,company)=>{
     if(err){console.log(err);}
-    else{response.json(comapany).pretty();}
+    else{response.json(comapany);}
   });
 });
 
@@ -39,13 +39,13 @@ router.get('/companydetail/:id',(request,response)=>{
 router.get('/newsdetail/:id',(request,response)=>{
   News.findById(request.params.id,(err,news)=>{
     if (err){console.log(err);}
-    else{response.json(news).pretty();}
+    else{response.json(news);}
   });
 });
 
 router.get('/newslist',(request,response)=>{
   News.find({}).then((news)=>{
-    response.json(news).pretty();
+    response.json(news);
     done();
   });
 });

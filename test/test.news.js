@@ -21,12 +21,13 @@ process.env.NODE_ENV = 'test';
      });
 
   describe('Saving news to the database',function(){
+    /*
   beforeEach((done) => {
         testNews.remove({}).then(()=>{
           done();
         });
     });
-
+    */
     //A test company
     it('saves news',(done)=>{
       test_news.save().then(()=>{
