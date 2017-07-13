@@ -11,8 +11,6 @@ const flash    = require('connect-flash');
 const morgan       = require('morgan');
 const cookieParser = require('cookie-parser');
 const session      = require('express-session');
-const routes = require('./app/api.js');
-
 const configDB = require('./config/database.js');
 
 // configuration ===============================================================
@@ -31,7 +29,6 @@ Connection(configDB, ()=>{
 
 require('./config/passport')(passport); // pass passport for configuration
 
-app.use(routes);
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
@@ -42,7 +39,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // Point static path to dist
 app.use(express.static(path.join(__dirname, 'bnb/dist')));
-app.set('view engine', 'ejs'); // set up ejs for templating
 
 // required for passport
 app.use(session({

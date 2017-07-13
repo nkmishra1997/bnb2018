@@ -1,39 +1,86 @@
-// app/routes.js
-
 module.exports = function(app, passport) {
+var controller = require('./controller.js')
 
-    // route for home page
-    app.get('/', function(req, res) {
-        res.render('index.ejs'); // load the index.ejs file
-    });
 
-    // route for login form
-    // route for processing the login form
-    // route for signup form
-    // route for processing the signup form
+// normal routes ===============================================================
 
-    // route for showing the profile page
+    // show the home page (will also have our login links)
+    
+    // PROFILE SECTION =========================
     app.get('/profile', isLoggedIn, function(req, res) {
-        res.render('profile.ejs', {
-            user : req.user // get the user out of session and pass to template
-        });
+        console.log(req.user)
     });
 
-    // =====================================
-    // FACEBOOK ROUTES =====================
-    // =====================================
-    // route for facebook authentication and login
+    // LOGOUT ==============================
+    app.get('/logout', function(req, res) {
+        req.logout();
+        res.redirect('/');
+    });
+
+
+
+
+
+
+// ============================================================================
+// Stock Market ===============================================================
+// ============================================================================
+
+app.route('/companylist')
+    .get(passport.authenticate('facebook-token'), controller.companyList);;
+
+app.route('/companydetail/:id')
+    .get(passport.authenticate('facebook-token'), controller.companyDetails);
+
+app.route('/newslist/')
+    .get(passport.authenticate('facebook-token'), controller.newsList);
+
+
+// ============================================================================
+// Customer  ===============================================================
+// ============================================================================
+
+app.route('/customerdetail')
+    .get(passport.authenticate('facebook-token'), controller.customerDetail);
+
+app.route('/leaderboard')
+    .get(passport.authenticate('facebook-token'), controller.customerList);
+
+app.route('/buy/:id')
+    .post(passport.authenticate('facebook-token'), controller.buy);
+
+app.route('/sell/:id')
+    .post(passport.authenticate('facebook-token'), controller.sell);
+
+app.route('/short/:id')
+    .post(passport.authenticate('facebook-token'), controller.short);
+
+app.route('/cover/:id')
+    .post(passport.authenticate('facebook-token'), controller.cover);
+
+app.route('/takeloan')
+    .post(passport.authenticate('facebook-token'), controller.takeLoan);
+
+app.route('/repayloan')
+    .post(passport.authenticate('facebook-token'), controller.repayLoan);
+
+// =============================================================================
+// AUTHENTICATE (FIRST LOGIN) ==================================================
+// =============================================================================
+
     // facebook -------------------------------
 
         // send to facebook to do the authentication
-        app.get('/auth/facebook', passport.authenticate('facebook', { authType: 'rerequest', scope : ['email'] }));
+        app.get('/auth/facebook', passport.authenticate('facebook', { scope : ['email'] }));
 
         // handle the callback after facebook has authenticated the user
         app.get('/auth/facebook/callback',
             passport.authenticate('facebook', {
-                successRedirect : '/profile',
+                successRedirect : '/market',
                 failureRedirect : '/'
             }));
+
+
 // =============================================================================
 // AUTHORIZE (ALREADY LOGGED IN / CONNECTING OTHER SOCIAL ACCOUNT) =============
 // =============================================================================
@@ -41,7 +88,7 @@ module.exports = function(app, passport) {
     // facebook -------------------------------
 
         // send to facebook to do the authentication
-        app.get('/connect/facebook', passport.authorize('facebook', { authType: 'rerequest', scope : ['email'] }));
+        app.get('/connect/facebook', passport.authorize('facebook', { scope : 'email' }));
 
         // handle the callback after facebook has authorized the user
         app.get('/connect/facebook/callback',
@@ -49,29 +96,15 @@ module.exports = function(app, passport) {
                 successRedirect : '/profile',
                 failureRedirect : '/'
             }));
-    // route for logging out
-    app.get('/logout', function(req, res) {
-        req.logout();
-        res.redirect('/');
-    });
 
 };
-
-// route middleware to make sure a user is logged in
+// route middleware to ensure user is logged in
 function isLoggedIn(req, res, next) {
-
-    // if user is authenticated in the session, carry on
     if (req.isAuthenticated())
         return next();
-
-    // if they aren't redirect them to the home page
-    res.redirect('/');
+    else{
+            console.log('no header');
+            res.redirect('/');
+        }
+            
 }
-/*
-  app.get('/customerdetail',(request,response)=>{
-      User.findOne({_id:user.facebook._id}).populate('stockHoldings.company').exec((error,user)=>{
-        if (error) throw error;
-        response.send(user);
-      });
-    });
-*/ 

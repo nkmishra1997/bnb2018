@@ -22,9 +22,9 @@ before(function(done){
   });
 
   var test_company = new testCompany({
-      name : 'ABC',
-      symbol : 'ABC',
-      description : 'XYZ',
+      name : 'Flipkart',
+      symbol : 'FLP',
+      description : 'e-com',
       stockPrice : 500,
       availableQuantity : 200,
       totalQuantity : 800,
@@ -33,12 +33,13 @@ before(function(done){
      });
 
   describe('Saving a company to the database',function(){
+    /*
   beforeEach((done) => {
         testCompany.remove({}).then(()=>{
           done();
         });
     });
-
+    */
     //A test company
     it('saves company',(done)=>{
       test_company.save().then(()=>{
