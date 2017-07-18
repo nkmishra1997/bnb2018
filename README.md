@@ -4,15 +4,22 @@
 # bnb2018
 Virtual Stock Market Game
 
-# Instructions to run
+# Instructions to run  
+You need to have  `npm` , `nodejs` and `angular/cli` installed to run the project  
 `npm install` This will install express dependencies      
 `cd bnb` Moving to Angular folder  
 `npm install`  This will install angular dependencies  
 `cd ..`   
 `npm run build`     
 `nodemon`   
-TO run tests:  
+
+# Replace APP_ID and APP_Secret with your fb app id and secret in config/auth.js  
+Disable git to monitor any changes to the auth.js file   
+`git update-index --skip-worktree config/auth.js`
+
+# TO run tests:  
 `npm test`  
+
 
 # Instructions to Contribute
 * fork this repo.
