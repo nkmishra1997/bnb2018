@@ -1,0 +1,13 @@
+<br><br>
+<h2>News</h2>
+<div *ngIf="news" class="row" style="display:table;">
+  <div *ngFor="let News of news.newslist | reverse;" class="panel panel-default col-md-6 col-xs-12 col-sm-6 col-lg-6" style="display:table-cell;">
+    <div class="panel-body" style="background-color:#f2f2f2; min-height:300px;"> 
+      <h4>News Text: {{News.newsText}}</h4>
+    </div>
+
+    <div class="panel-footer" style="background-color:none;">
+      <h6>{{News.publishedOn | date}} {{News.publishedOn | date:'hh:mm:ss a'}}</h6>
+    </div>
+   </div>
+</div>

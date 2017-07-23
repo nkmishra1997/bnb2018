@@ -54,7 +54,7 @@ exports.newsList = function(req, res) {
 		console.log(err);
 		res.send("unable to fetch news list");
 	}else {
-		res.json(newslist);
+		res.json({newslist});
 	}
   });
 };
