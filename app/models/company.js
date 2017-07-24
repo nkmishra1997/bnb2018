@@ -63,7 +63,6 @@ const companySchema = new Schema({
 	}]
 });
 
-const company = mongoose.model('company', companySchema);
-module.exports = company;
-
+const company = module.exports = mongoose.model('company', companySchema);
+//module.exports = company;
 // Functions responding to the APIs quering the database will go after this comment

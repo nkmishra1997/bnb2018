@@ -11,12 +11,12 @@ mongoose.Promise = global.Promise;
 process.env.NODE_ENV = 'test';
 
   var test_news = new testNews({
-      newsText : 'Harambe is dead',
+      newsText : 'Titans are humans',
       youtubeSrc : 'NA',
       isPublished : true,
       newsImpact : {
         company : 'ABC',
-        impact : 'Rise of the planet of the apes'
+        impact : 'Shingeki no kyojin'
       }
      });
 
