@@ -11,6 +11,11 @@ var userSchema = mongoose.Schema({
       default: false
     },
 
+    admin:{
+      type: Boolean,
+      default: false
+    },
+
     facebook         : {
         id           : String,
         token        : String,

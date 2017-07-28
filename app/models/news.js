@@ -2,7 +2,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const newsSchema = new Schema({
-  newsText: String,
+  newsText:{
+    type:String,
+    index:true,
+    unique: true,
+    dropDups: true
+  },
+
   youtubeSrc: String,
   isPublished:{
     type: Boolean,
