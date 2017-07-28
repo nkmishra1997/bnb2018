@@ -4,9 +4,13 @@ const Schema = mongoose.Schema;
 const companySchema = new Schema({
   name:{
     type: String,
+    unique: true
   },
 
-  symbol: String,
+  symbol:{
+    type: String,
+    unique: true
+  },
 
   description: String,
 
@@ -15,7 +19,7 @@ const companySchema = new Schema({
     min: 0
   },
 
-  availableQuantitiy: {
+  availableQuantity: {
     type: Number,
     min: 0,
     //max: company.totalQuantity
