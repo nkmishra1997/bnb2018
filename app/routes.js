@@ -18,7 +18,47 @@ var controller = require('./controller.js')
     });
 
 
+//============================================================================
+//Admin routes ===============================================================
+//============================================================================
 
+
+
+app.route('/adminDashboard')
+    .get(passport.authenticate('facebook-token'), isAdmin, controller.customerDetail);
+
+app.route('/admin/companylist')
+    .get(passport.authenticate('facebook-token'), isAdmin, controller.companyList);
+
+app.route('/admin/userlist')
+    .get(passport.authenticate('facebook-token'), isAdmin, controller.customerList);
+
+app.route('/admin/newslist')
+    .get(passport.authenticate('facebook-token'), isAdmin, controller.newsList);
+
+app.route('/admin/addCompany')
+    .post(passport.authenticate('facebook-token'), isAdmin, controller.addCompany);
+
+app.route('/admin/addNews')
+    .post(passport.authenticate('facebook-token'), isAdmin, controller.addNews);
+
+app.route('/admin/modifyCompany/:id')
+    .post(passport.authenticate('facebook-token'), isAdmin, controller.modifyCompany);
+
+app.route('/admin/modifyNews/:id')
+    .post(passport.authenticate('facebook-token'), isAdmin, controller.modifyNews);
+
+app.route('/admin/deleteCompany/:id')
+    .post(passport.authenticate('facebook-token'), isAdmin, controller.deleteCompany);
+
+app.route('/admin/deleteNews/:id')
+    .post(passport.authenticate('facebook-token'), isAdmin, controller.deleteNews);
+
+app.route('/admin/modifyUser/:id')
+    .post(passport.authenticate('facebook-token'), isAdmin, controller.modifyUser);
+
+app.route('/admin/deleteUser/:id')
+    .post(passport.authenticate('facebook-token'), isAdmin, controller.deleteUser);
 
 
 
@@ -27,7 +67,7 @@ var controller = require('./controller.js')
 // ============================================================================
 
 app.route('/companylist')
-    .get(passport.authenticate('facebook-token'), controller.companyList);;
+    .get(passport.authenticate('facebook-token'), controller.companyList);
 
 app.route('/companydetail/:id')
     .get(passport.authenticate('facebook-token'), controller.companyDetails);
@@ -107,4 +147,15 @@ function isLoggedIn(req, res, next) {
             res.redirect('/');
         }
             
+}
+
+//to ensure that the user is a admin
+function isAdmin(req, res, next){
+    if(req.user.admin == true){
+        return next();
+    }
+    else{
+        console.log("you dont have permission");
+        res.redirect('/');
+    }
 }
