@@ -16,7 +16,8 @@ exports.companyList = function(req, res) {
     if (err){
 		console.log(err);
 		res.send("unable to fetch company list");
-	}else {
+	}
+  else {
 		var accountBal = {'accountBalance' : req.user.accountBalance}
 		companies.push(accountBal);
 		res.json(companies);
@@ -30,21 +31,24 @@ exports.companyDetails = function(req, res) {
     if (err){
 		console.log(err);
 		res.send("unable to fetch company details");
-	}else {
+	}
+  else {
 		customer.findById(req.user._id, function(err, Customer) {
-            
+
             if (err){
                 console.log(err);
                 res.send("unable to fetch customer from request");
-            }else {
-                //Write the code here to get details of company
-				// max quantity user can buy,sell,short,cover
-				//his account balance
-				// sample response
-                //res.json({compDetails,accountBalance, buyMax, sellMax, shortMax , coverMax});
+            }
+            else {
+              var accountBalance = Customer.accountBalance;
+              var buyMax = Math.min((accountBalance/company.stockPrice),company.availableQuantity);
+              var sellMax = Math.min((accountBalance/company.stockPrice),(company.totalQuantity-company.availableQuantity));
+              var shortMax = parameters.shortMax;
+              var coverMax = Math.min((accountBalance/company.stockPrice),shortMax);
+                res.json({compDetails, accountBalance, buyMax, sellMax, shortMax , coverMax});
             }
         });
-	}
+	    }
   });
 };
 
@@ -53,7 +57,8 @@ exports.newsList = function(req, res) {
     if (err){
 		console.log(err);
 		res.send("unable to fetch news list");
-	}else {
+	}
+  else {
 		res.json({newslist});
 	}
   });
@@ -77,11 +82,20 @@ exports.customerDetail = function(req, res) {
     if (err){
 		console.log(err);
 		res.send("unable to fetch customer details");
-	}else {
-		//evaluate the worth of customer using given formula
-		//var worth = Customer.accountBalance + stocksHeldAmount - stockShortedAmount - Customer.loan.amount;
-        // console.log(worth, portfolio);
-		res.json(Customer);
+	}
+  else {
+		//evaluate the worth of customer
+    var stockHoldingAmount = 0;
+    Customer.stockHoldings.forEach((element)=>{
+      stockHoldingAmount += this.company.stockPrice * this.quantity;
+    });
+    var stockShortedAmount = 0;
+    Customer.stockShorted.forEach((element)=>{
+      stockShortedAmount += this.company.stockPrice * this.quantity;
+    });
+		var worth = { 'worth' : Customer.accountBalance + stockHoldingAmount - stockShortedAmount - Customer.loan.amount };
+         //console.log(worth);
+		res.json({Customer, worth});
 	}
   });
 };
@@ -91,7 +105,8 @@ exports.customerList = function(req, res) {
     if (err){
 		console.log(err);
 		res.send("unable to fetch company list");
-	}else {
+	}
+  else {
 		res.json(customerlist);
 	}
   });
@@ -103,7 +118,8 @@ exports.buy = function(req, res){
     if (err){
 		console.log(err);
 		res.send("unable to fetch company");
-	}else {
+	}
+  else {                            // BUY API
         customer
         .findById(req.user._id)
         .populate('stockHoldings.company')
@@ -114,9 +130,30 @@ exports.buy = function(req, res){
                 console.log(err);
                 res.send('unable to fetch user')
             }
-            res.json({'success':true});
+            else{
+              var flag = 0;
+              var stock = parameters.stock;
+              for(var i=0;i<Customer.stockHoldings.length;i++){
+                if(Customer.stockHoldings[i].company._id === Company._id ){
+                  Customer.stockHoldings[i].quantity += stock;
+                  Customer.accountBalance -= stock * Company.stockPrice;
+                  Company.availableQuantity -= stock;
+                  Company.history.push({timeStamp : Date.now(), stockPrice : Company.stockPrice, availableQuantity : Company.availableQuantity});
+                  Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'bought', quantity:stock, price:Company.stockPrice});
+                  flag = 1;
+                }
+              }
+              if(flag === 0){
+                  Company.availableQuantity -= stock;
+                  Company.history.push({timeStamp : Date.now(), stockPrice : Company.stockPrice, availableQuantity : Company.availableQuantity});
+                  Customer.accountBalance -= stock * Company.stockPrice;
+                  Customer.stockHoldings.push({company : Company._id, quantity : stock});
+                  Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'bought', quantity:stock, price:Company.stockPrice});
+              }
+            }
+            res.json({'success':true, Company, Customer});
         })
-	}
+	     }
   });
 }
 
@@ -133,8 +170,28 @@ exports.sell = function(req, res){
                 console.log(err);
                 res.send('unable to fetch user')
             }
-            //quantity = req.body.quantity;
-            res.json({'success':true}); 
+            else{
+              var flag = 0;
+              var stock = parameters.stock;
+              for(var i=0;i<Customer.stockHoldings.length;i++){
+                if(Customer.stockHoldings[i].company._id === Company._id ){
+                  Customer.stockHoldings[i].quantity -= stock;
+                  Customer.accountBalance += stock * Company.stockPrice;
+                  Company.availableQuantity += stock;
+                  Company.history.push({timeStamp : Date.now(), stockPrice : Company.stockPrice, availableQuantity : Company.availableQuantity});
+                  Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'sold', quantity:stock, price:Company.stockPrice});
+                  flag = 1;
+                }
+              }
+              if(flag === 0){
+                  Company.availableQuantity += stock;
+                  Company.history.push({timeStamp : Date.now(), stockPrice : Company.stockPrice, availableQuantity : Company.availableQuantity});
+                  Customer.accountBalance += stock * Company.stockPrice;
+                  Customer.stockHoldings.push({company : Company._id, quantity : stock});
+                  Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'sold', quantity:stock, price:Company.stockPrice});
+              }
+            }
+            res.json({'success':true, Company, Customer});
     	 })
 	}
   });
@@ -154,9 +211,28 @@ exports.short = function(req, res){
             if(err){
                 console.log(err);
                 res.send('unable to fetch user')
+            }else{
+              var flag = 0;
+              var stock = parameters.stock;
+              for(var i=0;i<Customer.stockHoldings.length;i++){
+                if(Customer.stockHoldings[i].company._id === Company._id ){
+                  Customer.stockHoldings[i].quantity += stock;
+                  Customer.accountBalance += stock * Company.stockPrice;
+                  Company.availableQuantity -= stock;
+                  Company.history.push({timeStamp : Date.now(), stockPrice : Company.stockPrice, availableQuantity : Company.availableQuantity});
+                  Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'shorted', quantity:stock, price:Company.stockPrice});
+                  flag = 1;
+                }
+              }
+              if(flag === 0){
+                  Company.availableQuantity -= stock;
+                  Company.history.push({timeStamp : Date.now(), stockPrice : Company.stockPrice, availableQuantity : Company.availableQuantity});
+                  Customer.accountBalance += stock * Company.stockPrice;
+                  Customer.stockHoldings.push({company : Company._id, quantity : stock});
+                  Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'shorted', quantity:stock, price:Company.stockPrice});
+              }
             }
-            //quantity = req.body.quantity;
-            res.json({'success':true});
+            res.json({'success':true, Company, Customer});
         })
 	}
   });
@@ -175,9 +251,28 @@ exports.cover = function(req, res){
             if(err){
                 console.log(err);
                 res.send('unable to fetch user');
+            }else{
+              var flag = 0;
+              var stock = parameters.stock;
+              for(var i=0;i<Customer.stockHoldings.length;i++){
+                if(Customer.stockHoldings[i].company._id === Company._id ){
+                  Customer.stockHoldings[i].quantity -= stock;
+                  Customer.accountBalance -= stock * Company.stockPrice;
+                  Company.availableQuantity += stock;
+                  Company.history.push({timeStamp : Date.now(), stockPrice : Company.stockPrice, availableQuantity : Company.availableQuantity});
+                  Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'covered', quantity:stock, price:Company.stockPrice});
+                  flag = 1;
+                }
+              }
+              if(flag === 0){
+                  Company.availableQuantity += stock;
+                  Company.history.push({timeStamp : Date.now(), stockPrice : Company.stockPrice, availableQuantity : Company.availableQuantity});
+                  Customer.accountBalance -= stock * Company.stockPrice;
+                  Customer.stockHoldings.push({company : Company._id, quantity : stock});
+                  Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'covered', quantity:stock, price:Company.stockPrice});
+              }
             }
-            //quantity = req.body.quantity;
-            res.json({'success':true});
+            res.json({'success':true, Company, Customer});
 
         });
 	};
@@ -193,7 +288,18 @@ exports.takeLoan = function(req, res){
             console.log(err);
             res.send('unable to fetch user')
         }
-        //COde here
+        else{
+          if(Customer.loan.taken === true){
+            res.send('Please repay the loan');
+          }
+          else{
+            Customer.loan.taken = true;
+            Customer.loan.amount = parameters.loanAmount;
+            Customer.loan.takeOutTime = Date.now();
+            Customer.accountBalance += parameters.loanAmount;
+          }
+        }
+        res.json({Customer});
     });
 };
 
@@ -205,7 +311,18 @@ exports.repayLoan = function(req, res){
             console.log(err);
             res.send('unable to fetch user')
         }
-        //code here
+        else{
+          if(Customer.loan.taken === false){
+            res.send('Please loan some money first');
+          }
+          else{
+            Customer.loan.taken = false;
+            Customer.loan.amount = 0;
+            Customer.loan.repayTime = Date.now();
+            Customer.accountBalance -= parameters.loanAmount;
+          }
+        }
+        res.json({Customer});
     });
 };
 
@@ -240,7 +357,7 @@ exports.addCompany = function(req, res){
                     res.json({success:true,msg:'Company saved successfully'});
                 }
             });
-        //}  
+        //}
     //});
 };
 
@@ -324,9 +441,9 @@ exports.modifyNews = function(req, res){
                 }
                 else{
                     res.json({success:true, msg:"News details updated successfully"});
-                }    
+                }
             });
-        }   
+        }
     });
 };
 
