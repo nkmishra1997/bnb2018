@@ -32,7 +32,7 @@ before(function(done){
       marketCap : 5,
      });
 
-  describe('Saving a company to the database',function(){
+  describe('Saving a company to the database',function(done){
     /*
   beforeEach((done) => {
         testCompany.remove({}).then(()=>{
@@ -41,7 +41,7 @@ before(function(done){
     });
     */
     //A test company
-    it('saves company',(done)=>{
+    it('saves company',()=>{
       test_company.save().then(()=>{
         assert(!test_company.isNew);
         done();
