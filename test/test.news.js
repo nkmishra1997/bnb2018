@@ -20,7 +20,7 @@ process.env.NODE_ENV = 'test';
       }
      });
 
-  describe('Saving news to the database',function(){
+  describe('Saving news to the database',function(done){
     /*
   beforeEach((done) => {
         testNews.remove({}).then(()=>{
@@ -29,7 +29,7 @@ process.env.NODE_ENV = 'test';
     });
     */
     //A test company
-    it('saves news',(done)=>{
+    it('saves news',()=>{
       test_news.save().then(()=>{
         assert(!test_news.isNew);
         done();
