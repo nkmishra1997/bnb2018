@@ -3,5 +3,5 @@ module.exports = {
 	loanAmount : 2500,
 	maxNumberOfShares : 10000,
 	shortMax : 100,
-	controlUpdate3: 0.005
+	stock : 10
 };
