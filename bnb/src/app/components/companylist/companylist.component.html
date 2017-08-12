@@ -1,0 +1,19 @@
+<br><br>
+
+<h2 class="page-header">Company</h2>
+<div *ngIf="company">
+  <div *ngFor="let company of company.companies">
+    <ul class="list-group">
+      <li class="list-group-item"><b>Name: </b><a  [routerLink]="['/admin/companydetail', company._id]">{{company.name}}</a>
+        <span class="pull-right">
+          <a ng-href='#here' ng-click="deleteCompany(company._id)" class="btn btn-md btn-danger align-middle" style="display:inline;">Delete</a>
+        </span>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  <div>
+    <a [routerLink]="['/admin/addcompany']" class="btn btn-primary btn-md btn-block" role="button">Add New Company</a>
+  </div>
+</div>
+<br><br>

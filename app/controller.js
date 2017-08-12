@@ -19,7 +19,7 @@ exports.companyList = function(req, res) {
 	}else {
 		var accountBal = {'accountBalance' : req.user.accountBalance}
 		companies.push(accountBal);
-		res.json(companies);
+		res.json({companies});
 	}
   });
 };
@@ -42,11 +42,27 @@ exports.companyDetails = function(req, res) {
 				//his account balance
 				// sample response
                 //res.json({compDetails,accountBalance, buyMax, sellMax, shortMax , coverMax});
+                res.json(compDetails);
             }
         });
 	}
   });
 };
+
+exports.newsDetails = function(req, res) {
+  news
+  .findById(req.params.id)
+  .populate('newsImpact.Company')
+  .exec(function(err, newsDetails) {
+    if (err){
+		console.log(err);
+		res.send("unable to fetch news details");
+	}else {    
+            //console.log(newsDetails.newsImpact.company.name);
+            res.json(newsDetails);
+    }
+  });
+}
 
 exports.newsList = function(req, res) {
   news.find({}, function(err, newslist) {
@@ -58,8 +74,6 @@ exports.newsList = function(req, res) {
 	}
   });
 };
-
-
 
 
 
@@ -85,6 +99,8 @@ exports.customerDetail = function(req, res) {
 	}
   });
 };
+
+
 
 exports.customerList = function(req, res) {
   customer.find({}, function(err, customerlist) {
@@ -224,24 +240,14 @@ exports.addCompany = function(req, res){
         annualGrowthRate: req.body.annualGrowthRate,
         marketcap: req.body.marketcap
     });
-    /*company.findOne({name: newCompany.name}, function(err, company){
+    newCompany.save(function(err,company){
         if(err){
-            throw err;
+            res.json({success:false,msg:'Company Not saved'});
         }
-        if(company){
-            res.json({success:false,msg:'Company exists'});
+        else{
+            res.json({success:true,msg:'Company saved successfully'});
         }
-        else{*/
-            newCompany.save(function(err,company){
-                if(err){
-                    res.json({success:false,msg:'Company Not saved'});
-                }
-                else{
-                    res.json({success:true,msg:'Company saved successfully'});
-                }
-            });
-        //}  
-    //});
+    });
 };
 
 exports.modifyCompany = function(req, res){
@@ -258,7 +264,7 @@ exports.modifyCompany = function(req, res){
             Company.totalQuantity= req.body.totalQuantity;
             Company.annualGrowthRate= req.body.annualGrowthRate;
             Company.marketcap= req.body.marketcap;
-            Company.save(function(err, company){
+            Company.save(function(err, Company){
                 if(err){
                     res.json({success:false, msg:"Company details not updated"});
                 }
@@ -286,26 +292,18 @@ exports.addNews = function(req, res){
       newsText : req.body.newsText,
       youtubeSrc : req.body.youtubeSrc,
       isPublished : req.body.isPublished,
+      publishedOn: Date.now(),
       newsImpact : req.body.newsImpact
     });
-    /*news.findOne({newsText: newNews.newsText}, function(err, news){
+    newNews.save(function(err,news){
         if(err){
-            throw err;
+            res.json({success:false,msg:'News Not saved'});
         }
-        if(news){
-            res.json({success:false, msg:"News exists"});
+        else{
+            res.json({success:true,msg:'News saved successfully'});
         }
-        else{*/
-            newNews.save(function(err,news){
-                if(err){
-                    res.json({success:false,msg:'News Not saved'});
-                }
-                newNews.on('index', function(err){ console.log(err);});
-                res.json({success:true,msg:'News saved successfully'});
-            });
-        }
-    //});
-//};
+    });
+}
 
 exports.modifyNews = function(req, res){
     news.findById(req.params.id, function(err, News){

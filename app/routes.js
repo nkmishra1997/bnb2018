@@ -42,6 +42,12 @@ app.route('/admin/addCompany')
 app.route('/admin/addNews')
     .post(passport.authenticate('facebook-token'), isAdmin, controller.addNews);
 
+app.route('/admin/newsDetails/:id')
+    .get(passport.authenticate('facebook-token'), isAdmin, controller.newsDetails);
+
+app.route('/admin/companyDetail/:id')
+    .get(passport.authenticate('facebook-token'), isAdmin, controller.companyDetails);
+
 app.route('/admin/modifyCompany/:id')
     .post(passport.authenticate('facebook-token'), isAdmin, controller.modifyCompany);
 
@@ -49,7 +55,7 @@ app.route('/admin/modifyNews/:id')
     .post(passport.authenticate('facebook-token'), isAdmin, controller.modifyNews);
 
 app.route('/admin/deleteCompany/:id')
-    .post(passport.authenticate('facebook-token'), isAdmin, controller.deleteCompany);
+    .delete(passport.authenticate('facebook-token'), isAdmin, controller.deleteCompany);
 
 app.route('/admin/deleteNews/:id')
     .post(passport.authenticate('facebook-token'), isAdmin, controller.deleteNews);

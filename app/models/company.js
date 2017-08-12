@@ -1,33 +1,44 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const parameters = require('../parameters');
 
 const companySchema = new Schema({
   name:{
     type: String,
-    unique: true
+    unique: true,
+    required:true
   },
 
   symbol:{
     type: String,
-    unique: true
+    unique: true,
+    required:true
   },
 
   description: String,
 
   stockPrice: {
     type: Number,
-    min: 0
+    default:0,
+    min: 0.0,
+    required:true
   },
 
   availableQuantity: {
     type: Number,
-    min: 0,
+    default: 0,
+    min: 0.0,
+    max: parameters.maxNumberOfShares,
+    required:true
     //max: company.totalQuantity
   },
 
   totalQuantity: {
     type: Number,
-    min: 0
+    default:0,
+    min: 0.0,
+    max: parameters.maxNumberOfShares,
+    required:true
   },
 
   annualGrowthRate: {
@@ -47,12 +58,14 @@ const companySchema = new Schema({
     },
     stockPrice: {
     type: Number,
+    default: 0,
     min: 0
   },
     availableQuantity:
     { type: Number,
-      min: 0,
-      //max: company.totalQuantity
+      default:0,
+      min: 0.0,
+      max: parameters.maxNumberOfShares
     }
   }],
 

@@ -1,0 +1,38 @@
+
+<h2 class="page-header">Add New Company</h2>
+<form (submit)="onCompanySubmit()">
+  <div class="form-group">
+    <label style="color:black;">Company Name</label>
+    <input type="text" [(ngModel)]="name" name="name" class="form-control" placeholder="Enter company name" autofocus required>
+  </div>
+  <div class="form-group">
+    <label style="color:black;">Company Symbol</label>
+    <input type="text" [(ngModel)]="symbol" name="symbol" class="form-control" placeholder="Pick a symbol" required>
+  </div>
+  <div class="form-group">
+    <label style="color:black;">Description</label>
+    <input type="text" [(ngModel)]="description" name="description" class="form-control" placeholder="Description about company" required>
+  </div>
+  <div class="form-group">
+    <label style="color:black;">Stock Price</label>
+    <input type="number" [(ngModel)]="stockPrice" name="stockPrice" class="form-control" placeholder="company's stockprice" required>
+  </div>
+  <div class="form-group">
+    <label style="color:black;">Available Quantity</label>
+    <input type="number" [(ngModel)]="availableQuantity" name="availableQuantity" class="form-control" placeholder="available quantity" required>
+  </div>
+  <div class="form-group">
+    <label style="color:black;">Total Quantity</label>
+    <input type="number" [(ngModel)]="totalQuantity" name="totalQuantity" class="form-control" placeholder="Total quantity" required>
+  </div>
+  <div class="form-group">
+    <label style="color:black;">Annual Growth Rate</label>
+    <input type="number" [(ngModel)]="annualGrowthRate" name="annualGrowthRate" class="form-control" placeholder="Company's Annual growth rate" required>
+  </div>
+  <div class="form-group">
+    <label style="color:black;">Market Cap</label>
+    <input type="number" [(ngModel)]="marketcap" name="marketcap" class="form-control" placeholder="Company's market cap" required>
+  </div>
+  <input type="submit" class="btn btn-primary" value="Submit">
+  <input type="reset" class="btn btn-primary">
+</form>
