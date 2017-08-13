@@ -18,8 +18,8 @@ exports.companyList = function(req, res) {
 		res.send("unable to fetch company list");
 	}
   else {
-		var accountBal = {'accountBalance' : req.user.accountBalance}
-		companies.push(accountBal);
+		//var accountBal = {'accountBalance' : req.user.accountBalance}
+		//companies.push(accountBal);
 		res.json(companies);
 	}
   });
