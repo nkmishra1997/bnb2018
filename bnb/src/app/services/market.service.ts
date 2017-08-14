@@ -14,4 +14,11 @@ export class MarketService {
     .map(res => res.json());
   }
 
+  fetchCustomer(){
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    return this.http.get('customerdetail',{headers : headers})
+    .map(res => res.json());
+  }
+  
 }

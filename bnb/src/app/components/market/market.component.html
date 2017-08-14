@@ -10,4 +10,14 @@
       <h4>Company volume: {{company.availableQuantity}}</h4>
     </div>
    </div>
-</div>
+<!--
+   <div class="panel-body" style="background-color:#f2f2f2; min-height:20px;">
+     <h5>Your balance: {{companies.accountBal.accountBalance}}</h5>
+   </div>
+ -->
+ </div>
+   <div *ngIf="customer" class="row" style="display:table;">
+     <div class="panel-body" style="background-color:#f2f2f2; min-height:20px;">
+    <h5>Account Balance: {{customer.Customer.accountBalance}}</h5>
+    </div>
+  </div>

@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class MarketComponent implements OnInit {
   companies : any;
-  //customer : any;
+  customer : any;
 
   constructor(private marketService : MarketService,
               private router : Router ) { }
@@ -23,7 +23,14 @@ export class MarketComponent implements OnInit {
       console.log(err);
       return false;
     });
-  }
 
+    this.marketService.fetchCustomer().subscribe(Customer => {
+      this.customer = Customer;
+    },
+    err => {
+      console.log(err);
+      return false;
+    });
+  }
 
 }
