@@ -19,7 +19,7 @@ exports.companyList = function(req, res) {
 	}
   else {
 		var accountBal = {'accountBalance' : req.user.accountBalance}
-		companies.push(accountBal);
+		//companies.push(accountBal);
 		res.json(companies);
 	}
   });
@@ -59,7 +59,7 @@ exports.newsList = function(req, res) {
 		res.send("unable to fetch news list");
 	}
   else {
-		res.json({newslist});
+		res.json(newslist);
 	}
   });
 };
