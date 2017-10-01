@@ -1,0 +1,23 @@
+<br><br>
+<h2>Market</h2>
+<div *ngIf="companies" class="row" style="display:table;">
+  <div *ngFor="let company of companies;">
+    <div class="panel-body" style="background-color:#f2f2f2; min-height:300px;">
+      <h4>Company name: {{company.name}}</h4>
+      <h4>Company symbol: {{company.symbol}}</h4>
+      <h4>Company price: {{company.stockPrice}}</h4>
+      <h4>Company trend: {{company.annualGrowthRate}}</h4>
+      <h4>Company volume: {{company.availableQuantity}}</h4>
+    </div>
+   </div>
+<!--
+   <div class="panel-body" style="background-color:#f2f2f2; min-height:20px;">
+     <h5>Your balance: {{companies.accountBal.accountBalance}}</h5>
+   </div>
+ -->
+ </div>
+   <div *ngIf="customer" class="row" style="display:table;">
+     <div class="panel-body" style="background-color:#f2f2f2; min-height:20px;">
+    <h5>Account Balance: {{customer.Customer.accountBalance}}</h5>
+    </div>
+  </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from '../../services/auth.service';
-import {Router} from '@angular/router';
+import { NewsService } from '../../services/news.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-news',
@@ -11,12 +11,12 @@ export class NewsComponent implements OnInit {
   news : any;
 
   constructor(
-    private authService: AuthService,
+    private newsService: NewsService,
     private router: Router
   ) { }
 
   ngOnInit() {
-    this.authService.fetchNews().subscribe(News => {
+    this.newsService.fetchNews().subscribe(News => {
       this.news = News;
     },
     err => {

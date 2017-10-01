@@ -7,6 +7,7 @@ mongoose.Promise = global.Promise;
 
 
 
+
 // ============================================================================
 // Stock Market ===============================================================
 // ============================================================================
@@ -19,8 +20,13 @@ exports.companyList = function(req, res) {
 	}
   else {
 		var accountBal = {'accountBalance' : req.user.accountBalance}
+<<<<<<< HEAD
 		companies.push(accountBal);
 		res.json({companies});
+=======
+		//companies.push(accountBal);
+		res.json(companies);
+>>>>>>> a6c46d123cf6c5d8e5058e48ed1a0be47edc1c84
 	}
   });
 };
@@ -74,7 +80,7 @@ exports.newsList = function(req, res) {
 		res.send("unable to fetch news list");
 	}
   else {
-		res.json({newslist});
+		res.json(newslist);
 	}
   });
 };

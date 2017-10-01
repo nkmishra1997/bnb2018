@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -14,6 +14,7 @@ export class AuthService {
     .map(res => res.json());
   }
 
+<<<<<<< HEAD
   getCustomer(){
     let headers = new Headers();
     headers.append('access_token', 'EAADnnBRP9lQBAFcavJRWV567GMQ5Ezw32D6Ra6mZAjerI4WZABFzL1e4CcJRZC5YSOtbiywcWvqqcA9kWyROtxDi3T7MUcn0AjH4RZAeDdo8sEQ4jED04ygFDZClOGAZAL8J5PqkLwLop7yZCuZAhLZBf0CwS1YfZAbyw5WuZCSVEExZCwZDZD');
@@ -131,6 +132,19 @@ export class AuthService {
     headers.append('access_token', 'EAADnnBRP9lQBAFcavJRWV567GMQ5Ezw32D6Ra6mZAjerI4WZABFzL1e4CcJRZC5YSOtbiywcWvqqcA9kWyROtxDi3T7MUcn0AjH4RZAeDdo8sEQ4jED04ygFDZClOGAZAL8J5PqkLwLop7yZCuZAhLZBf0CwS1YfZAbyw5WuZCSVEExZCwZDZD');
     headers.append('Content-Type','application/json');
     return this.http.delete('/admin/deleteUser/' + id, {headers: headers})
+=======
+  fetchCompanies(){
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    return this.http.get('/companylist',{headers: headers})
+    .map(res => res.json());
+  }
+
+  fetchCustomer(){
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    return this.http.get('customerdetail',{headers : headers})
+>>>>>>> a6c46d123cf6c5d8e5058e48ed1a0be47edc1c84
     .map(res => res.json());
   }
 
