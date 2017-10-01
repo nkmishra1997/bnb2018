@@ -16,19 +16,23 @@ export class CompanylistComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.refreshPage();
+  }
+
+  deleteCompany(id){
+    this.authService.deletecompany(id).subscribe(data => {
+        this.refreshPage();
+        console.log(data.msg);
+    });
+  }
+
+  refreshPage(){
     this.authService.fetchCompany().subscribe(Company => {
       this.company = Company;
     },
     err => {
       console.log(err);
       return false;
-    });
-  }
-
-  deleteCompany(id){
-    this.authService.deleteCompany(id).subscribe(data => {
-        console.log(data.msg);
-        this.router.navigate(['/admin/company']);
     });
   }
 

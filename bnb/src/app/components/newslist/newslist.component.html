@@ -3,7 +3,11 @@
 <div *ngIf="news">
   <div *ngFor="let News of news.newslist | reverse;">
    <ul class="list-group">
-     <li class="list-group-item"><b>News Text: </b><a [routerLink]="['/admin/newsdetail', News._id]">{{News.newsText}}</a></li>
+     <li class="list-group-item"><b>News Text: </b><a [routerLink]="['/admin/newsdetail', News._id]">{{News.newsText}}</a>
+      <span class="pull-right">
+          <a (click)="deleteNews(News._id)" class="btn btn-md btn-danger align-middle" style="display:inline;"><span class="fa fa-trash-o fa-2x"></span>  Delete</a>
+      </span>
+     </li>
    </ul>
   </div>
   <hr>

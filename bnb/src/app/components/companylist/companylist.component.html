@@ -6,7 +6,7 @@
     <ul class="list-group">
       <li class="list-group-item"><b>Name: </b><a  [routerLink]="['/admin/companydetail', company._id]">{{company.name}}</a>
         <span class="pull-right">
-          <a ng-href='#here' ng-click="deleteCompany(company._id)" class="btn btn-md btn-danger align-middle" style="display:inline;">Delete</a>
+          <a (click)="deleteCompany(company._id)" class="btn btn-md btn-danger align-middle" style="display:inline;"><span class="fa fa-trash-o fa-2x"></span>  Delete</a>
         </span>
       </li>
     </ul>
@@ -16,4 +16,5 @@
     <a [routerLink]="['/admin/addcompany']" class="btn btn-primary btn-md btn-block" role="button">Add New Company</a>
   </div>
 </div>
+
 <br><br>

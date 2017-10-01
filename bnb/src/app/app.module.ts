@@ -16,6 +16,8 @@ import { CompanyDetailsComponent } from './components/company-details/company-de
 import { NewslistComponent } from './components/newslist/newslist.component';
 import { AddNewsComponent } from './components/add-news/add-news.component';
 import { NewsDetailsComponent } from './components/news-details/news-details.component';
+import { UserListComponent } from './components/user-list/user-list.component';
+import { UserDetailsComponent } from './components/user-details/user-details.component';
 
 const appRoutes: Routes = [
   {path:'news', component:NewsComponent},
@@ -25,7 +27,9 @@ const appRoutes: Routes = [
   {path:'admin/news', component: NewslistComponent},
   {path:'admin/addnews', component: AddNewsComponent},
   {path:'admin/newsdetail/:id', component: NewsDetailsComponent},
-  {path:'admin/companydetail/:id', component: CompanyDetailsComponent}
+  {path:'admin/companydetail/:id', component: CompanyDetailsComponent},
+  {path:'admin/user', component: UserListComponent},
+  {path:'admin/userdetail/:id', component: UserDetailsComponent}
 ]
 
 @NgModule({
@@ -39,7 +43,9 @@ const appRoutes: Routes = [
     CompanyDetailsComponent,
     NewslistComponent,
     AddNewsComponent,
-    NewsDetailsComponent
+    NewsDetailsComponent,
+    UserListComponent,
+    UserDetailsComponent
   ],
   imports: [
     BrowserModule,

@@ -122,7 +122,7 @@ exports.customerList = function(req, res) {
 		res.send("unable to fetch company list");
 	}
   else {
-		res.json(customerlist);
+		res.json({customerlist});
 	}
   });
 };

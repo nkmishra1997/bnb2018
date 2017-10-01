@@ -3,38 +3,38 @@
 <div *ngIf="company">
   <h2 class="page-header">Company Details</h2>
 
-  <form (ngSubmit)="onSubmit()">
+  <form (submit)="onSubmit()">
   <div class="form-group">
-    <label style="color:black;" for="name">Name</label>
-    <input type="text" name="name" required id="name" [(ngModel)]="company.name" class="form-control">
+    <label style="color:black;">Name</label>
+    <input type="text" name="name" required id="name" [(ngModel)]="company.compDetails.name" class="form-control">
   </div>
   <div class="form-group">
-    <label style="color:black;" for="symbol">Symbol</label>
-    <input type="text" [(ngModel)]="company.symbol" name="symbol" class="form-control" id="symbol" required>
+    <label style="color:black;">Symbol</label>
+    <input type="text" [(ngModel)]="company.compDetails.symbol" name="symbol" class="form-control" id="symbol" required>
   </div>
   <div class="form-group">
-    <label style="color:black;" for="description">Description</label>
-    <input type="text" [(ngModel)]="company.description" name="description" class="form-control" id="description" required>
+    <label style="color:black;">Description</label>
+    <input type="text" [(ngModel)]="company.compDetails.description" name="description" class="form-control" id="description" required>
   </div>
   <div class="form-group">
-    <label style="color:black;" for="stockPrice">Stock Price</label>
-    <input type="number" [(ngModel)]="company.stockPrice" name="stockPrice" class="form-control" id="stockPrice" required>
+    <label style="color:black;">Stock Price</label>
+    <input type="number" [(ngModel)]="company.compDetails.stockPrice" name="stockPrice" class="form-control" id="stockPrice" required>
   </div>
   <div class="form-group">
-    <label style="color:black;" for="availableQuantity">Available Quantity</label>
-    <input type="number" [(ngModel)]="company.availableQuantity" name="availableQuantity" class="form-control" id="availableQuantity" required>
+    <label style="color:black;">Available Quantity</label>
+    <input type="number" [(ngModel)]="company.compDetails.availableQuantity" name="availableQuantity" class="form-control" id="availableQuantity" required>
   </div>
   <div class="form-group">
-    <label style="color:black;" for="totalQuantity">Total Quantity</label>
-    <input type="number" [(ngModel)]="company.totalQuantity" name="totalQuantity" class="form-control" id="totalQuantity" required>
+    <label style="color:black;">Total Quantity</label>
+    <input type="number" [(ngModel)]="company.compDetails.totalQuantity" name="totalQuantity" class="form-control" id="totalQuantity" required>
   </div>
   <div class="form-group">
-    <label style="color:black;" for="annualGrowthRate">Annual Growth Rate</label>
-    <input type="number" [(ngModel)]="company.annualGrowthRate" name="annualGrowthRate" class="form-control" id="annualGrowthRate" required>
+    <label style="color:black;">Annual Growth Rate</label>
+    <input type="number" [(ngModel)]="company.compDetails.annualGrowthRate" name="annualGrowthRate" class="form-control" id="annualGrowthRate" required>
   </div>
   <div class="form-group">
-    <label style="color:black;" for="marketcap">Market Cap</label>
-    <input type="number" [(ngModel)]="company.marketcap" name="marketcap" class="form-control" id="marketcap" required>
+    <label style="color:black;">Market Cap</label>
+    <input type="number" [(ngModel)]="company.compDetails.marketcap" name="marketcap" class="form-control" id="marketcap" required>
   </div>
   <input type="submit" class="btn btn-primary" value="Submit">
   <input type="reset" class="btn btn-primary">
