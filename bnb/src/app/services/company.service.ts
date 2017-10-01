@@ -3,29 +3,24 @@ import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 @Injectable()
-export class AuthService {
+export class CompanyService {
 
-  constructor(private http:Http) { }
+  constructor(private http : Http) { }
 
-  fetchNews(){
+  fetchCompany(id){
     let headers = new Headers();
+  //  let params = new URLSearchParams();
+  //  params.set('id',id.toString())
     headers.append('Content-Type','application/json');
-    return this.http.get('/newslist',{headers: headers})
+    return this.http.get('/companydetail/' + id,{ headers : headers })
     .map(res => res.json());
   }
-
-  fetchCompanies(){
-    let headers = new Headers();
-    headers.append('Content-Type','application/json');
-    return this.http.get('/companylist',{headers: headers})
-    .map(res => res.json());
-  }
-
+/*
   fetchCustomer(){
     let headers = new Headers();
     headers.append('Content-Type','application/json');
     return this.http.get('customerdetail',{headers : headers})
     .map(res => res.json());
   }
-
+*/
 }

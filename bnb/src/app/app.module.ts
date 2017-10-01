@@ -6,25 +6,36 @@ import {RouterModule, Routes} from '@angular/router';
 import { AppComponent } from './app.component';
 import { NewsComponent } from './components/news/news.component';
 
-import {AuthService} from './services/auth.service';
+import { AuthService } from './services/auth.service';
+import { NewsService } from './services/news.service';
+import { MarketService } from './services/market.service';
+import { CompanyService } from './services/company.service';
 import { ReverseArrPipe } from './pipes/reverse-arr.pipe';
+import { MarketComponent } from './components/market/market.component';
+import { CompanyComponent } from './components/company/company.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 const appRoutes: Routes = [
-  {path:'news', component:NewsComponent}
+  { path:'news', component : NewsComponent },
+  { path:'market', component : MarketComponent },
+  { path:'company/:id', component : CompanyComponent }
 ]
 
 @NgModule({
   declarations: [
     AppComponent,
     NewsComponent,
-    ReverseArrPipe
+    ReverseArrPipe,
+    MarketComponent,
+    CompanyComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [AuthService],
+  providers: [AuthService, NewsService, MarketService, CompanyService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
