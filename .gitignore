@@ -3,4 +3,3 @@ npm-debug.log
 .DS_Store
 /*.env
 /bnb/dist
-/config/auth.js
