@@ -14,11 +14,16 @@ import { ReverseArrPipe } from './pipes/reverse-arr.pipe';
 import { MarketComponent } from './components/market/market.component';
 import { CompanyComponent } from './components/company/company.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 const appRoutes: Routes = [
   { path:'news', component : NewsComponent },
   { path:'market', component : MarketComponent },
-  { path:'company/:id', component : CompanyComponent }
+  // { path:'market', outlet:'navbar', component : NavbarComponent },
+  // { path:'company/:id', outlet:'navbar', component : NavbarComponent },
+  // { path:'news', outlet:'navbar', component : NavbarComponent },
+  { path:'company/:id', component : CompanyComponent },
+  { path: 'profile', component : ProfileComponent}
 ]
 
 @NgModule({
@@ -28,7 +33,8 @@ const appRoutes: Routes = [
     ReverseArrPipe,
     MarketComponent,
     CompanyComponent,
-    ProfileComponent
+    ProfileComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
