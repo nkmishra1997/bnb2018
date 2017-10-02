@@ -35,7 +35,7 @@ export class AddNewsComponent implements OnInit {
     }
   }
 
-  this.authService.addNews(news).subscribe(data => {
+  /*this.authService.addNews(news).subscribe(data => {
       if(data.success){
         console.log("saved");
         this.router.navigate(['/admin/news']);
@@ -44,7 +44,7 @@ export class AddNewsComponent implements OnInit {
         console.log('not saved');
         this.router.navigate(['/admin/addnews']);
       }
-  });
+  });*/
   }
 
 }

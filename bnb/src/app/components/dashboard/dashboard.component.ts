@@ -16,13 +16,13 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.authService.getCustomer().subscribe(Customer => {
+    /*this.authService.getCustomer().subscribe(Customer => {
       this.customer = Customer;
     },
     err => {
       console.log(err);
       return false;
-    });
+    });*/
   }
 
 }

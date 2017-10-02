@@ -16,10 +16,10 @@ export class CompanylistComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.refreshPage();
+    //this.refreshPage();
   }
 
-  deleteCompany(id){
+  /*deleteCompany(id){
     this.authService.deletecompany(id).subscribe(data => {
         this.refreshPage();
         console.log(data.msg);
@@ -34,6 +34,6 @@ export class CompanylistComponent implements OnInit {
       console.log(err);
       return false;
     });
-  }
+  }*/
 
 }

@@ -16,10 +16,10 @@ export class UserListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.refreshPage();
+    //this.refreshPage();
   }
 
-  deleteUser(id){
+  /*deleteUser(id){
     this.authService.deleteuser(id).subscribe(data => {
         this.refreshPage();
         console.log(data.msg);
@@ -34,6 +34,6 @@ export class UserListComponent implements OnInit {
       console.log(err);
       return false;
     });
-  }
+  }*/
 
 }

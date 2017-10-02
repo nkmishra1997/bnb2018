@@ -30,13 +30,13 @@ export class UserDetailsComponent implements OnInit {
     this.sub = this.route.params.subscribe(params => {
        this.id = params['id'];
     });
-    this.authService.getUserDetail(this.id).subscribe(User => {
+    /*this.authService.getUserDetail(this.id).subscribe(User => {
       this.User = User;
     },
     err => {
       console.log(err);
       return false;
-    });
+    });*/
   }
 
   onSubmit(){

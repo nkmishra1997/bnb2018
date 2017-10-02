@@ -17,10 +17,10 @@ export class NewslistComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.refreshPage();
+    //this.refreshPage();
   }
 
-  deleteNews(id){
+  /*deleteNews(id){
     this.authService.deletenews(id).subscribe(data => {
         this.refreshPage();
         console.log(data.msg);
@@ -35,6 +35,6 @@ export class NewslistComponent implements OnInit {
       console.log(err);
       return false;
     });
-  }
+  }*/
 
 }

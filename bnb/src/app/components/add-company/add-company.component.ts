@@ -39,14 +39,14 @@ export class AddCompanyComponent implements OnInit {
     marketcap:this.marketcap
   }
 
-  this.authService.addCompany(company).subscribe(data => {
+  /*this.authService.addCompany(company).subscribe(data => {
       if(data.success){
         this.router.navigate(['/admin/company']);
       }
       else{
         this.router.navigate(['/admin/addcompany']);
       }
-  });
+  });*/
   }
 
 }

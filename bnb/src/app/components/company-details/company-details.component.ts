@@ -31,13 +31,13 @@ export class CompanyDetailsComponent implements OnInit {
     this.sub = this.route.params.subscribe(params => {
        this.id = params['id'];
     });
-    this.authService.getCompanyDetail(this.id).subscribe(Company => {
+    /*this.authService.getCompanyDetail(this.id).subscribe(Company => {
       this.company = Company;
     },
     err => {
       console.log(err);
       return false;
-    });
+    });*/
   }
 
   onSubmit(){

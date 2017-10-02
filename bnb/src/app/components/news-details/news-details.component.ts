@@ -30,13 +30,13 @@ export class NewsDetailsComponent implements OnInit {
     this.sub = this.route.params.subscribe(params => {
        this.id = params['id'];
     });
-    this.authService.getNewsDetail(this.id).subscribe(News => {
+    /*this.authService.getNewsDetail(this.id).subscribe(News => {
       this.news = News;
     },
     err => {
       console.log(err);
       return false;
-    });
+    });*/
   }
 
   onSubmit(){
@@ -53,7 +53,7 @@ export class NewsDetailsComponent implements OnInit {
   this.sub = this.route.params.subscribe(params => {
       this.id = params['id'];
   });
-  this.authService.addModifiedNews(this.id, news).subscribe(data => {
+  /*this.authService.addModifiedNews(this.id, news).subscribe(data => {
       if(data.success){
         console.log("News Modified");
         this.router.navigate(['/admin/news']);
@@ -62,6 +62,6 @@ export class NewsDetailsComponent implements OnInit {
         console.log('News not Modified');
         this.router.navigate(['/admin/newsdetail/', this.id]);
       }
-  });
+  });*/
   }
 }
