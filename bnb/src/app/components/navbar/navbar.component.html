@@ -2,7 +2,7 @@
 <div class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-        <ul>
+        <ul class="nav navbar-nav">
           <li [routerLinkActive]="['active']"><a [routerLink]="['/']" class="navbar-brand">Bulls 'n' Bears</a></li>
         </ul>
           <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
@@ -25,6 +25,8 @@
           </ul>
 
           <ul class="nav navbar-nav navbar-right">
+            <li [routerLinkActive]="['active']"><a [routerLink]="['/market']">Market</a></li>
+            <li [routerLinkActive]="['active']"><a [routerLink]="['/news']">News</a></li>
             <li [routerLinkActive]="['active']"><a [routerLink]="['/help']">Help</a></li>
             <li [routerLinkActive]="['active']"><a [routerLink]="['/profile']">My profile</a></li>
           </ul>
