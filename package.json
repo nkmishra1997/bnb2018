@@ -26,7 +26,7 @@
     "express": "~4.16.1",
     "express-session": "~1.15.6",
     "method-override": "^2.3.10",
-    "mocha": "^3.5.3",
+    "mocha": "^4.0.0",
     "mongoose": "~4.11.14",
     "morgan": "~1.9.0",
     "passport": "~0.3.2",
