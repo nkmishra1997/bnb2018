@@ -8,7 +8,8 @@ var userSchema = mongoose.Schema({
 
     ban: {
       type: Boolean,
-      default: false
+      default: false,
+      required:true
     },
 
     admin:{
@@ -23,34 +24,37 @@ var userSchema = mongoose.Schema({
         name         : String
     },
 
-    accountBalance : { type : Number, default: parameters.accountBalance, min: 0 },
+    accountBalance : { type : Number, default: parameters.accountBalance, min: 0, required:true },
 
     activity :[{
       company: {type: mongoose.Schema.Types.ObjectId, ref:'company'},
       timeStamp: { type: Date, default: Date.now()},
       action: String, // Subject to change, as I was unclear of the data type this constiable represents
       quantity: {type : Number, default: 0,min: 0},
-      price: { type : Number, default: 0, min: 0}
+      price: { type : Number, default: 0, min: 0.0}
     }],
 
     stockHoldings :[{
-      company: {type: mongoose.Schema.Types.ObjectId, ref:'company'},
-      quantity: {type : Number, default: 0,min: 0}
+      company: {type: mongoose.Schema.Types.ObjectId, ref:'company', unique:true},
+      quantity: {type : Number, default: 0,min: 0.0}
     }],
 
     stockShorted:[{
-      company: {type: mongoose.Schema.Types.ObjectId, ref:'company'},
+      company: {type: mongoose.Schema.Types.ObjectId, ref:'company', unique:true},
       quantity: {type : Number, default: 0,min: 0},
     }],
 
     loan :{
       taken:{
-        type: Boolean
+        type: Boolean,
+        default: false,
+        required:true
       },
       amount: {
       type : Number,
       default: 0,
-      min: 0
+      min: 0.0,
+      max:parameters.loanAmount
     },
       takeOutTime:{
         type: Date,
