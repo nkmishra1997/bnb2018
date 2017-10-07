@@ -15,6 +15,7 @@ import { MarketComponent } from './components/market/market.component';
 import { CompanyComponent } from './components/company/company.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { LoginComponent } from './login/login.component';
 
 const appRoutes: Routes = [
   { path:'news', component : NewsComponent },
@@ -34,7 +35,8 @@ const appRoutes: Routes = [
     MarketComponent,
     CompanyComponent,
     ProfileComponent,
-    NavbarComponent
+    NavbarComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
