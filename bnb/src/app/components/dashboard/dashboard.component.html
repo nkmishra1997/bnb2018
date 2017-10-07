@@ -1,0 +1,9 @@
+<br><br>
+
+<div *ngIf="customer">
+  <h2 class="page-header">{{customer.facebook.name}}</h2>
+  <ul class="list-group">
+    <li class="list-group-item"><b>Email Id:</b> {{customer.facebook.email}}</li>
+    <li class="list-group-item"><b>Your Balance:</b> {{customer.accountBalance}}</li>
+  </ul>
+</div>
