@@ -61,7 +61,7 @@ exports.newsDetails = function(req, res) {
     if (err){
 		console.log(err);
 		res.send("unable to fetch news details");
-	}else {    
+	}else {
             //console.log(newsDetails.newsImpact.company.name);
             res.json(newsDetails);
     }
@@ -230,9 +230,9 @@ exports.short = function(req, res){
             }else{
               var flag = 0;
               var stock = parameters.stock;
-              for(var i=0;i<Customer.stockHoldings.length;i++){
-                if(Customer.stockHoldings[i].company._id === Company._id ){
-                  Customer.stockHoldings[i].quantity += stock;
+              for(var i=0;i<Customer.stockShorted.length;i++){
+                if(Customer.stockShorted[i].company._id === Company._id ){
+                  Customer.stockShorted[i].quantity += stock;
                   Customer.accountBalance += stock * Company.stockPrice;
                   Company.availableQuantity -= stock;
                   Company.history.push({timeStamp : Date.now(), stockPrice : Company.stockPrice, availableQuantity : Company.availableQuantity});
@@ -244,7 +244,7 @@ exports.short = function(req, res){
                   Company.availableQuantity -= stock;
                   Company.history.push({timeStamp : Date.now(), stockPrice : Company.stockPrice, availableQuantity : Company.availableQuantity});
                   Customer.accountBalance += stock * Company.stockPrice;
-                  Customer.stockHoldings.push({company : Company._id, quantity : stock});
+                  Customer.stockShorted.push({company : Company._id, quantity : stock});
                   Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'shorted', quantity:stock, price:Company.stockPrice});
               }
             }
@@ -270,9 +270,9 @@ exports.cover = function(req, res){
             }else{
               var flag = 0;
               var stock = parameters.stock;
-              for(var i=0;i<Customer.stockHoldings.length;i++){
-                if(Customer.stockHoldings[i].company._id === Company._id ){
-                  Customer.stockHoldings[i].quantity -= stock;
+              for(var i=0;i<Customer.stockShorted.length;i++){
+                if(Customer.stockShorted[i].company._id === Company._id ){
+                  Customer.stockShorted[i].quantity -= stock;
                   Customer.accountBalance -= stock * Company.stockPrice;
                   Company.availableQuantity += stock;
                   Company.history.push({timeStamp : Date.now(), stockPrice : Company.stockPrice, availableQuantity : Company.availableQuantity});
@@ -284,7 +284,7 @@ exports.cover = function(req, res){
                   Company.availableQuantity += stock;
                   Company.history.push({timeStamp : Date.now(), stockPrice : Company.stockPrice, availableQuantity : Company.availableQuantity});
                   Customer.accountBalance -= stock * Company.stockPrice;
-                  Customer.stockHoldings.push({company : Company._id, quantity : stock});
+                  Customer.stockShorted.push({company : Company._id, quantity : stock});
                   Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'covered', quantity:stock, price:Company.stockPrice});
               }
             }

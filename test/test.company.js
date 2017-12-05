@@ -22,14 +22,14 @@ before(function(done){
   });
 
   var test_company = new testCompany({
-      name : 'Flipkart',
-      symbol : 'FLP',
+      name : 'Amazon',
+      symbol : 'AMZ',
       description : 'e-com',
-      stockPrice : 500,
-      availableQuantity : 200,
-      totalQuantity : 800,
-      annualGrowthRate: 2,
-      marketCap : 5,
+      stockPrice : 700,
+      availableQuantity : 500,
+      totalQuantity : 900,
+      annualGrowthRate: 4,
+      marketCap : 7,
      });
 
   describe('Saving a company to the database',function(done){
