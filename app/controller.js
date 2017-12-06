@@ -2,7 +2,6 @@ var mongoose = require('mongoose')
 var company = require('./models/company');
 var customer = require('./models/customer');
 var news = require('./models/news');
-var parameters = require('./parameters')
 mongoose.Promise = global.Promise;
 
 
@@ -115,7 +114,7 @@ exports.buy = function(req, res){
       .populate('activity.company')
       .then(Customer=>{
             var flag = 0
-            var stock = parameters.stock
+            var stock = req.body.amount
             for(var i=0;i<Customer.stockHoldings.length;i++){
               if(Customer.stockHoldings[i].company._id === Company._id ){
                 Customer.stockHoldings[i].quantity += stock
@@ -154,7 +153,7 @@ exports.sell = function(req, res){
       .populate('activity.company')
       .then(Customer=>{
             var flag = 0
-            var stock = parameters.stock
+            var stock = req.body.amount
             for(var i=0;i<Customer.stockHoldings.length;i++){
               if(Customer.stockHoldings[i].company._id === Company._id ){
                 Customer.stockHoldings[i].quantity -= stock
@@ -193,7 +192,7 @@ exports.short = function(req, res){
       .populate('activity.company')
       .then(Customer=>{
             var flag = 0
-            var stock = parameters.stock
+            var stock = req.body.amount
             for(var i=0;i<Customer.stockShorted.length;i++){
               if(Customer.stockShorted[i].company._id === Company._id ){
                 Customer.stockShorted[i].quantity += stock
@@ -232,7 +231,7 @@ exports.cover = function(req, res){
       .populate('activity.company')
       .then(Customer=>{
             var flag = 0
-            var stock = parameters.stock
+            var stock = req.body.amount
             for(var i=0;i<Customer.stockShorted.length;i++){
               if(Customer.stockShorted[i].company._id === Company._id ){
                 Customer.stockShorted[i].quantity -= stock
@@ -268,12 +267,13 @@ exports.takeLoan = function(req, res){
     .findById(req.user._id)
     .then(Customer=>{
 
+        var amount = req.body.amount
           if(Customer.loan.taken === true){
             res.send('Please repay the loan')
           }
           else{
             Customer.loan.taken = true
-            Customer.loan.amount = parameters.loanAmount
+            Customer.loan.amount = amount
             Customer.loan.takeOutTime = Date.now()
             Customer.accountBalance += parameters.loanAmount
           }
@@ -291,6 +291,7 @@ exports.repayLoan = function(req, res){
     .findById(req.user._id)
     .then(Customer=>{
 
+        var amount = req.body.amount
           if(Customer.loan.taken === false){
             res.send('Please loan some money first')
           }
@@ -298,7 +299,7 @@ exports.repayLoan = function(req, res){
             Customer.loan.taken = false
             Customer.loan.amount = 0
             Customer.loan.takeOutTime = Date.now()
-            Customer.accountBalance -= parameters.loanAmount
+            Customer.accountBalance -= amount
           }
 
         res.json({Customer})

@@ -4,7 +4,7 @@
   "description": "Virtual Stock Market Game",
   "main": "server.js",
   "scripts": {
-    "test": "mocha --timeout 10000",
+    "test": "mocha --timeout 20000",
     "build": "cd bnb && ng build"
   },
   "repository": {
@@ -33,6 +33,8 @@
   "devDependencies": {
     "@angular/cli": "^1.2.1",
     "chai": "^4.0.2",
-    "mocha": "^3.4.2"
+    "chai-http": "^3.0.0",
+    "mocha": "^3.4.2",
+    "should": "^13.1.3"
   }
 }
