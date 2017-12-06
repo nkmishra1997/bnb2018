@@ -82,7 +82,7 @@ app.route('/companylist')
 app.route('/companydetail/:id')
     .get(passport.authenticate('facebook-token'), controller.companyDetails);
 
-app.route('/newslist/')
+app.route('/newslist')
     .get(passport.authenticate('facebook-token'), controller.newsList);
 
 
