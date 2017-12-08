@@ -82,7 +82,7 @@ app.route('/companylist')
 app.route('/companydetail/:id')
     .get(isLoggedIn, controller.companyDetails);
 
-app.route('/newslist/')
+app.route('/newslist')
     .get(isLoggedIn, controller.newsList);
 
 
