@@ -36,9 +36,13 @@ app.use(cookieParser()); // read cookies (needed for auth)
 // Parsers for POST data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.get('/', function(req, res) {
+        res.render('index.ejs'); // load the index.ejs file
+    });
 
 // Point static path to dist
 app.use(express.static(path.join(__dirname, 'bnb/dist')));
+app.set('view engine', 'ejs'); // set up ejs for templating
 
 // required for passport
 app.use(session({
@@ -55,8 +59,8 @@ require('./app/routes.js')(app, passport); // load our routes and pass in our ap
 
 
 // Catch all other routes and return the index file
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'bnb/dist/index.html'));
-});
+
+
+
 
 module.exports = app
