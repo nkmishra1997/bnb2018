@@ -16,9 +16,10 @@ import { MarketComponent } from './components/market/market.component';
 import { CompanyComponent } from './components/company/company.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { LoginComponent } from './login/login.component';
 
 const appRoutes: Routes = [
+  
+
   { path:'news', component : NewsComponent },
   { path:'market', component : MarketComponent },
   // { path:'market', outlet:'navbar', component : NavbarComponent },
@@ -26,7 +27,7 @@ const appRoutes: Routes = [
   // { path:'news', outlet:'navbar', component : NavbarComponent },
   { path:'company/:id', component : CompanyComponent },
   { path: 'profile', component : ProfileComponent}
-]
+  ]
 
 @NgModule({
   declarations: [
@@ -37,7 +38,6 @@ const appRoutes: Routes = [
     CompanyComponent,
     ProfileComponent,
     NavbarComponent,
-    LoginComponent
   ],
   imports: [
     BrowserModule,

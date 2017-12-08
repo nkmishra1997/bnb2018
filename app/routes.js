@@ -1,10 +1,13 @@
 module.exports = function(app, passport) {
 var controller = require('./controller.js')
-
+var path = require("path");
 
 // normal routes ===============================================================
 
     // show the home page (will also have our login links)
+    app.get('/', function(req, res) {
+        res.render('index.ejs'); // load the index.ejs file
+    });
 
     // PROFILE SECTION =========================
 /*
@@ -84,6 +87,9 @@ app.route('/companydetail/:id')
 
 app.route('/newslist')
     .get(isLoggedIn, controller.newsList);
+app.get('market',function(req,res){
+    res.sendfile(path.join(__dirname+'/../bnb/src/app/components/market/market.component.html'));
+});
 
 
 // ============================================================================
@@ -143,9 +149,13 @@ app.route('/repayloan')
         // handle the callback after facebook has authorized the user
         app.get('/connect/facebook/callback',
             passport.authorize('facebook', {
-                successRedirect : '/profile',
+                successRedirect : '/market',
                 failureRedirect : '/'
             }));
+
+            app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname+'/../bnb/dist/index.html'));
+});
 
 };
 // route middleware to ensure user is logged in
@@ -169,3 +179,5 @@ function isAdmin(req, res, next){
         res.redirect('/');
     }
 }
+
+
