@@ -149,10 +149,6 @@ app.route('/repayloan')
                 failureRedirect : '/'
             }));
 
-            app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname+'/../bnb/dist/index.html'));
-});
-
 };
 // route middleware to ensure user is logged in
 function isLoggedIn(req, res, next) {

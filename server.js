@@ -60,7 +60,8 @@ require('./app/routes.js')(app, passport); // load our routes and pass in our ap
 
 // Catch all other routes and return the index file
 
-
-
+app.get('*', (req, res) => {
+res.sendFile(path.join(__dirname+'/bnb/dist/index.html'));
+});
 
 module.exports = app
