@@ -87,10 +87,6 @@ app.route('/companydetail/:id')
 
 app.route('/newslist')
     .get(isLoggedIn, controller.newsList);
-app.get('market',function(req,res){
-    res.sendfile(path.join(__dirname+'/../bnb/src/app/components/market/market.component.html'));
-});
-
 
 // ============================================================================
 // Customer  ===============================================================
@@ -179,5 +175,3 @@ function isAdmin(req, res, next){
         res.redirect('/');
     }
 }
-
-
