@@ -9,6 +9,17 @@ import { ProfileService } from '../../services/profile.service';
 export class ProfileComponent implements OnInit {
   player : any;
 
+  check = function(company){
+    for(var i=0;i<this.player.Customer.stockShorted.length;i++){
+      if(company.company.name == this.player.Customer.stockShorted[i].name){
+        return this.player.Customer.stockShorted[i].qantity
+      }
+      return 0
+    }
+  }
+
+  quantity = this.check;
+
   constructor(private profileService : ProfileService) { }
 
   ngOnInit() {

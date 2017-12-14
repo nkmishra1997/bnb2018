@@ -14,3 +14,15 @@
 <p>
   Loan Pending: {{player.Customer.loan.amount}}
 </p>
+
+<div *ngFor="let company of player.Customer.stockHoldings;">
+  <p>Company: {{company.company.symbol}}</p>
+  <p>Stock Qty.: {{company.quantity}}</p>
+  <div *ngIf="check(company)">
+    <p>Shorted Stock: {{quantity}}
+  </div>
+  <div *ngIf="!check(company)">
+    <p>Shorted Stock: 0</p>
+  </div>
+  <p>Current Price: {{company.company.stockPrice}}
+</div>
