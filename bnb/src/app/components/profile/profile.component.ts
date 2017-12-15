@@ -12,7 +12,7 @@ export class ProfileComponent implements OnInit {
   check = function(company){
     for(var i=0;i<this.player.Customer.stockShorted.length;i++){
       if(company.company.name == this.player.Customer.stockShorted[i].company.name){
-        return this.player.Customer.stockShorted[i].qantity
+        return this.player.Customer.stockShorted[i].quantity
       }
     }
     return 0

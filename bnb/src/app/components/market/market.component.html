@@ -3,8 +3,8 @@
 <div *ngIf="companies" class="row" style="display:table;">
   <div *ngFor="let company of companies;">
     <div class="panel-body" style="background-color:#f2f2f2; min-height:300px;">
-      <h4>Company name:</h4><h4><a routerLink="/news">{{company.name}}</a></h4>     //working fine
-      <h4>Company symbol:</h4><h4><a [routerLink]="['/company', company.id">{{company.symbol}}</a></h4>   //not working, can't pass company.id
+      <h4>Company name:</h4><h4><a routerLink="/news">{{company.name}}</a></h4>
+      <h4>Company symbol:</h4><h4><a [routerLink]="['/company/', company.id]">{{company.symbol}}</a></h4> 
       <h4>Company price: {{company.stockPrice}}</h4>
       <h4>Company trend: {{company.annualGrowthRate}}</h4>
       <h4>Company volume: {{company.availableQuantity}}</h4>
