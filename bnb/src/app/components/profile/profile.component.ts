@@ -14,8 +14,8 @@ export class ProfileComponent implements OnInit {
       if(company.company.name == this.player.Customer.stockShorted[i].company.name){
         return this.player.Customer.stockShorted[i].qantity
       }
-      return 0
     }
+    return 0
   }
 
   quantity = this.check;
