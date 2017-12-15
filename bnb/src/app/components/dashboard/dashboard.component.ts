@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from '../../services/auth.service';
+import {AdminService} from '../../services/admin.service';
 import {Router} from '@angular/router';
 
 @Component({
@@ -8,21 +8,21 @@ import {Router} from '@angular/router';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  customer : any;
+  admin : any;
 
   constructor(
-    private authService: AuthService,
+    private adminService: AdminService,
     private router: Router
   ) { }
 
   ngOnInit() {
-    /*this.authService.getCustomer().subscribe(Customer => {
-      this.customer = Customer;
+    this.adminService.fetchAdmin().subscribe(Customer => {
+      this.admin = Customer;
     },
     err => {
       console.log(err);
       return false;
-    });*/
+    });
   }
 
 }

@@ -29,7 +29,7 @@ var path = require("path");
 
 
 app.route('/adminDashboard')
-    .get(passport.authenticate('facebook-token'), isAdmin, controller.customerDetail);
+    .get(isLoggedIn, isAdmin, controller.customerDetail);
 
 app.route('/admin/companylist')
     .get(passport.authenticate('facebook-token'), isAdmin, controller.companyList);
