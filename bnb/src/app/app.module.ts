@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { NewsComponent } from './components/news/news.component';
 
 import { AuthService } from './services/auth.service';
+import { ProfileService } from './services/profile.service';
 import { NewsService } from './services/news.service';
 import { MarketService } from './services/market.service';
 import { CompanyService } from './services/company.service';
@@ -18,13 +19,8 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 
 const appRoutes: Routes = [
-  
-
   { path:'news', component : NewsComponent },
   { path:'market', component : MarketComponent },
-  // { path:'market', outlet:'navbar', component : NavbarComponent },
-  // { path:'company/:id', outlet:'navbar', component : NavbarComponent },
-  // { path:'news', outlet:'navbar', component : NavbarComponent },
   { path:'company/:id', component : CompanyComponent },
   { path: 'profile', component : ProfileComponent}
   ]
@@ -45,7 +41,7 @@ const appRoutes: Routes = [
     HttpModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [AuthService, NewsService, MarketService, CompanyService],
+  providers: [AuthService, NewsService, MarketService, CompanyService, ProfileService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
