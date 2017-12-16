@@ -3,9 +3,8 @@
 <div *ngIf="companies" class="row" style="display:table;">
   <div *ngFor="let company of companies;">
     <div class="panel-body" style="background-color:#f2f2f2; min-height:300px;">
-
-      <h4>Company name:</h4><h4><a routerLink="/news">{{company.name}}</a></h4>     //working fine
-      <h4>Company symbol:</h4><h4><a [routerLink]="['/company', company.id]">{{company.symbol}}</a></h4>   //not working, can't pass company.id
+      <h4>Company name:</h4><h4><a routerLink="/news">{{company.name}}</a></h4>
+      <h4>Company symbol:</h4><h4><a [routerLink]="['/company/', company.id]">{{company.symbol}}</a></h4>
       <h4>Company price: {{company.stockPrice}}</h4>
       <h4>Company trend: {{company.annualGrowthRate}}</h4>
       <h4>Company volume: {{company.availableQuantity}}</h4>
@@ -24,7 +23,7 @@
   </div>-->
 <!DOCTYPE html>
 <html lang="en">
-  
+
 <!-- Mirrored from themesonyx.com/preview/rocket/tables.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 09 Dec 2017 17:09:35 GMT -->
 <head>
     <meta charset="utf-8">
@@ -40,7 +39,7 @@
     <link rel="stylesheet" href="../css/font-awesome.min.css">
     <!-- Custom -->
     <link rel="stylesheet" type="text/css" href="../css/style.css">
-    
+
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="57x57" href="../img/favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="../img/favicon/apple-icon-60x60.png">
@@ -100,10 +99,10 @@
               <div class="mobile-search-active animated fadeInDown">
                   <form class="mobile-search-box">
                       <i class="glyphicon glyphicon-search"></i>
-                      <input class="mobile-search-input" autofocus type="text" spellcheck="false" placeholder="Search...">   
+                      <input class="mobile-search-input" autofocus type="text" spellcheck="false" placeholder="Search...">
                       <button type="button" class="close">
                         <span>&times;</span>
-                      </button> 
+                      </button>
                   </form>
               </div>
             </div>
@@ -141,7 +140,7 @@
                 </li>
                 <li>
                   <a href="log-in.html"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
-                </li>                
+                </li>
               </ul>
             </li>
           </ul>
@@ -214,7 +213,7 @@
                       </div>
                       <span class="message-item-time">1h ago</span>
                     </a>
-                </li> 
+                </li>
                 <li><a class="message-item" href="view-message.html">
                       <span class="message-item-img">
                         <img src="../img/users/user03.jpg" alt="User image">
@@ -248,7 +247,7 @@
                       <span class="message-item-time">1d ago</span>
                     </a>
                 </li>
-                <li><a class="messages-link" href="messages.html">View All messages</a></li> 
+                <li><a class="messages-link" href="messages.html">View All messages</a></li>
               </ul>
             </li>
           </ul>
@@ -259,7 +258,7 @@
         </div><!-- end .navbar-collapse -->
       </div><!-- end .container-fluid -->
     </nav><!-- end .nav-top -->
-    
+
     <!-- Page content -->
     <div class="contentWrapper">
       <div class="row">
@@ -270,7 +269,7 @@
       <div *ngIf="companies" class="row">
         <div class="bootstrapTables">
           <div class="col-sm-12 col-xs-12 table-responsive">
-            
+
             <h3>Hover Row</h3>
             <table class="hover-table table table-hover">
               <tr>
@@ -287,7 +286,7 @@
                 <td>{{company.annualGrowthRate}}</td>
                 <td>{{company.availableQuantity}}</td>
               </tr>
-            </table>    
+            </table>
           </div>
         </div>
       </div>
@@ -339,7 +338,7 @@
               <li><a href="typography.html">Typography</a></li>
             </ul>
           </div>
-        </div> 
+        </div>
         <div class="moreBox-item" data-toggle="collapse" data-target="#charts">
           <i class="fa fa-line-chart" aria-hidden="true"></i>
           Charts

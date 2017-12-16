@@ -18,7 +18,7 @@ describe('GET requests',()=>{
 
   it('/companylist',(done)=>{
 
-    let Company = new company({
+    var Company = new company({
       name : 'Amazon',
       symbol : 'AMZ',
       description : 'e-com',
@@ -43,7 +43,7 @@ describe('GET requests',()=>{
 
   it('/newslist',(done)=>{
 
-    let News = new news({
+    var News = new news({
       newsText : 'Titans are humans',
       youtubeSrc : 'NA',
       isPublished : true,
@@ -67,7 +67,7 @@ describe('GET requests',()=>{
 
   it('/companydetail/:id',(done)=>{
 
-    let Company = new company({
+    var Company = new company({
       name : 'Amazon',
       symbol : 'AMZ',
       description : 'e-com',
@@ -95,7 +95,7 @@ describe('POST requests',()=>{
 
   it('/buy/:id',(done)=>{
 
-    let Company = new company({
+    var Company = new company({
       name : 'Amazon',
       symbol : 'AMZ',
       description : 'e-com',
@@ -106,7 +106,7 @@ describe('POST requests',()=>{
       marketCap : 7,
      })
 
-     let buy = {
+     var buy = {
        amount : 10
      }
 
@@ -125,7 +125,7 @@ describe('POST requests',()=>{
 
   it('/sell/:id',(done)=>{
 
-    let Company = new company({
+    var Company = new company({
       name : 'Amazon',
       symbol : 'AMZ',
       description : 'e-com',
@@ -136,7 +136,7 @@ describe('POST requests',()=>{
       marketCap : 7,
      })
 
-     let sell = {
+     var sell = {
        amount : 10
      }
 
@@ -155,7 +155,7 @@ describe('POST requests',()=>{
 
   it('/short/:id',(done)=>{
 
-    let Company = new company({
+    var Company = new company({
       name : 'Amazon',
       symbol : 'AMZ',
       description : 'e-com',
@@ -166,7 +166,7 @@ describe('POST requests',()=>{
       marketCap : 7,
      })
 
-     let short = {
+     var short = {
        amount : 10
      }
 
@@ -185,7 +185,7 @@ describe('POST requests',()=>{
 
   it('/cover/:id',(done)=>{
 
-    let Company = new company({
+    var Company = new company({
       name : 'Amazon',
       symbol : 'AMZ',
       description : 'e-com',
@@ -196,7 +196,7 @@ describe('POST requests',()=>{
       marketCap : 7,
      })
 
-     let cover = {
+     var cover = {
        amount : 10
      }
 
@@ -215,7 +215,7 @@ describe('POST requests',()=>{
 
   it('/takeloan',(done)=>{
 
-     let loan = {
+     var loan = {
        amount : 10
      }
 
@@ -232,7 +232,7 @@ describe('POST requests',()=>{
 
   it('/repayloan',(done)=>{
 
-     let loan = {
+     var loan = {
        amount : 10
      }
 

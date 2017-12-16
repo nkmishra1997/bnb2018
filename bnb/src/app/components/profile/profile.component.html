@@ -11,11 +11,8 @@
   Your Worth: {{player.worth.worth}}
 </p>
 
-<p>
-  Loan Pending: {{player.Customer.loan.amount}}
-</p>
 
-<div *ngFor="let company of player.Customer.stockHoldings;">
+<!-- <div *ngFor="let company of player.Customer.stockHoldings;">
   <p>Company: <a routerLink="company/{{company.company.id}}">{{company.company.symbol}}</a></p>
   <p>Stock Qty.: {{company.quantity}}</p>
   <div *ngIf="check(company);">
@@ -25,4 +22,13 @@
     <p>Shorted Stock: 0</p>
   </div>
   <p>Current Price: {{company.company.stockPrice}}
+</div> -->
+
+<div>
+<button (click)="loanMoney()">Take Loan</button>
+<button (click)="repayMoney()">Repay Loan</button>
 </div>
+
+<p>
+  Loan Pending: {{player.Customer.loan.amount}}
+</p>

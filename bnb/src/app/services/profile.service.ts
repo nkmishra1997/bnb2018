@@ -14,4 +14,18 @@ export class ProfileService {
     .map(res => res.json());
   }
 
+  takeLoan(){
+    let headers = new Headers()
+    headers.append('Content-Type','application/json')
+    return this.http.post('/takeloan', {headers: headers})
+    .map(res => res.json())
+  }
+
+  repayLoan(){
+    let headers = new Headers()
+    headers.append('Content-Type','application/json')
+    return this.http.post('/repayloan', {headers: headers})
+    .map(res => res.json())
+  }
+
 }
