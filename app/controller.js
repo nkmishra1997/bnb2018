@@ -91,11 +91,11 @@ exports.customerDetail = function(req, res) {
 		//evaluate the worth of customer
     var stockHoldingAmount = 0
     Customer.stockHoldings.forEach((element)=>{
-      stockHoldingAmount += this.company.stockPrice * this.quantity
+      stockHoldingAmount += element.company.stockPrice * element.quantity
     })
     var stockShortedAmount = 0
     Customer.stockShorted.forEach((element)=>{
-      stockShortedAmount += this.company.stockPrice * this.quantity
+      stockShortedAmount += element.company.stockPrice * element.quantity
     })
 		var worth = { 'worth' : Customer.accountBalance + stockHoldingAmount - stockShortedAmount - Customer.loan.amount }
 
@@ -148,8 +148,10 @@ exports.buy = function(req, res){
                 Customer.stockHoldings.push({company : Company._id, quantity : stock})
                 Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'bought', quantity:stock, price:Company.stockPrice})
             }
+            Customer.save()
+            Company.save()
+            res.json({'success':true, Company, Customer})
 
-          res.json({'success':true, Company, Customer})
       }).catch(err=>{
         console.log(err)
         res.send('unable to fetch user')
@@ -187,8 +189,10 @@ exports.sell = function(req, res){
                 Customer.stockHoldings.push({company : Company._id, quantity : stock})
                 Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'sold', quantity:stock, price:Company.stockPrice})
             }
+            Customer.save()
+            Company.save()
+            res.json({'success':true, Company, Customer})
 
-          res.json({'success':true, Company, Customer})
       }).catch(err=>{
         console.log(err)
         res.send('unable to fetch user')
@@ -226,8 +230,10 @@ exports.short = function(req, res){
                 Customer.stockShorted.push({company : Company._id, quantity : stock})
                 Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'shorted', quantity:stock, price:Company.stockPrice})
             }
+            Customer.save()
+            Company.save()
+            res.json({'success':true, Company, Customer})
 
-          res.json({'success':true, Company, Customer})
       }).catch(err=>{
         console.log(err)
         res.send('unable to fetch user')
@@ -265,8 +271,10 @@ exports.cover = function(req, res){
                 Customer.stockShorted.push({company : Company._id, quantity : stock})
                 Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'covered', quantity:stock, price:Company.stockPrice})
             }
+            Customer.save()
+            Company.save()
+            res.json({'success':true, Company, Customer})
 
-          res.json({'success':true, Company, Customer})
       }).catch(err=>{
         console.log(err)
         res.send('unable to fetch user')
@@ -293,8 +301,9 @@ exports.takeLoan = function(req, res){
             Customer.loan.takeOutTime = Date.now()
             Customer.accountBalance += amount
           }
+          Customer.save()
+          res.json(Customer)
 
-        res.json(Customer)
     }).catch(err=>{
       console.log(err)
       res.send('unable to fetch user')
@@ -317,8 +326,9 @@ exports.repayLoan = function(req, res){
             Customer.loan.takeOutTime = Date.now()
             Customer.accountBalance -= amount
           }
+          Customer.save()
+          res.json(Customer)
 
-        res.json(Customer)
     }).catch(err=>{
       console.log(err)
       res.send('unable to fetch user')
