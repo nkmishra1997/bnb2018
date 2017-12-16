@@ -12,11 +12,11 @@ import { Router } from '@angular/router';
   ]
 })
 export class MarketComponent implements OnInit {
-  companies : any;
-  customer : any;
+  companies: any;
+  customer: any;
 
-  constructor(private marketService : MarketService,
-              private router : Router ) { }
+  constructor(private marketService: MarketService,
+              private router: Router ) { }
 
   ngOnInit() {
 

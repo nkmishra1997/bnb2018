@@ -2,6 +2,7 @@ var mongoose = require('mongoose')
 var company = require('./models/company');
 var customer = require('./models/customer');
 var news = require('./models/news');
+var parameters = require('./parameters.js')
 mongoose.Promise = global.Promise;
 
 
@@ -31,7 +32,17 @@ exports.companyDetails = function(req, res){
       var sellMax = Math.min((accountBalance/company.stockPrice),(company.totalQuantity-company.availableQuantity))
       var shortMax = parameters.shortMax
       var coverMax = Math.min((accountBalance/company.stockPrice),shortMax)
-      res.json({compDetails, accountBalance, buyMax, sellMax, shortMax , coverMax})
+
+      var details = {
+        compDetails : compDetails,
+        accountBalance : accountBalance,
+        buyMax : buyMax,
+        sellMax : sellMax,
+        shortMax : shortMax,
+        coverMax : coverMax
+      }
+      res.json(details)
+
     }).catch(err=>{
       console.log(err)
       res.send("unable to fetch customer from request")
@@ -87,7 +98,12 @@ exports.customerDetail = function(req, res) {
       stockShortedAmount += this.company.stockPrice * this.quantity
     })
 		var worth = { 'worth' : Customer.accountBalance + stockHoldingAmount - stockShortedAmount - Customer.loan.amount }
-		res.json({Customer, worth})
+
+    var player = {
+      Customer : Customer,
+      worth : worth
+    }
+    res.json(player)
 
   }).catch(err=>{
     console.log(err)

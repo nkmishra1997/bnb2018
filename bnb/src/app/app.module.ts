@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { NewsComponent } from './components/news/news.component';
 
 import { AuthService } from './services/auth.service';
+import { ProfileService } from './services/profile.service';
 import { NewsService } from './services/news.service';
 import { MarketService } from './services/market.service';
 import { CompanyService } from './services/company.service';
@@ -16,14 +17,18 @@ import { MarketComponent } from './components/market/market.component';
 import { CompanyComponent } from './components/company/company.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+//*******************************
+//Admin Components
+//*******************************
+import { DashboardComponent } from './components/dashboard/dashboard.component';    //Admin profile Component
+import { AdminService } from 'app/services/admin.service';
 
 const appRoutes: Routes = [
-  
-
   { path:'news', component : NewsComponent },
   { path:'market', component : MarketComponent },
   { path:'company/:id', component : CompanyComponent },
-  { path: 'profile', component : ProfileComponent}
+  { path: 'profile', component : ProfileComponent},
+  { path: 'admin', component : DashboardComponent}
   ]
 
 @NgModule({
@@ -35,6 +40,7 @@ const appRoutes: Routes = [
     CompanyComponent,
     ProfileComponent,
     NavbarComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +48,7 @@ const appRoutes: Routes = [
     HttpModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [AuthService, NewsService, MarketService, CompanyService],
+  providers: [AuthService, NewsService, MarketService, CompanyService, ProfileService, AdminService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
