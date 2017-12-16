@@ -29,7 +29,7 @@ var path = require("path");
 
 
 app.route('/adminDashboard')
-    .get(passport.authenticate('facebook-token'), isAdmin, controller.customerDetail);
+    .get(isLoggedIn, isAdmin, controller.customerDetail);
 
 app.route('/admin/companylist')
     .get(passport.authenticate('facebook-token'), isAdmin, controller.companyList);
@@ -87,10 +87,6 @@ app.route('/companydetail/:id')
 
 app.route('/newslist')
     .get(isLoggedIn, controller.newsList);
-app.get('market',function(req,res){
-    res.sendfile(path.join(__dirname+'/../bnb/src/app/components/market/market.component.html'));
-});
-
 
 // ============================================================================
 // Customer  ===============================================================
@@ -153,10 +149,6 @@ app.route('/repayloan')
                 failureRedirect : '/'
             }));
 
-            app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname+'/../bnb/dist/index.html'));
-});
-
 };
 // route middleware to ensure user is logged in
 function isLoggedIn(req, res, next) {
@@ -179,5 +171,3 @@ function isAdmin(req, res, next){
         res.redirect('/');
     }
 }
-
-
