@@ -14,4 +14,12 @@ export class AdminService {
       .map(res => res.json());
     }
 
+    getNews(){
+      let headers = new Headers();console.log("inside service");
+      headers.append('Content-Type','application/json');
+      return this.http.get('/admin/newslist',{headers: headers})
+      .map(res => res.json());
+    }
+
+
 }
