@@ -1,17 +1,12 @@
 <br><br>
 
-
-
-
-
-
 <h2 class="page-header">User</h2>
 <div *ngIf="user">
-  <div *ngFor="let user of user.customerlist">
+  <div *ngFor="let User of user">
     <ul class="list-group">
-      <li class="list-group-item"><b>Name: </b><a  [routerLink]="['/admin/userdetail', user._id]">{{user.facebook.name}}</a>
+      <li class="list-group-item"><b>Name: </b><a  [routerLink]="['/admin/userdetail', user._id]">{{User.facebook.name}}</a>
         <span class="pull-right">
-          <a (onClick)="deleteUser(user._id)" class="btn btn-md btn-danger align-middle" style="display:inline;"><span class="fa fa-trash-o fa-2x"></span>  Delete</a>
+          <a (onClick)="deleteUser(user._id)" class="btn btn-md btn-danger align-middle" style="display:inline;"><span class="fa fa-trash-o fa-lg"></span>  Delete</a>
         </span>
       </li>
     </ul>
