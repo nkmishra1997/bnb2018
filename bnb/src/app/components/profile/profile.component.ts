@@ -8,6 +8,8 @@ import { ProfileService } from '../../services/profile.service';
 })
 export class ProfileComponent implements OnInit {
   player : any;
+  customer : any;
+
 
   check = function(company){
     for(var i=0;i<this.player.Customer.stockShorted.length;i++){
@@ -20,7 +22,9 @@ export class ProfileComponent implements OnInit {
 
   quantity = this.check;
 
+
   constructor(private profileService : ProfileService) { }
+
 
   ngOnInit() {
 
@@ -31,6 +35,30 @@ export class ProfileComponent implements OnInit {
       console.log(err);
       return false;
     });
+
+  }
+
+  loanMoney(){
+    this.profileService.takeLoan().subscribe(Customer =>{
+      this.customer = Customer
+      console.log(Customer)
+    },
+    err => {
+      console.log(err)
+      return false
+    })
+
+  }
+
+  repayMoney(){
+    this.profileService.repayLoan().subscribe(Customer =>{
+      this.customer = Customer
+      console.log(Customer)
+    },
+    err => {
+      console.log(err)
+      return false
+    })
 
   }
 

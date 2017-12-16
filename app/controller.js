@@ -283,7 +283,7 @@ exports.takeLoan = function(req, res){
     .findById(req.user._id)
     .then(Customer=>{
 
-        var amount = req.body.amount
+        var amount = parameters.loanAmount
           if(Customer.loan.taken === true){
             res.send('Please repay the loan')
           }
@@ -291,10 +291,10 @@ exports.takeLoan = function(req, res){
             Customer.loan.taken = true
             Customer.loan.amount = amount
             Customer.loan.takeOutTime = Date.now()
-            Customer.accountBalance += parameters.loanAmount
+            Customer.accountBalance += amount
           }
 
-        res.json({Customer})
+        res.json(Customer)
     }).catch(err=>{
       console.log(err)
       res.send('unable to fetch user')
@@ -307,7 +307,7 @@ exports.repayLoan = function(req, res){
     .findById(req.user._id)
     .then(Customer=>{
 
-        var amount = req.body.amount
+        var amount = parameters.loanAmount
           if(Customer.loan.taken === false){
             res.send('Please loan some money first')
           }
@@ -318,7 +318,7 @@ exports.repayLoan = function(req, res){
             Customer.accountBalance -= amount
           }
 
-        res.json({Customer})
+        res.json(Customer)
     }).catch(err=>{
       console.log(err)
       res.send('unable to fetch user')

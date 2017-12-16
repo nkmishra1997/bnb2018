@@ -21,14 +21,17 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 //Admin Components
 //*******************************
 import { DashboardComponent } from './components/dashboard/dashboard.component';    //Admin profile Component
-import { AdminService } from 'app/services/admin.service';
+import { NewslistComponent } from './components/newslist/newslist.component';       //Admin newslist component
+
+import { AdminService } from './services/admin.service';
 
 const appRoutes: Routes = [
   { path:'news', component : NewsComponent },
   { path:'market', component : MarketComponent },
   { path:'company/:id', component : CompanyComponent },
   { path: 'profile', component : ProfileComponent},
-  { path: 'admin', component : DashboardComponent}
+  { path: 'admin', component : DashboardComponent},
+  { path: 'admin/news', component: NewslistComponent, pathMatch: 'full'}
   ]
 
 @NgModule({
@@ -40,7 +43,8 @@ const appRoutes: Routes = [
     CompanyComponent,
     ProfileComponent,
     NavbarComponent,
-    DashboardComponent
+    DashboardComponent,
+    NewslistComponent
   ],
   imports: [
     BrowserModule,

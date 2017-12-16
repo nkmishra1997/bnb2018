@@ -38,7 +38,7 @@ app.route('/admin/userlist')
     .get(passport.authenticate('facebook-token'), isAdmin, controller.customerList);
 
 app.route('/admin/newslist')
-    .get(passport.authenticate('facebook-token'), isAdmin, controller.newsList);
+    .get(isLoggedIn, isAdmin, controller.newsList);
 
 app.route('/admin/addCompany')
     .post(passport.authenticate('facebook-token'), isAdmin, controller.addCompany);

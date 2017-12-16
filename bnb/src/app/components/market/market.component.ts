@@ -5,7 +5,11 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-market',
   templateUrl: './market.component.html',
-  styleUrls: ['./market.component.css']
+  styleUrls: ["../css/bootstrap.min.css",
+              "../css/font-awesome.min.css",
+              "../css/style.css",
+              './market.component.css'
+  ]
 })
 export class MarketComponent implements OnInit {
   companies: any;
