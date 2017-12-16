@@ -22,9 +22,6 @@ const appRoutes: Routes = [
 
   { path:'news', component : NewsComponent },
   { path:'market', component : MarketComponent },
-  // { path:'market', outlet:'navbar', component : NavbarComponent },
-  // { path:'company/:id', outlet:'navbar', component : NavbarComponent },
-  // { path:'news', outlet:'navbar', component : NavbarComponent },
   { path:'company/:id', component : CompanyComponent },
   { path: 'profile', component : ProfileComponent}
   ]
