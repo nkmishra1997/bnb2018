@@ -1,31 +1,31 @@
 <br><br>
-
+<h2 class="page-header">News Details</h2>
 <div *ngIf="news">
-  <h2 class="page-header">News Details</h2>
-
   <form (submit)="onSubmit()">
-  <div class="form-group">
-    <label style="color:black;">News Text</label>
-    <input type="text" class="form-control" id="newsText" required [(ngModel)]="news.newsText" name="newsText">
-  </div>
-  <div class="form-group">
-    <label style="color:black;">Youtube Source</label>
-    <input type="text" [(ngModel)]="news.youtubeSrc" name="youtubeSrc" class="form-control" id="youtubeSrc" required>
-  </div>
-  <div class="form-group">
-    <label style="color:black;">Publish</label>
-    <input type="text" [(ngModel)]="news.isPublished" name="isPublished" class="form-control" id="isPublished" required>
-  </div>
-  <div class="form-group">
-    <label style="color:black;">Company</label>
-    <input type="text" [(ngModel)]="news.newsImpact.company" name="newsImpact.company" class="form-control" id="newsImpact.company" required>
-  </div>
-  <div class="form-group">
-    <label style="color:black;">Impact</label>
-    <input type="text" [(ngModel)]="news.newsImpact.impact" name="newsImpact.impact" class="form-control" id="newsImpact.impact" required>
-  </div>
-  <input type="submit" class="btn btn-primary" value="Submit">
-  <input type="reset" class="btn btn-primary">
+    <div class="form-group">
+      <label style="color:black;">News Text</label>
+      <input type="text" class="form-control" id="newsText" required [(ngModel)]="news.newsText" name="newsText">
+    </div>
+    <div class="form-group">
+      <label style="color:black;">Youtube Source</label>
+      <input type="text" [(ngModel)]="news.youtubeSrc" name="youtubeSrc" class="form-control" id="youtubeSrc" required>
+    </div>
+    <div class="form-group">
+      <label style="color:black;">Publish</label>
+      <input type="text" [(ngModel)]="news.isPublished" name="isPublished" class="form-control" id="isPublished" required>
+    </div>
+    <div class="form-group">
+      <label style="color:black;">Company</label>
+      <input type="text" [(ngModel)]="news.newsImpact.company" name="newsImpact.company" class="form-control" id="newsImpact.company" required>
+    </div>
+    <div class="form-group">
+      <label style="color:black;">Impact</label>
+      <!--<div *ngFor="let newsImpact of news.newsImpact;let myindex = index">-->
+        <input type="text" [(ngModel)]="news.newsImpact[0].impact" name="newsImpact.impact" class="form-control" id="newsImpact.impact" required>
+      <!--</div>-->
+    </div>
+    <input type="submit" class="btn btn-primary" value="Submit">
+    <input type="reset" class="btn btn-primary">
 </form>
 
 </div>

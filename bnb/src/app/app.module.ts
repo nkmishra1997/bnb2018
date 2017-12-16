@@ -20,8 +20,11 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 //*******************************
 //Admin Components
 //*******************************
-import { DashboardComponent } from './components/dashboard/dashboard.component';    //Admin profile Component
-import { NewslistComponent } from './components/newslist/newslist.component';       //Admin newslist component
+import { DashboardComponent } from './components/dashboard/dashboard.component';         //Admin profile Component
+import { NewslistComponent } from './components/newslist/newslist.component';            //Admin newslist component
+import { NewsDetailsComponent } from './components/news-details/news-details.component'; //To show details of news to admin
+import { UserListComponent } from './components/user-list/user-list.component';          //To show user list to admin
+import { CompanylistComponent } from './components/companylist/companylist.component';   //To show company list to admin
 
 import { AdminService } from './services/admin.service';
 
@@ -31,7 +34,10 @@ const appRoutes: Routes = [
   { path:'company/:id', component : CompanyComponent },
   { path: 'profile', component : ProfileComponent},
   { path: 'admin', component : DashboardComponent},
-  { path: 'admin/news', component: NewslistComponent, pathMatch: 'full'}
+  { path: 'admin/news', component: NewslistComponent, pathMatch: 'full'},
+  { path: 'admin/news/:id', component: NewsDetailsComponent},
+  { path: 'admin/players', component: UserListComponent},
+  { path: 'admin/company', component: CompanylistComponent}
   ]
 
 @NgModule({
@@ -44,7 +50,10 @@ const appRoutes: Routes = [
     ProfileComponent,
     NavbarComponent,
     DashboardComponent,
-    NewslistComponent
+    NewslistComponent,
+    NewsDetailsComponent,
+    UserListComponent,
+    CompanylistComponent
   ],
   imports: [
     BrowserModule,

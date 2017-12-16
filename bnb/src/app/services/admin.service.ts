@@ -21,5 +21,26 @@ export class AdminService {
       .map(res => res.json());
     }
 
+    getNewsDetail(id){
+      let headers = new Headers();console.log("inside service");
+      headers.append('Content-Type','application/json');
+      return this.http.get('admin/newsDetail/'+id,{headers: headers})
+      .map(res => res.json());
+    }
+
+    fetchUser(){
+      let headers = new Headers();console.log("inside service");
+      headers.append('Content-Type','application/json');
+      return this.http.get('/admin/userlist',{headers: headers})
+      .map(res => res.json());
+    }
+
+    fetchCompany(){
+      let headers = new Headers();console.log("inside service");
+      headers.append('Content-Type','application/json');
+      return this.http.get('/admin/companylist',{headers: headers})
+      .map(res => res.json());
+    }
+
 
 }

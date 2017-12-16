@@ -2,11 +2,11 @@
 
 <h2 class="page-header">Company</h2>
 <div *ngIf="company">
-  <div *ngFor="let company of company.companies">
+  <div *ngFor="let Company of company">
     <ul class="list-group">
-      <li class="list-group-item"><b>Name: </b><a  [routerLink]="['/admin/companydetail', company._id]">{{company.name}}</a>
+      <li class="list-group-item"><b>Name: </b><a  [routerLink]="['/admin/companydetail', company._id]">{{Company.name}}</a>
         <span class="pull-right">
-          <a (click)="deleteCompany(company._id)" class="btn btn-md btn-danger align-middle" style="display:inline;"><span class="fa fa-trash-o fa-2x"></span>  Delete</a>
+          <a (click)="deleteCompany(company._id)" class="btn btn-md btn-danger align-middle" style="display:inline;"><span class="fa fa-trash-o fa-lg"></span>  Delete</a>
         </span>
       </li>
     </ul>
