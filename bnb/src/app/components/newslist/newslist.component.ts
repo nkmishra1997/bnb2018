@@ -17,20 +17,14 @@ export class NewslistComponent implements OnInit {
   ) { }
 
   ngOnInit() { console.log("check 1");
-    //this.refreshPage();
-    this.adminService.getNews().subscribe(News => {
-      this.news = News;
-    },
-    err => {
-      console.log(err);
-      return false;
-    });
+    this.refreshPage();
+    
   }
-  /*deleteNews(id){
-    this.authService.deletenews(id).subscribe(data => {
+  deleteNews(id){
+    /*this.authService.deletenews(id).subscribe(data => {
         this.refreshPage();
         console.log(data.msg);
-    });
+    });*/
   }
   refreshPage(){ console.log("inside refreshpage()");
     this.adminService.getNews().subscribe(News => {
@@ -40,6 +34,6 @@ export class NewslistComponent implements OnInit {
       console.log(err);
       return false;
     });
-  }*/
+  }
 
 }
