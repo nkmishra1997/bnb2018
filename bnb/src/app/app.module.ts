@@ -27,7 +27,7 @@ import { AdminService } from './services/admin.service';
 
 const appRoutes: Routes = [
   { path:'news', component : NewsComponent },
-  { path:'market', component : MarketComponent },
+  { path:'market', component : MarketComponent, },
   { path:'company/:id', component : CompanyComponent },
   { path: 'profile', component : ProfileComponent},
   { path: 'admin', component : DashboardComponent},
