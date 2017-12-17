@@ -28,10 +28,10 @@ app.route('/adminDashboard')
     .get(isLoggedIn, isAdmin, controller.customerDetail);
 
 app.route('/admin/companylist')
-    .get(passport.authenticate('facebook-token'), isAdmin, controller.companyList);
+    .get(isLoggedIn, isAdmin, controller.companyList);
 
 app.route('/admin/userlist')
-    .get(passport.authenticate('facebook-token'), isAdmin, controller.customerList);
+    .get(isLoggedIn, isAdmin, controller.customerList);
 
 app.route('/admin/newslist')
     .get(isLoggedIn, isAdmin, controller.newsList);
@@ -42,8 +42,8 @@ app.route('/admin/addCompany')
 app.route('/admin/addNews')
     .post(passport.authenticate('facebook-token'), isAdmin, controller.addNews);
 
-app.route('/admin/newsDetails/:id')
-    .get(passport.authenticate('facebook-token'), isAdmin, controller.newsDetails);
+app.route('/admin/newsDetail/:id')
+    .get(isLoggedIn, isAdmin, controller.newsDetails);
 
 app.route('/admin/companyDetail/:id')
     .get(passport.authenticate('facebook-token'), isAdmin, controller.companyDetails);
