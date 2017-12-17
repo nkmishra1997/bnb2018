@@ -28,3 +28,24 @@
 <p>
   Max quantity you can cover:{{company.coverMax}}
 </p>
+
+
+<form [formGroup]="buyForm" novalidate (ngSubmit)="buyStock(buyForm.value)">
+  <input [ngModel]="amount" type="text" formControlName="amount"/>
+  <button type="btn btn-primary" [disabled]="!buyForm.valid">Buy</button>
+</form>
+
+<form [formGroup]="sellForm" novalidate (ngSubmit)="sellStock(sellForm.value)">
+  <input [ngModel]="amount" type="text" formControlName="amount"/>
+  <button type="btn btn-primary" [disabled]="!sellForm.valid">Sell</button>
+</form>
+
+<form [formGroup]="shortForm" novalidate (ngSubmit)="shortStock(shortForm.value)">
+  <input [ngModel]="amount" type="text" formControlName="amount"/>
+  <button type="btn btn-primary" [disabled]="!shortForm.valid">Short</button>
+</form>
+
+<form [formGroup]="coverForm" novalidate (ngSubmit)="coverStock(coverForm.value)">
+  <input [ngModel]="amount" type="text" formControlName="amount"/>
+  <button type="btn btn-primary" [disabled]="!coverForm.valid">Cover</button>
+</form>
