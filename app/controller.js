@@ -58,7 +58,7 @@ exports.newsDetails = function(req, res) {    //yet to be tested
   news
   .findById(req.params.id)
   .populate('newsImpact.Company')
-  .then(function(err, newsDetails) {
+  .then(newsDetails=>{
     res.json(newsDetails)
   }).catch(err=>{
     console.log(err)
@@ -114,10 +114,10 @@ exports.customerDetail = function(req, res) {
 
 exports.customerList = function(req, res) {
   customer.find({}).then(customerlist=> {
-	   res.json({customerlist})
+	   res.json(customerlist)
   }).catch(err=>{
     console.log(err)
-    res.send("unable to fetch company list")
+    res.send("unable to fetch customer list")
   })
 }
 

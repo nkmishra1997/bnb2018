@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from '../../services/auth.service';
+import {AdminService} from '../../services/admin.service';
 import {Router, ActivatedRoute} from '@angular/router';
 
 @Component({
@@ -21,7 +21,7 @@ export class NewsDetailsComponent implements OnInit {
   }
 
   constructor(
-    private authService: AuthService,
+    private adminService: AdminService,
     private router: Router,
     private route: ActivatedRoute
   ) { }
@@ -30,13 +30,14 @@ export class NewsDetailsComponent implements OnInit {
     this.sub = this.route.params.subscribe(params => {
        this.id = params['id'];
     });
-    /*this.authService.getNewsDetail(this.id).subscribe(News => {
+
+    this.adminService.getNewsDetail(this.id).subscribe(News => {
       this.news = News;
     },
     err => {
       console.log(err);
       return false;
-    });*/
+    });
   }
 
   onSubmit(){

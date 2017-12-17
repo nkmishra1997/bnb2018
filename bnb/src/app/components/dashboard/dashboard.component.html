@@ -6,4 +6,8 @@
     <li class="list-group-item"><b>Email Id:</b> {{admin.Customer.facebook.email}}</li>
     <li class="list-group-item"><b>Your Balance:</b> {{admin.Customer.accountBalance}}</li>
   </ul>
+  <br>
+  <a [routerLink]="['/admin/players']" class="btn btn-md btn-default align-middle" style="display:inline;">Player List</a>
+  <a [routerLink]="['/admin/company']" class="btn btn-md btn-default align-middle" style="display:inline;">Company List</a>
+  <a [routerLink]="['/admin/news']" class="btn btn-md btn-default align-middle" style="display:inline;">News List</a>
 </div>
