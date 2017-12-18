@@ -46,10 +46,10 @@ app.route('/admin/newsDetail/:id')
     .get(isLoggedIn, isAdmin, controller.newsDetails);
 
 app.route('/admin/companyDetail/:id')
-    .get(passport.authenticate('facebook-token'), isAdmin, controller.companyDetails);
+    .get(isLoggedIn, isAdmin, controller.companyDetails);
 
-app.route('/admin/UserDetails/:id')
-    .get(passport.authenticate('facebook-token'), isAdmin, controller.customerDetail);
+app.route('/admin/userDetails/:id')
+    .get(isLoggedIn, isAdmin, controller.customerDetail);
 
 app.route('/admin/modifyCompany/:id')
     .post(passport.authenticate('facebook-token'), isAdmin, controller.modifyCompany);

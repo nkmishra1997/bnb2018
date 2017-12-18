@@ -42,5 +42,19 @@ export class AdminService {
       .map(res => res.json());
     }
 
+    getUserDetail(id){
+      let headers = new Headers();console.log("inside service");
+      headers.append('Content-Type','application/json');
+      return this.http.get('admin/userDetails/'+id,{headers: headers})
+      .map(res => res.json());
+    }
+
+    getCompanyDetail(id){
+      let headers = new Headers();console.log("inside service");
+      headers.append('Content-Type','application/json');
+      return this.http.get('admin/companyDetail/'+id,{headers: headers})
+      .map(res => res.json());
+    }
+
 
 }
