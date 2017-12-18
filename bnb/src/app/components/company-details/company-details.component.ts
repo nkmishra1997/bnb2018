@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from '../../services/auth.service';
+import {AdminService} from '../../services/admin.service';
 import {Router, ActivatedRoute} from '@angular/router';
 
 @Component({
@@ -22,7 +22,7 @@ export class CompanyDetailsComponent implements OnInit {
   marketcap:Number;
 
   constructor(
-    private authService: AuthService,
+    private adminService: AdminService,
     private router: Router,
     private route: ActivatedRoute
   ) { }
@@ -31,17 +31,17 @@ export class CompanyDetailsComponent implements OnInit {
     this.sub = this.route.params.subscribe(params => {
        this.id = params['id'];
     });
-    /*this.authService.getCompanyDetail(this.id).subscribe(Company => {
+    this.adminService.getCompanyDetail(this.id).subscribe(Company => {
       this.company = Company;
     },
     err => {
       console.log(err);
       return false;
-    });*/
+    });
   }
 
   onSubmit(){
-  /*const company = {
+  const company = {
     name:this.name,
     symbol:this.symbol,
     description:this.description,
@@ -55,7 +55,7 @@ export class CompanyDetailsComponent implements OnInit {
   this.sub = this.route.params.subscribe(params => {
       this.id = params['id'];
   });
-  this.authService.addModifiedCompany(this.id, company).subscribe(data => {
+  /*this.authService.addModifiedCompany(this.id, company).subscribe(data => {
       if(data.success){
         console.log(data.msg);
         this.router.navigate(['/admin/company']);
