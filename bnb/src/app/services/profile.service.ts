@@ -8,10 +8,10 @@ export class ProfileService {
   constructor(private http : Http) { }
 
   fetchCustomer(){
-    let headers = new Headers();
-    headers.append('Content-Type','application/json');
+    let headers = new Headers()
+    headers.append('Content-Type','application/json')
     return this.http.get('/customerdetail',{headers:headers})
-    .map(res => res.json());
+    .map(res => res.json())
   }
 
   takeLoan(){

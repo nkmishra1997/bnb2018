@@ -129,6 +129,9 @@ exports.buy = function(req, res){
       .populate('stockHoldings.company')
       .populate('activity.company')
       .then(Customer=>{
+
+        console.log(req.body) //for testing only
+
             var flag = 0
             var stock = req.body.amount
             for(var i=0;i<Customer.stockHoldings.length;i++){
@@ -170,6 +173,9 @@ exports.sell = function(req, res){
       .populate('stockHoldings.company')
       .populate('activity.company')
       .then(Customer=>{
+
+        console.log(req.body) //for testing only
+
             var flag = 0
             var stock = req.body.amount
             for(var i=0;i<Customer.stockHoldings.length;i++){

@@ -10,11 +10,7 @@ var path = require("path");
     });
 
     // PROFILE SECTION =========================
-/*
-    app.get('/profile', isLoggedIn, function(req, res) {
-        console.log(req.user)
-    });
-*/
+
     // LOGOUT ==============================
     app.get('/logout', function(req, res) {
         req.logout();
@@ -128,10 +124,16 @@ app.route('/repayloan')
         // handle the callback after facebook has authenticated the user
         app.get('/auth/facebook/callback',
             passport.authenticate('facebook', {
+               
                 successRedirect : '/market',
                 failureRedirect : '/'
             }));
-
+app.get('/auth/userdata', isLoggedIn, function(req, res) {
+    Donator.findById(req.user, function(err, fulluser) {
+        if (err) throw err;
+        res.json(fulluser);
+    })
+});
 
 // =============================================================================
 // AUTHORIZE (ALREADY LOGGED IN / CONNECTING OTHER SOCIAL ACCOUNT) =============
@@ -152,8 +154,8 @@ app.route('/repayloan')
 };
 // route middleware to ensure user is logged in
 function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated())
-        return next();
+    if (req.isAuthenticated()) {
+        return next();}
     else{
             console.log('no header');
             res.redirect('/');

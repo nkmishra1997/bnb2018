@@ -5,6 +5,13 @@
 Virtual Stock Market Game
 
 # Instructions to run  
+For the first time :	
+Give permissions - `chmod 755 run.sh`	
+Then simply run the script:	
+`./run.sh`	
+
+OR you can do it manually:
+
 You need to have  `npm` , `nodejs` and `angular/cli` installed to run the project  
 `npm install` This will install express dependencies      
 `cd bnb` Moving to Angular folder  
@@ -12,6 +19,7 @@ You need to have  `npm` , `nodejs` and `angular/cli` installed to run the projec
 `cd ..`   
 `npm run build`     
 `nodemon`   
+
 
 # Replace APP_ID and APP_Secret with your fb app id and secret in config/auth.js  
 Disable git to monitor any changes to the auth.js file   
