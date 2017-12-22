@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService } from '../../services/profile.service';
+import { Router } from '@angular/router';
+import {Http, Response, RequestOptions, Headers} from '@angular/http';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+   styleUrls: ["../css/bootstrap.min.css",
+              "../css/font-awesome.min.css",
+              "../css/style.css",
+              './profile.component.css']
 })
 export class ProfileComponent implements OnInit {
   player : any;
