@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from '../../services/auth.service';
+import {AdminService} from '../../services/admin.service';
 import {Router, ActivatedRoute} from '@angular/router';
 
 @Component({
@@ -21,7 +21,7 @@ export class UserDetailsComponent implements OnInit {
   amount: Number;//}}
 
   constructor(
-    private authService: AuthService,
+    private adminService: AdminService,
     private router: Router,
     private route: ActivatedRoute
   ) { }
@@ -30,13 +30,13 @@ export class UserDetailsComponent implements OnInit {
     this.sub = this.route.params.subscribe(params => {
        this.id = params['id'];
     });
-    /*this.authService.getUserDetail(this.id).subscribe(User => {
+    this.adminService.getUserDetail(this.id).subscribe(User => {
       this.User = User;
     },
     err => {
       console.log(err);
       return false;
-    });*/
+    });
   }
 
   onSubmit(){

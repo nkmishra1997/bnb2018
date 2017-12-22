@@ -25,6 +25,8 @@ import { NewslistComponent } from './components/newslist/newslist.component';   
 import { NewsDetailsComponent } from './components/news-details/news-details.component'; //To show details of news to admin
 import { UserListComponent } from './components/user-list/user-list.component';          //To show user list to admin
 import { CompanylistComponent } from './components/companylist/companylist.component';   //To show company list to admin
+import { UserDetailsComponent } from './components/user-details/user-details.component'; //To show user details to admin
+import { CompanyDetailsComponent } from './components/company-details/company-details.component';   //TO show company details to admin
 
 import { AdminService } from './services/admin.service';
 
@@ -37,7 +39,9 @@ const appRoutes: Routes = [
   { path: 'admin/news', component: NewslistComponent, pathMatch: 'full'},
   { path: 'admin/news/:id', component: NewsDetailsComponent},
   { path: 'admin/players', component: UserListComponent},
-  { path: 'admin/company', component: CompanylistComponent}
+  { path: 'admin/company', component: CompanylistComponent},
+  { path: 'admin/player/:id', component: UserDetailsComponent},
+  { path: 'admin/company/:id', component: CompanyDetailsComponent}
   ]
 
 @NgModule({
@@ -53,7 +57,9 @@ const appRoutes: Routes = [
     NewslistComponent,
     NewsDetailsComponent,
     UserListComponent,
-    CompanylistComponent
+    CompanylistComponent,
+    UserDetailsComponent,
+    CompanyDetailsComponent
   ],
   imports: [
     BrowserModule,

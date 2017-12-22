@@ -1,0 +1,72 @@
+.removemargin
+{
+    margin-top: 4px !important;
+    text-align : center !important;
+}
+.removemargin1
+{
+    margin-top: 0px !important;
+    text-align : center !important;
+}
+
+.btn-success
+{
+    margin-right: 5px !important;
+    color: white !important;
+}
+
+.header-l
+{
+    padding-bottom: 50px !important;
+    padding-top: 10px !important;
+    text-align: center !important;
+
+}
+
+.buttons1{
+
+text-align: center !important;
+color: white !important;
+
+}
+
+
+.header-r
+{
+
+    padding-bottom: 10px !important;
+
+
+}
+
+
+.col-sm-12
+{
+    margin : 0 !important;
+    padding: 20px !important;
+
+}
+
+th ,.col-sm-12 td
+{
+    text-align: center !important;
+}
+
+
+.col-sm-12 .table-responsive
+{
+    margin : 0 !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+}
+
+@media only screen and (max-width: 500px) {
+
+   .header-l  {
+
+   text-align: center;
+
+   }
+
+
+}
