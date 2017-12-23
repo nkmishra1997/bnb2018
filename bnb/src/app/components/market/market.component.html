@@ -84,6 +84,7 @@
                   <a href="#" class="mobile-user-profile dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i></a>
                   <ul class="mobile-user-dropdown dropdown-menu animated fadeInDown">
                     <li><a href="/profile.html">View Profle</a></li>
+                    <li><a href="/profile">View Profle</a></li>
                     <li><a href="javascript:;">Notification</a></li>
                     <li><a href="javascript:;">Privacy settings</a></li>
                     <li><a href="javascript:;">Activity Log</a></li>
@@ -126,7 +127,7 @@
               </a>
               <ul class="user-profile-dropdown dropdown-menu animated fadeInDown">
                 <li>
-                  <a href="my-profile.html"><i class="fa fa-user" aria-hidden="true"></i>View Profle</a>
+                  <a href="/profile"><i class="fa fa-user" aria-hidden="true"></i>View Profle</a>
                 </li>
                 <li>
                   <a href="javascript:;"><i class="fa fa-cog" aria-hidden="true"></i>Privacy settings</a>
@@ -283,7 +284,7 @@
                 <th>Volume</th>
               </tr>
               <tr *ngFor="let company of companies;">
-                <td>{{company.symbol}}</td>
+                <td><a [routerLink]="['/company', company._id]" style="text-decoration:none;color:white;">{{company.symbol}}</a></td>
                 <td>{{company.name}}</td>
                 <td>{{company.stockPrice}}</td>
                 <td>{{company.annualGrowthRate}}</td>
@@ -308,7 +309,7 @@
               <i class="fa fa-envelope-o" aria-hidden="true"></i><br>
               <span class="hidden-xs">Messages</span>
             </a>
-            <a class="col-xs-2 nav-myProfile" href="my-profile.html">
+            <a class="col-xs-2 nav-myProfile" href="/profile">
               <i class="fa fa-user" aria-hidden="true"></i><br>
               <span class="hidden-xs">My Profile</span>
             </a>
@@ -401,8 +402,8 @@
               <li><a href="forgot-password.html">Recover Password</a></li>
               <li><a href="sign-up.html">Sign Up</a></li>
               <li><a href="view-message.html">View Email</a></li>
-              <li><a href="user-profile.html">User Profile</a></li>
-              <li><a href="edit-profile.html">Edit Profile</a></li>
+              <li><a href="/profile">User Profile</a></li>
+              <li><a href="/profile">Edit Profile</a></li>
               <li><a href="404.html">Error 404</a></li>
               <li><a href="500.html">Error 500</a></li>
             </ul>
