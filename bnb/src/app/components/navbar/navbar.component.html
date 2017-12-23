@@ -1,4 +1,4 @@
-<div class="navbar navbar-default navbar-fixed-top">
+<!--<div class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
         <ul class="nav navbar-nav">
@@ -11,7 +11,7 @@
           </button>
         </div>
         <div class="navbar-collapse collapse" id="navbar-main">
-          <ul class="nav navbar-nav">
+          <ul class="nav navbar-nav">-->
 
             <!-- <li>
               <a href="../help/">Help</a>
@@ -21,7 +21,7 @@
               <a href="http://news.bootswatch.com">Blog</a>
             </li> -->
 
-          </ul>
+          <!--</ul>
 
           <ul class="nav navbar-nav navbar-right">
             <li [routerLinkActive]="['active']"><a [routerLink]="['/market']">Market</a></li>
@@ -32,4 +32,52 @@
 
         </div>
       </div>
-    </div>
+    </div>-->
+        <nav class="nav-top navbar">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <div class="nav-top-mobile">
+            <div class="mobile-user">
+              <ul>
+                <li class="dropdown">
+                  <a href="/profile" class="mobile-user-profile" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i></a>
+
+                </li>
+              </ul>
+            </div>
+            <div class="mobile-search">
+              <a href="#" class="mobile-search-trigger" role="button"><i class="fa fa-search" aria-hidden="true"></i></a>
+              <div class="mobile-search-active animated fadeInDown">
+                  <form class="mobile-search-box">
+                      <i class="glyphicon glyphicon-search"></i>
+                      <input class="mobile-search-input" autofocus type="text" spellcheck="false" placeholder="Search...">
+                      <button type="button" class="close">
+                        <span>&times;</span>
+                      </button>
+                  </form>
+              </div>
+            </div>
+          </div><!-- end .nav-top-mobile -->
+          <div class="logo ">
+            <a class="navbar-brand" href="index.html">
+            <img src="../../assets/img/logo.png" alt="Rocket Logo" />
+              <span>BNB</span>
+              <small class="hidden-xs">Raise your standards</small>
+            </a>
+          </div>
+        </div>
+        <!-- Collect the nav links, forms, and other content and hide -->
+        <div  class="collapse navbar-collapse hidden-xs">
+          <ul class="user-profile nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a class="user-block" href="/profile" role="button" aria-haspopup="true" aria-expanded="false">
+                <span class="user-name">Hi {{customer.Customer.facebook.name}}</span>
+                <span class="caret"></span>
+                <img src="https://graph.facebook.com/v2.11/{{customer.Customer.facebook.id}}/picture" alt="User Profile">
+              </a>
+
+            </li>
+          </ul>
+        </div><!-- end .navbar-collapse -->
+      </div><!-- end .container-fluid -->
+    </nav><!-- end .nav-top -->
