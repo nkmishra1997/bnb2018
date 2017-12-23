@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ProfileService } from '../../services/profile.service';
 import { Router } from '@angular/router';
 import {Http, Response, RequestOptions, Headers} from '@angular/http';
+import { Observable } from "rxjs";
+import 'rxjs/add/observable/timer';
 
 @Component({
   selector: 'app-profile',
@@ -32,15 +34,16 @@ export class ProfileComponent implements OnInit {
 
 
   ngOnInit() {
-
-    /*this.profileService.fetchCustomer().subscribe(Player => {
-      this.player = Player;
-    },
-    err => {
-      console.log(err);
-      return false;
-    });*/
-    this.refreshPage();
+    Observable.timer(0, 10000)
+      .subscribe(() => {
+        this.profileService.fetchCustomer().subscribe(Player => {
+          this.player = Player; console.log("customer fetched");
+        },
+        err => {
+          console.log(err);
+          return false;
+        });
+      });
 
   }
 
