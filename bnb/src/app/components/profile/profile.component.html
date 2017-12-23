@@ -247,7 +247,8 @@
           </div>
           <div class="header-r col-sm-6 col-xs-12 table-responsive">
             <h3 class="removemargin">Basic Info</h3>
-            <table class="basic-table table">
+            <div class="bootstrapTables noborder">
+            <table class="hover-table table table-hover">
               <tr>
                 <td>Your Balance : </td>
                 <td>	{{player.Customer.accountBalance}} </td>
@@ -261,6 +262,7 @@
                 <td>{{player.Customer.loan.amount}}</td>
               </tr>
             </table>
+          </div>
               <div class="buttons1">
               <button class="btn btn-success" (click)="loanMoney()">Take Loan</button>
               <button class="btn btn-danger" (click)="repayMoney()">Repay Loan</button>
@@ -274,7 +276,7 @@
          <div class="col-sm-12 col-xs-12 userProfile-header">
             <h3 class="removemargin1">Portfolio</h3>
             <div class="bootstrapTables table-responsive">
-            <table class="basic-table table">
+            <table class="hover-table table table-hover">
               <tr>
                 <th>Company</th>
                 <th>Qty</th>
