@@ -83,6 +83,7 @@
                 <li class="dropdown">
                   <a href="#" class="mobile-user-profile dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i></a>
                   <ul class="mobile-user-dropdown dropdown-menu animated fadeInDown">
+                    <li><a href="/profile.html">View Profle</a></li>
                     <li><a href="/profile">View Profle</a></li>
                     <li><a href="javascript:;">Notification</a></li>
                     <li><a href="javascript:;">Privacy settings</a></li>
@@ -122,7 +123,7 @@
               <a class="user-block dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                 <span class="user-name">Hi {{customer.Customer.facebook.name}}</span>
                 <span class="caret"></span>
-                <img src="https://graph.facebook.com/v2.5/{{customer.Customer.facebook.id}}/picture" alt="User Profile">
+                <img src="https://graph.facebook.com/v2.11/{{customer.Customer.facebook.id}}/picture" alt="User Profile">
               </a>
               <ul class="user-profile-dropdown dropdown-menu animated fadeInDown">
                 <li>
@@ -285,7 +286,7 @@
               <tr *ngFor="let company of companies;">
                 <td><a [routerLink]="['/company', company._id]" style="text-decoration:none;color:white;">{{company.symbol}}</a></td>
                 <td>{{company.name}}</td>
-                <td>{{company.symbol}}</td>
+                <td>{{company.stockPrice}}</td>
                 <td>{{company.annualGrowthRate}}</td>
                 <td>{{company.availableQuantity}}</td>
               </tr>
