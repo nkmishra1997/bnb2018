@@ -91,6 +91,7 @@ app.route('/newslist')
 app.route('/customerdetail')
     .get(isLoggedIn, controller.customerDetail);
 
+
 app.route('/scoreboard')
     .get(isLoggedIn, controller.customerList);
 
