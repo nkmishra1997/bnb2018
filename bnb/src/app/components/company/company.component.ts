@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CompanyService } from '../../services/company.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable } from "rxjs";
+import 'rxjs/add/observable/timer';
 
 @Component({
   selector: 'app-company',
@@ -28,15 +30,17 @@ coverForm : FormGroup;
       this.id = params['id'];
     });
 
-    /*this.companyService.fetchCompany(this.id).subscribe(Company => {
-      this.company = Company;
-    },
-    err => {
-      console.log(err);
-      return false;
-    });*/
+    Observable.timer(0, 10000)
+      .subscribe(() => {
+        this.companyService.fetchCompany(this.id).subscribe(Company => {
+          this.company = Company; console.log("company fetched");
+        },
+        err => {
+          console.log(err);
+          return false;
+        });
+      });
 
-    this.refreshPage();
 
     this.buyForm = this.formBuilder.group({
       amount : ['', Validators.required]
