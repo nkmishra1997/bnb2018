@@ -28,13 +28,15 @@ coverForm : FormGroup;
       this.id = params['id'];
     });
 
-    this.companyService.fetchCompany(this.id).subscribe(Company => {
+    /*this.companyService.fetchCompany(this.id).subscribe(Company => {
       this.company = Company;
     },
     err => {
       console.log(err);
       return false;
-    });
+    });*/
+
+    this.refreshPage();
 
     this.buyForm = this.formBuilder.group({
       amount : ['', Validators.required]
@@ -59,6 +61,7 @@ coverForm : FormGroup;
 
     this.companyService.buy(this.id,form).subscribe(Info => {
       this.info = Info
+      this.refreshPage();
     },
     err => {
       console.log(err)
@@ -72,6 +75,7 @@ coverForm : FormGroup;
 
     this.companyService.sell(this.id,form).subscribe(Info => {
       this.info = Info
+      this.refreshPage();
     },
     err => {
       console.log(err)
@@ -85,6 +89,7 @@ coverForm : FormGroup;
 
     this.companyService.short(this.id,form).subscribe(Info => {
       this.info = Info
+      this.refreshPage();
     },
     err => {
       console.log(err)
@@ -98,11 +103,23 @@ coverForm : FormGroup;
 
     this.companyService.cover(this.id,form).subscribe(Info => {
       this.info = Info
+      this.refreshPage();
     },
     err => {
       console.log(err)
       return false
     })
+  }
+
+  refreshPage() {
+    console.log("Inside RefreshPage()");
+    this.companyService.fetchCompany(this.id).subscribe(Company => {
+      this.company = Company;
+    },
+    err => {
+      console.log(err);
+      return false;
+    });
   }
 
 }

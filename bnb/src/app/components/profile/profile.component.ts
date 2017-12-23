@@ -33,13 +33,14 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
 
-    this.profileService.fetchCustomer().subscribe(Player => {
+    /*this.profileService.fetchCustomer().subscribe(Player => {
       this.player = Player;
     },
     err => {
       console.log(err);
       return false;
-    });
+    });*/
+    this.refreshPage();
 
   }
 
@@ -47,6 +48,7 @@ export class ProfileComponent implements OnInit {
     this.profileService.takeLoan().subscribe(Customer =>{
       this.customer = Customer
       console.log(Customer)
+      this.refreshPage();
     },
     err => {
       console.log(err)
@@ -59,12 +61,24 @@ export class ProfileComponent implements OnInit {
     this.profileService.repayLoan().subscribe(Customer =>{
       this.customer = Customer
       console.log(Customer)
+      this.refreshPage();
     },
     err => {
       console.log(err)
       return false
     })
 
+  }
+
+  refreshPage() {
+    console.log("Inside refreshPage()");
+    this.profileService.fetchCustomer().subscribe(Player => {
+      this.player = Player;
+    },
+    err => {
+      console.log(err);
+      return false;
+    });
   }
 
 }
