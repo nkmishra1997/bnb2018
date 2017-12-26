@@ -21,10 +21,10 @@ export class LeaderboardComponent implements OnInit {
     private http: Http ) { }
 
   ngOnInit() {
-    Observable.timer(0, 10000)
+    Observable.timer(0, 120000)
       .subscribe(() => {
         this.leaderboardService.fetchCustomers().subscribe(Customer => {
-          this.customer = Customer; console.log("customer list fetched");
+          this.customer = Customer; console.log(Customer);
         },
         err => {
           console.log(err);
