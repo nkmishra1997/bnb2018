@@ -8,7 +8,9 @@ import 'rxjs/add/observable/timer';
 @Component({
   selector: 'app-company',
   templateUrl: './company.component.html',
-  styleUrls: ['./company.component.css']
+  styleUrls: ["../css/bootstrap.min.css",
+              "../css/font-awesome.min.css",
+              "../css/style.css",'./company.component.css']
 })
 export class CompanyComponent implements OnInit {
 company : any;

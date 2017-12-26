@@ -36,8 +36,9 @@ app.use(cookieParser()); // read cookies (needed for auth)
 // Parsers for POST data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static('views'));
 app.get('/', function(req, res) {
-        res.render('index.ejs'); // load the index.ejs file
+        res.sendfile('./views/index.html'); // load the index.ejs file
     });
 
 // Point static path to dist

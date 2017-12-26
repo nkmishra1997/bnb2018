@@ -24,7 +24,7 @@ export class LeaderboardComponent implements OnInit {
     Observable.timer(0, 120000)
       .subscribe(() => {
         this.leaderboardService.fetchCustomers().subscribe(Customer => {
-          this.customer = Customer; console.log(Customer);
+          this.customer = Customer; console.log("customer list fetched");
         },
         err => {
           console.log(err);

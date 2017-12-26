@@ -6,7 +6,7 @@ var path = require("path");
 
     // show the home page (will also have our login links)
     app.get('/', function(req, res) {
-        res.render('index.ejs'); // load the index.ejs file
+        res.sendfile('../views/index.html'); // load the index.ejs file
     });
 
     // PROFILE SECTION =========================

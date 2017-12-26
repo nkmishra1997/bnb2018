@@ -55,7 +55,7 @@
       <div class="userProfile-header">
         <div class="row">
           <div class="header-l col-sm-6 col-xs-12">
-            <img *ngIf="player" src="https://graph.facebook.com/v2.11/{{player?.Customer.facebook.id}}/picture" alt="User image">
+            <img *ngIf="player" src="https://graph.facebook.com/v2.11/{{player?.Customer.facebook.id}}/picture?type=large" alt="User image">
             <div class="header-l-info">
               <h3>{{player?.Customer.facebook.name}} <a href="#" title="Verified"><i class="fa fa-check-square-o" aria-hidden="true"></i></a></h3>
               <span class="freelaner"><i class="fa fa-user" aria-hidden="true"></i> Trader</span>
