@@ -3,9 +3,13 @@ import { NewsService } from '../../services/news.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-news',
+  selector: 'app-market',
   templateUrl: './news.component.html',
-  styleUrls: ['./news.component.css']
+  styleUrls: ["../css/bootstrap.min.css",
+              "../css/font-awesome.min.css",
+              "../css/style.css",
+              './news.component.css'
+  ]
 })
 export class NewsComponent implements OnInit {
   news : any;
