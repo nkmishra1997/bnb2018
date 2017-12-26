@@ -1,3 +1,23 @@
-<p>
-  leaderboard works!
-</p>
+<app-navbar></app-navbar>
+<h1>Leaderboard</h1>
+<div *ngIf="customer" class="row">
+  <div class="bootstrapTables">
+    <div class="col-sm-12 col-xs-12 table-responsive">
+      <table class="hover-table table table-hover">
+        <tr>
+          <th>Rank</th>
+          <th>Name</th>
+          <th>Worth</th>
+        </tr>
+        <div *ngFor="let player of customer">
+          <tr>
+            <td>{{player.rank}}</td>
+            <td><img src="https://graph.facebook.com/v2.11/{{player.facebook.id}}/picture" alt="User Profile">  {{player.facebook.name}}
+            </td>
+            <td>{{player.worth}}</td>
+          </tr>
+        </div>
+      </table>
+    </div>
+  </div>
+</div>

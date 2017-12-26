@@ -55,9 +55,9 @@
       <div class="userProfile-header">
         <div class="row">
           <div class="header-l col-sm-6 col-xs-12">
-            <img src="https://graph.facebook.com/v2.11/{{player.Customer.facebook.id}}/picture" alt="User image">
+            <img *ngIf="player" src="https://graph.facebook.com/v2.11/{{player?.Customer.facebook.id}}/picture" alt="User image">
             <div class="header-l-info">
-              <h3>{{player.Customer.facebook.name}} <a href="#" title="Verified"><i class="fa fa-check-square-o" aria-hidden="true"></i></a></h3>
+              <h3>{{player?.Customer.facebook.name}} <a href="#" title="Verified"><i class="fa fa-check-square-o" aria-hidden="true"></i></a></h3>
               <span class="freelaner"><i class="fa fa-user" aria-hidden="true"></i> Trader</span>
             </div>
           </div>
@@ -67,15 +67,15 @@
             <table class="hover-table table table-hover">
               <tr>
                 <td>Your Balance : </td>
-                <td>	{{player.Customer.accountBalance}} </td>
+                <td>	{{player?.Customer.accountBalance}} </td>
               </tr>
               <tr>
                 <td>Your Worth : </td>
-                <td>{{player.worth.worth}}</td>
+                <td>{{player?.worth.worth}}</td>
               </tr>
               <tr>
                 <td>Loan Pending :</td>
-                <td>{{player.Customer.loan.amount}}</td>
+                <td>{{player?.Customer.loan.amount}}</td>
               </tr>
             </table>
           </div>
@@ -85,7 +85,7 @@
                  </div>
           </div>
         </div>
--<!-- <div *ngFor="let company of player.Customer.stockHoldings;">
+-<!-- <div *ngFor="let company of player?.Customer.stockHoldings;">
  -  <p>Company: <a routerLink="company/{{company.company.id}}">{{company.company.symbol}}</a></p>
  -  <p>Stock Qty.: {{company.quantity}}</p>
  -  <div *ngIf="check(company);">
@@ -109,7 +109,7 @@
                 <th>Stock</th>
                 <th>Price</th>
               </tr>
-              <tr *ngFor="let company of player.Customer.stockHoldings;">
+              <tr *ngFor="let company of player?.Customer.stockHoldings;">
                 <td>{{company.company.symbol}}</td>
                 <td>{{company.quantity}}</td>
                 <td *ngIf="check(company);">{{quantity}}</td>
