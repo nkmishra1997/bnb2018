@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { MarketService } from '../../services/market.service';
 import { Router } from '@angular/router';
 import {Http, Response, RequestOptions, Headers} from '@angular/http';
@@ -17,7 +17,6 @@ export class MarketComponent implements OnInit {
   companies: any;
   customer: any;
   user: any;
-  private alive: boolean;
   constructor(private marketService: MarketService,
               private router: Router,
               private http: Http ) { }

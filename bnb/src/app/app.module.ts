@@ -12,6 +12,7 @@ import { ProfileService } from './services/profile.service';
 import { NewsService } from './services/news.service';
 import { MarketService } from './services/market.service';
 import { CompanyService } from './services/company.service';
+import { LeaderboardService } from './services/leaderboard.service';
 import { ReverseArrPipe } from './pipes/reverse-arr.pipe';
 import { MarketComponent } from './components/market/market.component';
 import { CompanyComponent } from './components/company/company.component';
@@ -47,7 +48,7 @@ const appRoutes: Routes = [
     HttpModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [AuthService, NewsService, MarketService, CompanyService, ProfileService],
+  providers: [AuthService, NewsService, MarketService, CompanyService, ProfileService, LeaderboardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
