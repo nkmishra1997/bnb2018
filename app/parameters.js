@@ -1,5 +1,5 @@
 module.exports = {
-	accountBalance: 100000000,
+	accountBalance: 100000,
 	loanAmount : 2500,
 	maxNumberOfShares : 1000000,
 	stockLimit : 100,

@@ -27,25 +27,15 @@ var userSchema = mongoose.Schema({
     accountBalance : { type : Number, default: parameters.accountBalance, min: 0, required:true },
 
     activity :[{
-      company: {type: mongoose.Schema.Types.ObjectId},
+      company: {type: mongoose.Schema.Types.ObjectId, ref:'company'},
       timeStamp: { type: Date, default: Date.now()},
       action: String,
       quantity: {type : Number, default: 0,min: 0},
       price: { type : Number, default: 0, min: 0.0}
     }],
 
-    // stockHoldings :[{
-    //   company: {type: mongoose.Schema.Types.ObjectId, ref:'company', unique:true},
-    //   quantity: {type : Number, default: 0,min: 0.0}
-    // }],
-    //
-    // stockShorted:[{
-    //   company: {type: mongoose.Schema.Types.ObjectId, ref:'company', unique:true},
-    //   quantity: {type : Number, default: 0,min: 0},
-    // }],
-
     portfolio: [{
-        company: {type: mongoose.Schema.Types.ObjectId},
+        company: {type: mongoose.Schema.Types.ObjectId, ref:'company'},
         stockHeld: {type: Number, min: 0, max: parameters.stockLimit},
         stockShorted: {type: Number, min: 0, max: parameters.stockLimit}
     }],
@@ -64,11 +54,9 @@ var userSchema = mongoose.Schema({
     },
       takeOutTime:{
         type: Date,
-        default: Date.now()
       },
       repayTime: {
         type: Date,
-        default: Date.now()
       }
     }
 });
