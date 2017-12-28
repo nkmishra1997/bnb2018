@@ -7,7 +7,6 @@ mongoose.Promise = global.Promise;
 
 
 
-
 // ============================================================================
 // Stock Market ===============================================================
 // ============================================================================
@@ -84,18 +83,17 @@ exports.newsList = function(req, res){
 exports.customerDetail = function(req, res) {
   customer
   .findById(req.user._id)
-  .populate('stockHoldings.company')
-  .populate('stockShorted.company')
+  .populate('portfolio.company')
   .then(Customer=>{
 
 		//evaluate the worth of customer
     var stockHoldingAmount = 0
-    Customer.stockHoldings.forEach((element)=>{
-      stockHoldingAmount += element.company.stockPrice * element.quantity
+    Customer.portfolio.forEach((element)=>{
+      stockHoldingAmount += element.company.stockPrice * element.stockHeld
     })
     var stockShortedAmount = 0
-    Customer.stockShorted.forEach((element)=>{
-      stockShortedAmount += element.company.stockPrice * element.quantity
+    Customer.portfolio.forEach((element)=>{
+      stockShortedAmount += element.company.stockPrice * element.stockShorted
     })
 		var worth = { 'worth' : Customer.accountBalance + stockHoldingAmount - stockShortedAmount - Customer.loan.amount }
 
@@ -126,29 +124,29 @@ exports.buy = function(req, res){
     company.findById(req.params.id).then(Company=>{
       customer
       .findById(req.user._id)
-      .populate('stockHoldings.company')
-      .populate('activity.company')
+      //.populate('portfolio.company')
+      //.populate('activity.company')
       .then(Customer=>{
-
-        console.log(req.body) //for testing only
 
             var flag = 0
             var stock = req.body.amount
-            for(var i=0;i<Customer.stockHoldings.length;i++){
-              if(Customer.stockHoldings[i].company._id === Company._id ){
-                Customer.stockHoldings[i].quantity += stock
+            for(var i=0;i<Customer.portfolio.length;i++){
+              if(Customer.portfolio[i].company == Company._id ){
+              //  console.log(Customer.portfolio[i].company._id)
+                Customer.portfolio[i].stockHeld += stock
                 Customer.accountBalance -= stock * Company.stockPrice
                 Company.availableQuantity -= stock
                 Company.history.push({timeStamp : Date.now(), stockPrice : Company.stockPrice, availableQuantity : Company.availableQuantity})
                 Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'bought', quantity:stock, price:Company.stockPrice})
                 flag = 1
+                break
               }
             }
-            if(flag === 0){
+            if(flag == 0){
                 Company.availableQuantity -= stock
                 Company.history.push({timeStamp : Date.now(), stockPrice : Company.stockPrice, availableQuantity : Company.availableQuantity})
                 Customer.accountBalance -= stock * Company.stockPrice
-                Customer.stockHoldings.push({company : Company._id, quantity : stock})
+                Customer.portfolio.push({company : Company._id, stockHeld : stock, stockShorted : 0})
                 Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'bought', quantity:stock, price:Company.stockPrice})
             }
             Customer.save()
@@ -170,7 +168,7 @@ exports.sell = function(req, res){
     company.findById(req.params.id).then(Company=>{
       customer
       .findById(req.user._id)
-      .populate('stockHoldings.company')
+      .populate('portfolio.company')
       .populate('activity.company')
       .then(Customer=>{
 
@@ -178,22 +176,24 @@ exports.sell = function(req, res){
 
             var flag = 0
             var stock = req.body.amount
-            for(var i=0;i<Customer.stockHoldings.length;i++){
-              if(Customer.stockHoldings[i].company._id === Company._id ){
-                Customer.stockHoldings[i].quantity -= stock
+            for(var i=0;i<Customer.portfolio.length;i++){
+              if(Customer.portfolio[i].company._id === Company._id && Customer.portfolio[i].stockHeld > 0){
+                Customer.stockHoldings[i].stockHeld -= stock
                 Customer.accountBalance += stock * Company.stockPrice
                 Company.availableQuantity += stock
                 Company.history.push({timeStamp : Date.now(), stockPrice : Company.stockPrice, availableQuantity : Company.availableQuantity})
                 Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'sold', quantity:stock, price:Company.stockPrice})
                 flag = 1
+                break
               }
             }
-            if(flag === 0){
-                Company.availableQuantity += stock
-                Company.history.push({timeStamp : Date.now(), stockPrice : Company.stockPrice, availableQuantity : Company.availableQuantity})
-                Customer.accountBalance += stock * Company.stockPrice
-                Customer.stockHoldings.push({company : Company._id, quantity : stock})
-                Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'sold', quantity:stock, price:Company.stockPrice})
+            if(flag == 0){
+              res.send('Buy some stocks first!')
+                // Company.availableQuantity += stock
+                // Company.history.push({timeStamp : Date.now(), stockPrice : Company.stockPrice, availableQuantity : Company.availableQuantity})
+                // Customer.accountBalance += stock * Company.stockPrice
+                // Customer.portfolio.push({company : Company._id, quantity : stock})
+                // Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'sold', quantity:stock, price:Company.stockPrice})
             }
             Customer.save()
             Company.save()
@@ -214,26 +214,29 @@ exports.short = function(req, res){
     company.findById(req.params.id).then(Company=>{
       customer
       .findById(req.user._id)
-      .populate('stockShorted.company')
+      .populate('portfolio.company')
       .populate('activity.company')
       .then(Customer=>{
             var flag = 0
             var stock = req.body.amount
-            for(var i=0;i<Customer.stockShorted.length;i++){
-              if(Customer.stockShorted[i].company._id === Company._id ){
-                Customer.stockShorted[i].quantity += stock
+            for(var i=0;i<Customer.portfolio.length;i++){
+              if(Customer.portfolio[i].company._id === Company._id && Customer.portfolio[i].stockHeld == 0){
+                Customer.portfolio[i].stockShorted += stock
                 Customer.accountBalance += stock * Company.stockPrice
                 Company.availableQuantity -= stock
                 Company.history.push({timeStamp : Date.now(), stockPrice : Company.stockPrice, availableQuantity : Company.availableQuantity})
                 Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'shorted', quantity:stock, price:Company.stockPrice})
                 flag = 1
               }
+              if(Customer.portfolio[i].company._id === Company._id && Customer.portfolio[i].stockHeld !== 0){
+                res.send('Sell your stocks first!')
+              }
             }
             if(flag === 0){
                 Company.availableQuantity -= stock
                 Company.history.push({timeStamp : Date.now(), stockPrice : Company.stockPrice, availableQuantity : Company.availableQuantity})
                 Customer.accountBalance += stock * Company.stockPrice
-                Customer.stockShorted.push({company : Company._id, quantity : stock})
+                Customer.stockShorted.push({company : Company._id, stockHeld : 0, stockShorted : stock})
                 Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'shorted', quantity:stock, price:Company.stockPrice})
             }
             Customer.save()
@@ -255,14 +258,14 @@ exports.cover = function(req, res){
     company.findById(req.params.id).then(Company=>{
       customer
       .findById(req.user._id)
-      .populate('stockShorted.company')
+      .populate('portfolio.company')
       .populate('activity.company')
       .then(Customer=>{
             var flag = 0
             var stock = req.body.amount
-            for(var i=0;i<Customer.stockShorted.length;i++){
-              if(Customer.stockShorted[i].company._id === Company._id ){
-                Customer.stockShorted[i].quantity -= stock
+            for(var i=0;i<Customer.portfolio.length;i++){
+              if(Customer.portfolio[i].company._id === Company._id && Customer.portfolio[i].stockShorted > 0){
+                Customer.portfolio[i].stockShorted -= stock
                 Customer.accountBalance -= stock * Company.stockPrice
                 Company.availableQuantity += stock
                 Company.history.push({timeStamp : Date.now(), stockPrice : Company.stockPrice, availableQuantity : Company.availableQuantity})
@@ -271,11 +274,12 @@ exports.cover = function(req, res){
               }
             }
             if(flag === 0){
-                Company.availableQuantity += stock
-                Company.history.push({timeStamp : Date.now(), stockPrice : Company.stockPrice, availableQuantity : Company.availableQuantity})
-                Customer.accountBalance -= stock * Company.stockPrice
-                Customer.stockShorted.push({company : Company._id, quantity : stock})
-                Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'covered', quantity:stock, price:Company.stockPrice})
+              res.send('Short some stocks first!')
+                // Company.availableQuantity += stock
+                // Company.history.push({timeStamp : Date.now(), stockPrice : Company.stockPrice, availableQuantity : Company.availableQuantity})
+                // Customer.accountBalance -= stock * Company.stockPrice
+                // Customer.stockShorted.push({company : Company._id, quantity : stock})
+                // Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'covered', quantity:stock, price:Company.stockPrice})
             }
             Customer.save()
             Company.save()
