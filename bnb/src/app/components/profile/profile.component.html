@@ -85,7 +85,7 @@
                  </div>
           </div>
         </div>
--<!-- <div *ngFor="let company of player?.Customer.stockHoldings;">
+<!-- <div *ngFor="let company of player?.Customer.stockHoldings;">
  -  <p>Company: <a routerLink="company/{{company.company.id}}">{{company.company.symbol}}</a></p>
  -  <p>Stock Qty.: {{company.quantity}}</p>
  -  <div *ngIf="check(company);">
@@ -99,7 +99,7 @@
 
         </div>
          <div class="row ">
-         <div class="col-sm-12 col-xs-12 userProfile-header">
+         <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6 userProfile-header" style="max-height:400px;overflow-y:scroll;">
             <h3 class="removemargin1">Portfolio</h3>
             <div class="bootstrapTables table-responsive">
             <table class="hover-table table table-hover">
@@ -110,15 +110,38 @@
                 <th>Price</th>
               </tr>
               <tr *ngFor="let company of player?.Customer.stockHoldings;">
-                <td>{{company.company.symbol}}</td>
+                <!-- <td>{{company.company.symbol}}</td>
                 <td>{{company.quantity}}</td>
                 <td *ngIf="check(company);">{{quantity}}</td>
                 <td *ngIf="!check(company);"> 0</td>
-                <td>{{company.company.stockPrice}}</td>
+                <td>{{company.company.stockPrice}}</td> -->
+                <td>ABC</td>
+                <td>{{company.quantity}}</td>
+                <td>123</td>
+                <td>111</td>
               </tr>
             </table>
         </div>
        </div>
+       <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6 userProfile-header" style="max-height:400px;overflow-y:scroll;">
+        <h3 class="removemargin1">Your Activity</h3>
+        <div class="bootstrapTables table-responsive">
+            <table class="hover-table table table-hover">
+              <tr>
+                <th>Company</th>
+                <th>Action</th>
+                <th>Price</th>
+                <th>Quantity</th>
+              </tr>
+              <tr *ngFor="let company of player?.Customer.activity;">
+                <td>ABC</td>
+                <td>{{company.action}}</td>
+                <td>{{company.price}}</td>
+                <td>{{company.quantity}}</td>
+              </tr>
+            </table>
+        </div>
+      </div>
          </div>
   </div>
 </body>
