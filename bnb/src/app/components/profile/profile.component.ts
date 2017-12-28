@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import {Http, Response, RequestOptions, Headers} from '@angular/http';
 import { Observable } from "rxjs";
 import 'rxjs/add/observable/timer';
+import {Subscription} from "rxjs";
 
 declare var require: any;
 require('../js/jquery-3.2.0.min.js');
@@ -22,7 +23,7 @@ require('../js/script.js');
 export class ProfileComponent implements OnInit {
   player : any;
   customer : any;
-
+  private subscription: Subscription;
 
   check = function(company){
     for(var i=0;i<this.player.Customer.stockShorted.length;i++){
@@ -40,7 +41,7 @@ export class ProfileComponent implements OnInit {
 
 
   ngOnInit() {
-    Observable.timer(0, 10000)
+    this.subscription = Observable.timer(0, 10000)
       .subscribe(() => {
         this.profileService.fetchCustomer().subscribe(Player => {
           this.player = Player; console.log("customer fetched");
@@ -50,7 +51,10 @@ export class ProfileComponent implements OnInit {
           return false;
         });
       });
+  }
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   loanMoney(){

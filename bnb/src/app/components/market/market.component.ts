@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import {Http, Response, RequestOptions, Headers} from '@angular/http';
 import { Observable } from "rxjs";
 import 'rxjs/add/observable/timer';
+import {Subscription} from "rxjs";
+
 @Component({
   selector: 'app-market',
   templateUrl: './market.component.html',
@@ -17,6 +19,7 @@ export class MarketComponent implements OnInit {
   companies: any;
   customer: any;
   user: any;
+  private subscription: Subscription;
   constructor(private marketService: MarketService,
               private router: Router,
               private http: Http ) { }
@@ -31,7 +34,7 @@ export class MarketComponent implements OnInit {
         console.log(err);
         return false;
       });
-    Observable.timer(0, 10000)
+      this.subscription = Observable.timer(0, 10000)
       .subscribe(() => {
         this.marketService.fetchCompanies().subscribe(Companies => {
           this.companies = Companies; console.log("company fetched");
@@ -41,6 +44,10 @@ export class MarketComponent implements OnInit {
           return false;
         });
       });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

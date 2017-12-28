@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from "rxjs";
 import 'rxjs/add/observable/timer';
+import {Subscription} from "rxjs";
 
 declare var require: any;
 declare var Chart:any;
@@ -31,6 +32,7 @@ buyForm : FormGroup;
 sellForm : FormGroup;
 shortForm : FormGroup;
 coverForm : FormGroup;
+private subscription: Subscription;
 
   constructor(private companyService : CompanyService,
               private route : ActivatedRoute,
@@ -41,7 +43,7 @@ coverForm : FormGroup;
       this.id = params['id'];
     });
 
-    Observable.timer(0, 10000)
+    this.subscription = Observable.timer(0, 10000)
       .subscribe(() => {
         this.companyService.fetchCompany(this.id).subscribe(Company => {
           this.company = Company; console.log("company fetched");
@@ -146,6 +148,10 @@ coverForm : FormGroup;
     this.coverForm = this.formBuilder.group({
       amount : ['', Validators.required]
     })
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   buyStock(form : any){

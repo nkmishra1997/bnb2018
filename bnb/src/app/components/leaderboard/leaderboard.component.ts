@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import {Http, Response, RequestOptions, Headers} from '@angular/http';
 import { Observable } from "rxjs";
 import 'rxjs/add/observable/timer';
+import {Subscription} from "rxjs";
 
 declare var require: any;
 require('../js/jquery-3.2.0.min.js');
@@ -21,13 +22,14 @@ require('../js/script.js');
 })
 export class LeaderboardComponent implements OnInit {
   customer: any;
+  private subscription: Subscription;
 
   constructor(private leaderboardService: LeaderboardService,
     private router: Router,
     private http: Http ) { }
 
   ngOnInit() {
-    Observable.timer(0, 120000)
+    this.subscription = Observable.timer(0, 120000)
       .subscribe(() => {
         this.leaderboardService.fetchCustomers().subscribe(Customer => {
           this.customer = Customer; console.log("customer list fetched");
@@ -37,6 +39,10 @@ export class LeaderboardComponent implements OnInit {
           return false;
         });
       });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }
