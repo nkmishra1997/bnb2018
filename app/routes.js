@@ -76,42 +76,42 @@ app.route('/admin/deleteUser/:id')
 // ============================================================================
 
 app.route('/companylist')
-    .get(passport.authenticate('facebook-token'), controller.companyList);
+    .get(isLoggedIn, controller.companyList);
 
 app.route('/companydetail/:id')
-    .get(passport.authenticate('facebook-token'), controller.companyDetails);
+    .get(isLoggedIn, controller.companyDetails);
 
 app.route('/newslist')
-    .get(passport.authenticate('facebook-token'), controller.newsList);
+    .get(isLoggedIn, controller.newsList);
 
 // ============================================================================
 // Customer  ===============================================================
 // ============================================================================
 
 app.route('/customerdetail')
-    .get(passport.authenticate('facebook-token'), controller.customerDetail);
+    .get(isLoggedIn, controller.customerDetail);
 
 
 app.route('/scoreboard')
-    .get(passport.authenticate('facebook-token'), controller.customerList);
+    .get(isLoggedIn, controller.customerList);
 
 app.route('/buy/:id')
-    .post(passport.authenticate('facebook-token'), controller.buy);
+    .post(isLoggedIn, controller.buy);
 
 app.route('/sell/:id')
-    .post(passport.authenticate('facebook-token'), controller.sell);
+    .post(isLoggedIn, controller.sell);
 
 app.route('/short/:id')
-    .post(passport.authenticate('facebook-token'), controller.short);
+    .post(isLoggedIn, controller.short);
 
 app.route('/cover/:id')
-    .post(passport.authenticate('facebook-token'), controller.cover);
+    .post(isLoggedIn, controller.cover);
 
 app.route('/takeloan')
-    .post(passport.authenticate('facebook-token'), controller.takeLoan);
+    .post(isLoggedIn, controller.takeLoan);
 
 app.route('/repayloan')
-    .post(passport.authenticate('facebook-token'), controller.repayLoan);
+    .post(isLoggedIn, controller.repayLoan);
 
 // =============================================================================
 // AUTHENTICATE (FIRST LOGIN) ==================================================
@@ -125,7 +125,7 @@ app.route('/repayloan')
         // handle the callback after facebook has authenticated the user
         app.get('/auth/facebook/callback',
             passport.authenticate('facebook', {
-
+               
                 successRedirect : '/market',
                 failureRedirect : '/'
             }));
