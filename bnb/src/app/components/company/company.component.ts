@@ -5,6 +5,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from "rxjs";
 import 'rxjs/add/observable/timer';
 
+declare var require: any;
+declare var Chart:any;
+require('./Assets/Chart.bundle.min.js');
+require('./Assets/Chart.min.js');
+//require('./Assets/chartJs-config.js');
+require('../js/jquery-3.2.0.min.js');
+require('../js/bootstrap.min.js');
+require('../js/preloader.js');
+require('../js/script.js');
+
 @Component({
   selector: 'app-company',
   templateUrl: './company.component.html',
@@ -25,9 +35,8 @@ coverForm : FormGroup;
   constructor(private companyService : CompanyService,
               private route : ActivatedRoute,
               private formBuilder : FormBuilder) { }
-
+  
   ngOnInit() {
-
     this.sub = this.route.params.subscribe(params => {
       this.id = params['id'];
     });
@@ -36,6 +45,84 @@ coverForm : FormGroup;
       .subscribe(() => {
         this.companyService.fetchCompany(this.id).subscribe(Company => {
           this.company = Company; console.log("company fetched");
+
+          var ctx = document.querySelector("#statsChart");
+
+          let D:Array<any> = new Array(20);
+          for(var i=0;i<20;i++){
+            D[i] = 0;
+          }
+          var l = this.company.compDetails.history.length;
+          for(var j=1;j<=l&&j<21;j++){
+            D[20-j] = this.company.compDetails.history[l-j].stockPrice;
+          }
+          var data = {
+            labels: ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19"],
+            datasets: [
+            {
+              label: "Stock Price",
+              backgroundColor: "rgba(74,73,180,0.8)",
+              borderColor: "rgba(74,73,180,0.8)",
+              pointBorderColor: "rgb(74,73,180,59)",
+              pointBackgroundColor: "rgba(74,73,180,0.8)",
+              data: D
+            }		
+            ]
+          };
+              
+          var areaChart = new Chart(ctx, {
+            type:"line",
+            data:data,
+                
+            options: {
+              tooltips: {
+                //mode:"label",
+                backgroundColor:'rgba(25,25,25,0.9)',
+                cornerRadius:0,
+                footerFontFamily:"Montserrat"
+              },
+              scaleLineColor: 'transparent',
+              elements:{
+                point: {
+                  hitRadius:90
+                }
+              },
+                  
+              scales: {
+                yAxes: [{
+                  stacked: true,
+                  ticks: {
+                    fontFamily: "Arial",
+                    fontColor:"#586874;"
+
+                  }
+                }],
+                xAxes: [{
+                  stacked: true,
+                  gridLines: {
+                    drawOnChartArea: false
+                },
+                  ticks: {
+                    fontFamily: "Arial",
+                    fontColor:"#586874"
+
+                  },
+                }]
+              },
+              animation: {
+                duration: 1500
+              },
+              responsive: true,
+              legend: {
+                display: false,
+              }
+              // tooltips: {
+              //   backgroundColor:'rgba(25,25,25,0.9)',
+              //   cornerRadius:0,
+              //   footerFontFamily:"Montserrat"
+              // },		
+            }
+          });
         },
         err => {
           console.log(err);
@@ -110,6 +197,9 @@ coverForm : FormGroup;
     this.companyService.cover(this.id,form).subscribe(Info => {
       this.info = Info
       this.refreshPage();
+
+
+
     },
     err => {
       console.log(err)
@@ -127,5 +217,4 @@ coverForm : FormGroup;
       return false;
     });
   }
-
 }

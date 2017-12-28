@@ -110,28 +110,34 @@
     <div class="contentWrapper">
       <div class="userProfile-header">
         <div class="row">
+          <div class="col-sm-6 col-xs-12">
+            <div id="chartBox">
+                <h6><i class="fa fa-line-chart" aria-hidden="true"></i>Stock Price Statistics</h6>
+              <canvas id="statsChart" style="margin-top:20px;"></canvas> 
+            </div>
+          </div>
           <div class="header-r col-sm-6 col-xs-12 table-responsive">
             <h3 class="removemargin">{{company?.compDetails.name}}</h3>
             <div class="bootstrapTables noborder">
-            <table class="hover-table table table-hover">
-              <tr>
-                <td>Price : </td>
-                <td>	{{company?.compDetails.stockPrice}} </td>
-              </tr>
-              <tr>
-                <td>Available : </td>
-                <td>{{company?.compDetails.availableQuantity}}</td>
-              </tr>
-              <tr>
-                <td>Market Capitalisation (in cr.):</td>
-                <td>{{company?.compDetails.marketcap}}</td>
-              </tr>
-              <tr>
-                <td>Growth Rate(%):</td>
-                <td>{{company?.compDetails.annualGrowthRate}}</td>
-              </tr>
-            </table>
-          </div>
+              <table class="hover-table table table-hover">
+                <tr>
+                  <td>Price : </td>
+                  <td>	{{company?.compDetails.stockPrice}} </td>
+                </tr>
+                <tr>
+                  <td>Available : </td>
+                  <td>{{company?.compDetails.availableQuantity}}</td>
+                </tr>
+                <tr>
+                  <td>Market Capitalisation (in cr.):</td>
+                  <td>{{company?.compDetails.marketcap}}</td>
+                </tr>
+                <tr>
+                  <td>Growth Rate(%):</td>
+                  <td>{{company?.compDetails.annualGrowthRate}}</td>
+                </tr>
+              </table>
+            </div>
               <!--<div class="buttons1">
               <button class="btn btn-success" (click)="loanMoney()">Take Loan</button>
               <button class="btn btn-danger" (click)="repayMoney()">Repay Loan</button>
@@ -139,58 +145,52 @@
           </div>
         </div>
       </div>
--<!-- <div *ngFor="let company of player?.Customer.stockHoldings;">
- -  <p>Company: <a routerLink="company/{{company.company.id}}">{{company.company.symbol}}</a></p>
- -  <p>Stock Qty.: {{company.quantity}}</p>
- -  <div *ngIf="check(company);">
- -    <p>Shorted Stock: {{quantity}}
- -  </div>
- -  <div *ngIf="!check(company);">
- -    <p>Shorted Stock: 0</p>
- -  </div>
- -  <p>Current Price: {{company.company.stockPrice}}
- -</div> -->
-<div class="contentWrapper">
-         <div class="row ">
-         <div class="col-sm-12 col-xs-12 userProfile-header">
-            <h3 class="removemargin1">Portfolio</h3>
+    <!-- <div *ngFor="let company of player?.Customer.stockHoldings;">
+    -  <p>Company: <a routerLink="company/{{company.company.id}}">{{company.company.symbol}}</a></p>
+    -  <p>Stock Qty.: {{company.quantity}}</p>
+    -  <div *ngIf="check(company);">
+    -    <p>Shorted Stock: {{quantity}}
+    -  </div>
+    -  <div *ngIf="!check(company);">
+    -    <p>Shorted Stock: 0</p>
+    -  </div>
+    -  <p>Current Price: {{company.company.stockPrice}}
+    -</div> -->
+      <div class="contentWrapper">
+        <div class="row ">
+          <div class="col-sm-12 col-xs-12 userProfile-header">
+            <!-- <h3 class="removemargin1">Portfolio</h3> -->
             <div class="bootstrapTables table-responsive">
-            <table class="hover-table table table-hover">
-              <tr>
-<form [formGroup]="buyForm" novalidate (ngSubmit)="buyStock(buyForm.value)">
-  <input [ngModel]="amount" type="text" formControlName="amount"/>
-  <button type="btn btn-success" [disabled]="!buyForm.valid">Buy</button>
-</form>
-              </tr>
-              <tr>
-                <form [formGroup]="sellForm" novalidate (ngSubmit)="sellStock(sellForm.value)">
-  <input [ngModel]="amount" type="text" formControlName="amount"/>
-  <button type="btn btn-danger" [disabled]="!sellForm.valid">Sell</button>
-</form>
-
-              </tr>
-    <tr><form [formGroup]="coverForm" novalidate (ngSubmit)="coverStock(coverForm.value)">
-  <input [ngModel]="amount" type="text" formControlName="amount"/>
-  <button type="btn btn-success" [disabled]="!coverForm.valid">Cover</button>
-</form></tr>
-              <tr><form [formGroup]="shortForm" novalidate (ngSubmit)="shortStock(shortForm.value)">
-  <input [ngModel]="amount" type="text" formControlName="amount"/>
-  <button type="btn btn-danger" [disabled]="!shortForm.valid">Short</button>
-</form></tr>
-            </table>
+              <table class="hover-table table table-hover">
+                <tr>
+                  <form [formGroup]="buyForm" novalidate (ngSubmit)="buyStock(buyForm.value)">
+                    <input [ngModel]="amount" type="text" formControlName="amount"/>
+                    <button type="btn btn-success" [disabled]="!buyForm.valid">Buy</button>
+                  </form>
+                </tr>
+                <tr>
+                  <form [formGroup]="sellForm" novalidate (ngSubmit)="sellStock(sellForm.value)">
+                    <input [ngModel]="amount" type="text" formControlName="amount"/>
+                    <button type="btn btn-danger" [disabled]="!sellForm.valid">Sell</button>
+                  </form>
+                </tr>
+                <tr>
+                  <form [formGroup]="coverForm" novalidate (ngSubmit)="coverStock(coverForm.value)">
+                    <input [ngModel]="amount" type="text" formControlName="amount"/>
+                    <button type="btn btn-success" [disabled]="!coverForm.valid">Cover</button>
+                  </form>
+                </tr>
+                <tr>
+                  <form [formGroup]="shortForm" novalidate (ngSubmit)="shortStock(shortForm.value)">
+                    <input [ngModel]="amount" type="text" formControlName="amount"/>
+                    <button type="btn btn-danger" [disabled]="!shortForm.valid">Short</button>
+                  </form>
+                </tr>
+              </table>
+            </div>
+          </div>
         </div>
-       </div>
-         </div>
-</div>
+      </div>
     </div>
-    <script type="text/javascript" src="../js/jquery-3.2.0.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
-
-    <!--Custom script -->
-    <script type="text/javascript" src="../js/preloader.js"></script>
-    <script type="text/javascript" src="../js/script.js"></script>
-        </body>
-
-<!-- Mirrored from themesonyx.com/preview/rocket/user-profile.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 09 Dec 2017 17:09:12 GMT -->
+  </body>
 </html>

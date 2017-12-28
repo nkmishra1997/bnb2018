@@ -3,6 +3,12 @@ import { MarketService } from '../../services/market.service';
 import { Router } from '@angular/router';
 import {Http, Response, RequestOptions, Headers} from '@angular/http';
 
+declare var require: any;
+require('../js/jquery-3.2.0.min.js');
+require('../js/bootstrap.min.js');
+require('../js/preloader.js');
+require('../js/script.js');
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',

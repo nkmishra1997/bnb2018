@@ -5,6 +5,12 @@ import {Http, Response, RequestOptions, Headers} from '@angular/http';
 import { Observable } from "rxjs";
 import 'rxjs/add/observable/timer';
 
+declare var require: any;
+require('../js/jquery-3.2.0.min.js');
+require('../js/bootstrap.min.js');
+require('../js/preloader.js');
+require('../js/script.js');
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
