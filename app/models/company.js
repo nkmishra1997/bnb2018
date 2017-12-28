@@ -68,16 +68,6 @@ const companySchema = new Schema({
       max: parameters.maxNumberOfShares
     }
   }],
-
-  complementaryCompany : [{
-		company : mongoose.Schema.Types.ObjectId,
-		factor : {type: Number, min: 0.0, default: 0.0},
-	}],
-
-	supplementaryCompany : [{
-		company : mongoose.Schema.Types.ObjectId,
-		factor : {type: Number, min: 0.0, default: 0.0},
-	}]
 });
 
 const company = module.exports = mongoose.model('company', companySchema);

@@ -90,12 +90,10 @@ exports.customerDetail = function(req, res) {
 
 		//evaluate the worth of customer
     var stockHoldingAmount = 0
-    Customer.stockHoldings.forEach((element)=>{
-      stockHoldingAmount += element.company.stockPrice * element.quantity
-    })
     var stockShortedAmount = 0
-    Customer.stockShorted.forEach((element)=>{
-      stockShortedAmount += element.company.stockPrice * element.quantity
+    Customer.portfolio.forEach((element)=>{
+      stockHoldingAmount += element.company.stockPrice * element.stockHeld
+      stockShortedAmount += element.company.stockPrice * element.stockShorted
     })
 		var worth = { 'worth' : Customer.accountBalance + stockHoldingAmount - stockShortedAmount - Customer.loan.amount }
 
@@ -124,37 +122,38 @@ exports.customerList = function(req, res) {
 
 exports.buy = function(req, res){
     company.findById(req.params.id).then(Company=>{
-      customer
-      .findById(req.user._id)
-      .populate('stockHoldings.company')
-      .populate('activity.company')
-      .then(Customer=>{
-
-        console.log(req.body) //for testing only
-
-            var flag = 0
-            var stock = req.body.amount
-            for(var i=0;i<Customer.stockHoldings.length;i++){
-              if(Customer.stockHoldings[i].company._id === Company._id ){
-                Customer.stockHoldings[i].quantity += stock
-                Customer.accountBalance -= stock * Company.stockPrice
-                Company.availableQuantity -= stock
-                Company.history.push({timeStamp : Date.now(), stockPrice : Company.stockPrice, availableQuantity : Company.availableQuantity})
-                Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'bought', quantity:stock, price:Company.stockPrice})
-                flag = 1
-              }
-            }
-            if(flag === 0){
-                Company.availableQuantity -= stock
-                Company.history.push({timeStamp : Date.now(), stockPrice : Company.stockPrice, availableQuantity : Company.availableQuantity})
-                Customer.accountBalance -= stock * Company.stockPrice
-                Customer.stockHoldings.push({company : Company._id, quantity : stock})
-                Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'bought', quantity:stock, price:Company.stockPrice})
-            }
-            Customer.save()
-            Company.save()
-            res.json({'success':true, Company, Customer})
-
+      customer.findById(req.user._id).then(Customer=>{
+        stock = parseInt(req.body.amount);
+        if(stock == null || stock == undefined || stock <= 0){
+          res.json({'success':false});
+          return
+        }
+        var totalStocks = 0
+        var index = -1
+        for(var i=0;i<Customer.portfolio.length;i++){
+          totalStocks = Customer.portfolio[i].stockHeld + Customer.portfolio[i].stockShorted
+          if(Customer.portfolio[i].company.toString() === Company._id.toString() ){
+            index = i
+          }
+        }
+        if (0 < stock && stock <= Math.min(Math.floor(Customer.accountBalance / Company.stockPrice), Company.availableQuantity, parameters.stockLimit-totalStocks)){
+          if(index == -1){
+            Customer.portfolio.push({company : Company._id, stockHeld : stock, stockShorted : 0})
+          }
+          else{
+            Customer.portfolio[index].stockHeld += stock
+          }
+          Customer.accountBalance -= stock * Company.stockPrice
+          Company.availableQuantity -= stock
+          Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'BUY', quantity:stock, price:Company.stockPrice})
+          Customer.save()
+          Company.save()
+          res.json({'success':true, Company, Customer})
+          return
+        }
+        else{
+          res.json({'success':false})
+        }
       }).catch(err=>{
         console.log(err)
         res.send('unable to fetch user')
@@ -167,38 +166,33 @@ exports.buy = function(req, res){
 
 
 exports.sell = function(req, res){
-    company.findById(req.params.id).then(Company=>{
-      customer
-      .findById(req.user._id)
-      .populate('stockHoldings.company')
-      .populate('activity.company')
-      .then(Customer=>{
+  company.findById(req.params.id).then(Company=>{
+    customer.findById(req.user._id).then(Customer=>{
 
         console.log(req.body) //for testing only
-
-            var flag = 0
-            var stock = req.body.amount
-            for(var i=0;i<Customer.stockHoldings.length;i++){
-              if(Customer.stockHoldings[i].company._id === Company._id ){
-                Customer.stockHoldings[i].quantity -= stock
-                Customer.accountBalance += stock * Company.stockPrice
-                Company.availableQuantity += stock
-                Company.history.push({timeStamp : Date.now(), stockPrice : Company.stockPrice, availableQuantity : Company.availableQuantity})
-                Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'sold', quantity:stock, price:Company.stockPrice})
-                flag = 1
-              }
-            }
-            if(flag === 0){
-                Company.availableQuantity += stock
-                Company.history.push({timeStamp : Date.now(), stockPrice : Company.stockPrice, availableQuantity : Company.availableQuantity})
-                Customer.accountBalance += stock * Company.stockPrice
-                Customer.stockHoldings.push({company : Company._id, quantity : stock})
-                Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'sold', quantity:stock, price:Company.stockPrice})
-            }
+        stock = parseInt(req.body.amount);
+        if(stock == null || stock == undefined || stock <= 0){
+          res.json({'success':false});
+          return
+        }
+        var flag = 0
+        for(var i=0;i<Customer.portfolio.length;i++){
+          if(Customer.portfolio[i].company.toString() === Company._id.toString() && stock<=Customer.portfolio[i].stockHeld){
+            Customer.portfolio[i].stockHeld -= stock
+            Customer.accountBalance += stock * Company.stockPrice
+            Company.availableQuantity += stock
+            Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'SELL', quantity:stock, price:Company.stockPrice})
+            flag = 1
             Customer.save()
             Company.save()
             res.json({'success':true, Company, Customer})
-
+            return
+          }
+        }
+        if(flag == 0){
+          res.json({'success':false});
+          return
+        }
       }).catch(err=>{
         console.log(err)
         res.send('unable to fetch user')
@@ -212,34 +206,44 @@ exports.sell = function(req, res){
 
 exports.short = function(req, res){
     company.findById(req.params.id).then(Company=>{
-      customer
-      .findById(req.user._id)
-      .populate('stockShorted.company')
-      .populate('activity.company')
-      .then(Customer=>{
-            var flag = 0
-            var stock = req.body.amount
-            for(var i=0;i<Customer.stockShorted.length;i++){
-              if(Customer.stockShorted[i].company._id === Company._id ){
-                Customer.stockShorted[i].quantity += stock
-                Customer.accountBalance += stock * Company.stockPrice
-                Company.availableQuantity -= stock
-                Company.history.push({timeStamp : Date.now(), stockPrice : Company.stockPrice, availableQuantity : Company.availableQuantity})
-                Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'shorted', quantity:stock, price:Company.stockPrice})
-                flag = 1
-              }
-            }
-            if(flag === 0){
-                Company.availableQuantity -= stock
-                Company.history.push({timeStamp : Date.now(), stockPrice : Company.stockPrice, availableQuantity : Company.availableQuantity})
-                Customer.accountBalance += stock * Company.stockPrice
-                Customer.stockShorted.push({company : Company._id, quantity : stock})
-                Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'shorted', quantity:stock, price:Company.stockPrice})
-            }
-            Customer.save()
-            Company.save()
-            res.json({'success':true, Company, Customer})
-
+      customer.findById(req.user._id).then(Customer=>{
+        stock = parseInt(req.body.amount);
+        if(stock == null || stock == undefined || stock <= 0){
+          res.json({'success':false});
+          return
+        }
+        var totalStocks = 0
+        var index = -1
+        for(var i=0;i<Customer.portfolio.length;i++){
+          totalStocks = Customer.portfolio[i].stockHeld + Customer.portfolio[i].stockShorted
+          if(Customer.portfolio[i].company.toString() === Company._id.toString() ){
+            index = i
+          }
+        }
+        if(index == -1 && stock < parameters.stockLimit-totalStocks ){
+          Customer.portfolio.push({company : Company._id, stockHeld : 0, stockShorted : stock})
+          Customer.accountBalance += stock * Company.stockPrice
+          Company.availableQuantity -= stock
+          Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'shorted', quantity:stock, price:Company.stockPrice})
+          Customer.save()
+          Company.save()
+          res.json({'success':true, Company, Customer})
+          return
+        }
+        else if (stock< parameters.stockLimit-totalStocks && Customer.portfolio[index].stockHeld == 0){
+          Customer.portfolio[index].stockShorted += stock
+          Customer.accountBalance += stock * Company.stockPrice
+          Company.availableQuantity -= stock
+          Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'shorted', quantity:stock, price:Company.stockPrice})
+          Customer.save()
+          Company.save()
+          res.json({'success':true, Company, Customer})
+          return
+        }
+        else{
+          res.json({'success':false})
+          return
+        }
       }).catch(err=>{
         console.log(err)
         res.send('unable to fetch user')
