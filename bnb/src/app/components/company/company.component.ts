@@ -160,7 +160,7 @@ private subscription: Subscription;
 
     this.companyService.buy(this.id,form).subscribe(Info => {
       this.info = Info
-      //this.refreshPage();
+      this.refreshPage();
     },
     err => {
       console.log(err)

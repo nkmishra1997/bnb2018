@@ -28,10 +28,10 @@ exports.companyDetails = function(req, res){
   company.findById(req.params.id).then((compDetails)=>{
     customer.findById(req.user._id).then(Customer=>{
       var accountBalance = Customer.accountBalance
-      var buyMax = Math.min((accountBalance/company.stockPrice),company.availableQuantity)
-      var sellMax = Math.min((accountBalance/company.stockPrice),(company.totalQuantity-company.availableQuantity))
+      var buyMax = Math.min(Math.floor(accountBalance/company.stockPrice),company.availableQuantity)
+      var sellMax = Math.min(Math.floor(accountBalance/company.stockPrice),(company.totalQuantity-company.availableQuantity))
       var shortMax = parameters.shortMax
-      var coverMax = Math.min((accountBalance/company.stockPrice),shortMax)
+      var coverMax = Math.min(Math.floor(accountBalance/company.stockPrice),shortMax)
 
       var details = {
         compDetails : compDetails,
@@ -123,9 +123,11 @@ exports.customerList = function(req, res) {
 exports.buy = function(req, res){
     company.findById(req.params.id).then(Company=>{
       customer.findById(req.user._id).then(Customer=>{
-        stock = parseInt(req.body.amount);
+
+        var stock = parseInt(req.body.amount);
         if(stock == null || stock == undefined || stock <= 0){
           res.json({'success':false});
+          console.log(1)
           return
         }
         var totalStocks = 0
@@ -136,8 +138,9 @@ exports.buy = function(req, res){
             index = i
           }
         }
+
         if (0 < stock && stock <= Math.min(Math.floor(Customer.accountBalance / Company.stockPrice), Company.availableQuantity, parameters.stockLimit-totalStocks)){
-          if(index == -1){
+          if(index === -1){
             Customer.portfolio.push({company : Company._id, stockHeld : stock, stockShorted : 0})
           }
           else{
@@ -170,7 +173,7 @@ exports.sell = function(req, res){
     customer.findById(req.user._id).then(Customer=>{
 
         console.log(req.body) //for testing only
-        stock = parseInt(req.body.amount);
+        var stock = parseInt(req.body.amount);
         if(stock == null || stock == undefined || stock <= 0){
           res.json({'success':false});
           return
@@ -207,7 +210,7 @@ exports.sell = function(req, res){
 exports.short = function(req, res){
     company.findById(req.params.id).then(Company=>{
       customer.findById(req.user._id).then(Customer=>{
-        stock = parseInt(req.body.amount);
+        var stock = parseInt(req.body.amount);
         if(stock == null || stock == undefined || stock <= 0){
           res.json({'success':false});
           return
@@ -224,7 +227,7 @@ exports.short = function(req, res){
           Customer.portfolio.push({company : Company._id, stockHeld : 0, stockShorted : stock})
           Customer.accountBalance += stock * Company.stockPrice
           Company.availableQuantity -= stock
-          Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'shorted', quantity:stock, price:Company.stockPrice})
+          Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'SHORT', quantity:stock, price:Company.stockPrice})
           Customer.save()
           Company.save()
           res.json({'success':true, Company, Customer})
@@ -234,7 +237,7 @@ exports.short = function(req, res){
           Customer.portfolio[index].stockShorted += stock
           Customer.accountBalance += stock * Company.stockPrice
           Company.availableQuantity -= stock
-          Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'shorted', quantity:stock, price:Company.stockPrice})
+          Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'SHORT', quantity:stock, price:Company.stockPrice})
           Customer.save()
           Company.save()
           res.json({'success':true, Company, Customer})
@@ -257,34 +260,33 @@ exports.short = function(req, res){
 
 exports.cover = function(req, res){
     company.findById(req.params.id).then(Company=>{
-      customer
-      .findById(req.user._id)
-      .populate('stockShorted.company')
-      .populate('activity.company')
-      .then(Customer=>{
-            var flag = 0
-            var stock = req.body.amount
-            for(var i=0;i<Customer.stockShorted.length;i++){
-              if(Customer.stockShorted[i].company._id === Company._id ){
-                Customer.stockShorted[i].quantity -= stock
-                Customer.accountBalance -= stock * Company.stockPrice
-                Company.availableQuantity += stock
-                Company.history.push({timeStamp : Date.now(), stockPrice : Company.stockPrice, availableQuantity : Company.availableQuantity})
-                Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'covered', quantity:stock, price:Company.stockPrice})
-                flag = 1
-              }
-            }
-            if(flag === 0){
-                Company.availableQuantity += stock
-                Company.history.push({timeStamp : Date.now(), stockPrice : Company.stockPrice, availableQuantity : Company.availableQuantity})
-                Customer.accountBalance -= stock * Company.stockPrice
-                Customer.stockShorted.push({company : Company._id, quantity : stock})
-                Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'covered', quantity:stock, price:Company.stockPrice})
-            }
-            Customer.save()
-            Company.save()
-            res.json({'success':true, Company, Customer})
+      customer.findById(req.user._id).then(Customer=>{
 
+          console.log(req.body) //for testing only
+          var stock = parseInt(req.body.amount);
+          if(stock == null || stock == undefined || stock <= 0){
+            res.json({'success':false});
+            return
+          }
+          var flag = 0
+          var stock = parseInt(req.body.amount)
+          for(var i=0;i<Customer.portfolio.length;i++){
+            if(Customer.portfolio[i].company.toString() === Company._id.toString() && stock<=Customer.portfolio[i].stockShorted){
+              Customer.portfolio[i].stockShorted -= stock
+              Customer.accountBalance -= stock * Company.stockPrice
+              Company.availableQuantity += stock
+              Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'COVER', quantity:stock, price:Company.stockPrice})
+              flag = 1
+              Customer.save()
+              Company.save()
+              res.json({'success':true, Company, Customer})
+              return
+            }
+          }
+          if(flag === 0){
+            res.json({'success':false})
+            return
+          }
       }).catch(err=>{
         console.log(err)
         res.send('unable to fetch user')

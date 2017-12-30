@@ -198,7 +198,7 @@
             <div class="form-group">
               <input class="form-control" [ngModel]="amount" type="number" formControlName="amount" value=0/>
             </div>
-            <button class="btn btn-default" [disabled]="!buyForm.valid">Buy</button>
+            <button type="submit" class="btn btn-default" [disabled]="!buyForm.valid">Buy</button>
           </form>
           <form class="form-inline" [formGroup]="sellForm" novalidate (ngSubmit)="sellStock(sellForm.value)" style="margin-bottom:-25px;">
             <div class="form-group">
@@ -206,18 +206,18 @@
             </div>
             <button type="submit" class="btn btn-default" [disabled]="!sellForm.valid">Sell</button>
           </form>
-          <form class="form-inline" [formGroup]="coverForm" novalidate (ngSubmit)="coverStock(coverForm.value)" style="margin-bottom:-25px;">
-            <div class="form-group">
-              <input class="form-control" [ngModel]="amount" type="number" formControlName="amount" value=0/>
-            </div>
-            <button type="submit" class="btn btn-default" [disabled]="!coverForm.valid">Cover</button>
-          </form>
           <form class="form-inline" [formGroup]="shortForm" novalidate (ngSubmit)="shortStock(shortForm.value)" style="margin-bottom:-25px;">
             <div class="form-group">
               <input class="form-control" [ngModel]="amount" type="number" formControlName="amount" value=0/>
             </div>
             <button type="submit" class="btn btn-default" [disabled]="!shortForm.valid">Short</button>
           </form>
+          <form class="form-inline" [formGroup]="coverForm" novalidate (ngSubmit)="coverStock(coverForm.value)" style="margin-bottom:-25px;">
+            <div class="form-group">
+              <input class="form-control" [ngModel]="amount" type="number" formControlName="amount" value=0/>
+            </div>
+            <button type="submit" class="btn btn-default" [disabled]="!coverForm.valid">Cover</button>
+          </form>  
         </div>
       </div><br><br>
 
