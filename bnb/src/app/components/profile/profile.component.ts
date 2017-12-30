@@ -23,45 +23,45 @@ require('../js/script.js');
 export class ProfileComponent implements OnInit {
   player : any;
   customer : any;
+  company: any;
   private subscription: Subscription;
-
-  check = function(company){
-    for(var i=0;i<this.player.Customer.stockShorted.length;i++){
-      if(company.company.name == this.player.Customer.stockShorted[i].company.name){
-        return this.player.Customer.stockShorted[i].quantity
-      }
-    }
-    return 0
-  }
-
-  quantity = this.check;
 
 
   constructor(private profileService : ProfileService) { }
-
 
   ngOnInit() {
     this.subscription = Observable.timer(0, 10000)
       .subscribe(() => {
         this.profileService.fetchCustomer().subscribe(Player => {
-          this.player = Player; console.log("customer fetched");
+          this.player = Player
+          this.refreshPage()
         },
         err => {
-          console.log(err);
-          return false;
-        });
-      });
+          console.log(err)
+          return false
+        })
+      })
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subscription.unsubscribe()
   }
 
   loanMoney(){
     this.profileService.takeLoan().subscribe(Customer =>{
       this.customer = Customer
       console.log(Customer)
-      this.refreshPage();
+      this.refreshPage()
+    },
+    err => {
+      console.log(err)
+      return false
+    })
+
+    this.profileService.fetchCustomer().subscribe(Player => {
+      this.player = Player
+      console.log(Player.worth.worth)
+      this.refreshPage()
     },
     err => {
       console.log(err)
@@ -74,7 +74,16 @@ export class ProfileComponent implements OnInit {
     this.profileService.repayLoan().subscribe(Customer =>{
       this.customer = Customer
       console.log(Customer)
-      this.refreshPage();
+      this.refreshPage()
+    },
+    err => {
+      console.log(err)
+      return false
+    })
+
+    this.profileService.fetchCustomer().subscribe(Player => {
+      this.player = Player
+      this.refreshPage()
     },
     err => {
       console.log(err)
@@ -84,13 +93,13 @@ export class ProfileComponent implements OnInit {
   }
 
   refreshPage() {
-    console.log("Inside refreshPage()");
+    console.log("Inside refreshPage()")
     this.profileService.fetchCustomer().subscribe(Player => {
-      this.player = Player;
+      this.player = Player
     },
     err => {
-      console.log(err);
-      return false;
+      console.log(err)
+      return false
     });
   }
 

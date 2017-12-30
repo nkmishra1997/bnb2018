@@ -71,7 +71,7 @@
           <ul class="user-profile nav navbar-nav navbar-right">
             <li class="dropdown">
               <a class="user-block" href="/profile" role="button" aria-haspopup="true" aria-expanded="false">
-                <span class="user-name">Hi {{customer?.Customer.facebook.name}}</span>
+                <span class="user-name">Hi, {{customer?.Customer.facebook.name}}</span>
                 <span class="caret"></span>
                 <img *ngIf="customer" src="https://graph.facebook.com/v2.11/{{customer.Customer.facebook.id}}/picture?type=large" alt="User Profile">
               </a>
