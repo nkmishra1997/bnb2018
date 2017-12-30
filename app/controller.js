@@ -84,8 +84,7 @@ exports.newsList = function(req, res){
 exports.customerDetail = function(req, res) {
   customer
   .findById(req.user._id)
-  .populate('stockHoldings.company')
-  .populate('stockShorted.company')
+  .populate('portfolio.company')
   .then(Customer=>{
 
 		//evaluate the worth of customer
