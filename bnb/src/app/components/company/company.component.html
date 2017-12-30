@@ -113,7 +113,7 @@
           <div class="col-sm-6 col-xs-12">
             <div id="chartBox">
                 <h6><i class="fa fa-line-chart" aria-hidden="true"></i>Stock Price Statistics</h6>
-              <canvas id="statsChart" style="margin-top:20px;"></canvas> 
+              <canvas id="statsChart" style="margin-top:20px;"></canvas>
             </div>
           </div>
           <div class="header-r col-sm-6 col-xs-12 table-responsive">
@@ -198,7 +198,7 @@
             <div class="form-group">
               <input class="form-control" [ngModel]="amount" type="number" formControlName="amount" value=0/>
             </div>
-            <button type="submit" class="btn btn-default" [disabled]="!buyForm.valid">Buy</button>
+            <button class="btn btn-default" [disabled]="!buyForm.valid">Buy</button>
           </form>
           <form class="form-inline" [formGroup]="sellForm" novalidate (ngSubmit)="sellStock(sellForm.value)" style="margin-bottom:-25px;">
             <div class="form-group">

@@ -37,14 +37,14 @@ private subscription: Subscription;
   constructor(private companyService : CompanyService,
               private route : ActivatedRoute,
               private formBuilder : FormBuilder) { }
-  
+
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       this.id = params['id'];
     });
 
-    this.subscription = Observable.timer(0, 10000)
-      .subscribe(() => {
+    this.subscription = Observable.timer(0,10000)
+    .subscribe(() => {
         this.companyService.fetchCompany(this.id).subscribe(Company => {
           this.company = Company; console.log("company fetched");
 
@@ -68,14 +68,14 @@ private subscription: Subscription;
               pointBorderColor: "rgb(74,73,180,59)",
               pointBackgroundColor: "rgba(74,73,180,0.8)",
               data: D
-            }		
+            }
             ]
           };
-              
+
           var areaChart = new Chart(ctx, {
             type:"line",
             data:data,
-                
+
             options: {
               tooltips: {
                 //mode:"label",
@@ -89,7 +89,7 @@ private subscription: Subscription;
                   hitRadius:90
                 }
               },
-                  
+
               scales: {
                 yAxes: [{
                   stacked: true,
@@ -122,7 +122,7 @@ private subscription: Subscription;
               //   backgroundColor:'rgba(25,25,25,0.9)',
               //   cornerRadius:0,
               //   footerFontFamily:"Montserrat"
-              // },		
+              // },
             }
           });
         },
@@ -160,7 +160,7 @@ private subscription: Subscription;
 
     this.companyService.buy(this.id,form).subscribe(Info => {
       this.info = Info
-      this.refreshPage();
+      //this.refreshPage();
     },
     err => {
       console.log(err)
