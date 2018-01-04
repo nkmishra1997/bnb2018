@@ -27,7 +27,9 @@ export class ProfileComponent implements OnInit {
   private subscription: Subscription;
 
 
-  constructor(private profileService : ProfileService) { }
+  constructor(private profileService : ProfileService,
+              private router : Router,
+              private http : Http ) { }
 
   ngOnInit() {
     this.subscription = Observable.timer(0, 10000)

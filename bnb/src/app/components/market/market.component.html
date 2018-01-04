@@ -99,9 +99,9 @@
                 <th>Trend %</th>
                 <th>Volume</th>
               </tr>
-              <tr *ngFor="let company of companies;" [routerLink]="['/company', company._id]">
-                <td>{{company.symbol}}</td>
-                <td>{{company.name}}</td>
+              <tr *ngFor="let company of companies;">
+                <td [routerLink]="['/company', company._id]">{{company.symbol}}</td>
+                <td [routerLink]="['/company', company._id]">{{company.name}}</td>
                 <td>{{company.stockPrice}}</td>
                 <td>{{company.annualGrowthRate}}</td>
                 <td>{{company.availableQuantity}}</td>
