@@ -85,6 +85,7 @@ exports.customerDetail = function(req, res) {
   customer
   .findById(req.user._id)
   .populate('portfolio.company')
+  .populate('activity.company')
   .then(Customer=>{
 
 		//evaluate the worth of customer

@@ -110,7 +110,7 @@
                 <th>Price</th>
               </tr>
               <tr *ngFor="let company of player?.Customer.portfolio;">
-                <td>{{company.company.symbol}}</td>
+                <td [routerLink]="['/company', company._id]">{{company.company.symbol}}</td>
                 <td>{{company.stockHeld}}</td>
                 <td>{{company.stockShorted}}</td>
                 <td>{{company.company.stockPrice}}</td>
@@ -137,7 +137,7 @@
             </table>
         </div>
       </div>
-         </div>
+    </div>
   </div>
 </body>
 </html>
