@@ -59,7 +59,15 @@ export class ProfileComponent implements OnInit {
       console.log(err)
       return false
     })
+  }
 
+  checkLoan(){
+    if(this.player.Customer.loan.amount == 0){
+      return true
+    }
+    else{
+      return false
+    }
   }
 
   repayMoney(){

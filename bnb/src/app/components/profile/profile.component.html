@@ -78,8 +78,12 @@
             </table>
           </div>
               <div class="buttons1">
-              <button class="btn btn-success" (click)="loanMoney()">Take Loan</button>
-              <button class="btn btn-danger" (click)="repayMoney()">Repay Loan</button>
+                <div *ngIf="checkLoan()">
+                  <button class="btn btn-success" (click)="loanMoney()">Take Loan</button>
+                </div>
+                <div *ngIf="!checkLoan()">
+                  <button class="btn btn-danger" (click)="repayMoney()">Repay Loan</button>
+                </div>
                  </div>
           </div>
         </div>
