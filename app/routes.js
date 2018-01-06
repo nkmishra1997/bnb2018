@@ -125,7 +125,7 @@ app.route('/repayloan')
         // handle the callback after facebook has authenticated the user
         app.get('/auth/facebook/callback',
             passport.authenticate('facebook', {
-               
+
                 successRedirect : '/market',
                 failureRedirect : '/'
             }));

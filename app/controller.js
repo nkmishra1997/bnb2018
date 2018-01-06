@@ -86,7 +86,7 @@ exports.customerDetail = function(req, res) {
   .findById(req.user._id)
   .populate('portfolio.company')
   .populate('activity.company')
-  .then(Customer=>{
+  .then(Customer => {
 
 		//evaluate the worth of customer
     var stockHoldingAmount = 0
@@ -111,8 +111,29 @@ exports.customerDetail = function(req, res) {
 
 
 exports.customerList = function(req, res) {
-  customer.find({}).then(customerlist=> {
-	   res.json(customerlist)
+  customer.find({})
+  .populate('portfolio.company')
+  .populate('activity.company')
+  .then(customerlist=> {
+    var playerList = []
+     customerlist.map((customer)=>{
+       var stockHoldingAmount = 0
+       var stockShortedAmount = 0
+       customer.portfolio.forEach((element)=>{
+         stockHoldingAmount += element.company.stockPrice * element.stockHeld
+         stockShortedAmount += element.company.stockPrice * element.stockShorted
+       })
+   		var worth = { 'worth' : customer.accountBalance + stockHoldingAmount - stockShortedAmount - customer.loan.amount }
+
+       var player = {
+         name : customer.facebook.name,
+         id : customer.facebook.id,
+         worth : worth
+       }
+       playerList.push(player)
+     })
+    res.json(playerList)
+
   }).catch(err=>{
     console.log(err)
     res.send("unable to fetch customer list")
@@ -127,7 +148,6 @@ exports.buy = function(req, res){
         var stock = parseInt(req.body.amount);
         if(stock == null || stock == undefined || stock <= 0){
           res.json({'success':false});
-          console.log(1)
           return
         }
         var totalStocks = 0

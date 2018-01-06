@@ -103,7 +103,7 @@
         <h1>Leaderboard</h1>
         <!--<h4>Bootstrap comes with multiple useful table variants.</h4>-->
       </div>
-      <div *ngIf="customer" class="row">
+      <div *ngIf="playerList" class="row">
         <div class="bootstrapTables">
           <div class="col-sm-12 col-xs-12 table-responsive">
             <table class="hover-table table table-hover">
@@ -112,12 +112,11 @@
                 <th>Name</th>
                 <th>Worth</th>
               </tr>
-              <div *ngFor="let player of customer">
+              <div *ngFor="let player of playerList;">
                 <tr>
-                  <td>{{player.rank}}</td>
-                  <td><img src="https://graph.facebook.com/v2.11/{{player.facebook.id}}/picture" alt="User Profile">  {{player.facebook.name}}
-                  </td>
-                  <td>{{player.worth}}</td>
+                  <!-- <td>{{player.rank}}</td> -->
+                  <td><img src="https://graph.facebook.com/v2.11/{{player.id}}/picture" alt="User Profile">{{player.name}}</td>
+                  <td>{{player.worth.worth}}</td>
                 </tr>
               </div>
             </table>

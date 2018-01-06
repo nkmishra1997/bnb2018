@@ -21,7 +21,7 @@ require('../js/script.js');
   './leaderboard.component.css']
 })
 export class LeaderboardComponent implements OnInit {
-  customer: any;
+  playerList: any;
   private subscription: Subscription;
 
   constructor(private leaderboardService: LeaderboardService,
@@ -31,18 +31,19 @@ export class LeaderboardComponent implements OnInit {
   ngOnInit() {
     this.subscription = Observable.timer(0, 120000)
       .subscribe(() => {
-        this.leaderboardService.fetchCustomers().subscribe(Customer => {
-          this.customer = Customer; console.log("customer list fetched");
+        this.leaderboardService.fetchCustomers().subscribe(playerList => {
+          this.playerList = playerList
+          console.log(playerList)
         },
         err => {
-          console.log(err);
-          return false;
-        });
-      });
+          console.log(err)
+          return false
+        })
+      })
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subscription.unsubscribe()
   }
 
 }

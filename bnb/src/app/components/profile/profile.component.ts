@@ -52,18 +52,7 @@ export class ProfileComponent implements OnInit {
   loanMoney(){
     this.profileService.takeLoan().subscribe(Customer =>{
       this.customer = Customer
-
-        // this.profileService.fetchCustomer().subscribe(Player => {
-        //   this.player = Player
-        //   console.log(Player.worth.worth)
-        //   this.refreshPage()
-        // },
-        // err => {
-        //   console.log(err)
-        //   return false
-        // })
-
-      console.log(Customer)
+      //console.log(Customer)
       this.refreshPage()
     },
     err => {
@@ -76,18 +65,7 @@ export class ProfileComponent implements OnInit {
   repayMoney(){
     this.profileService.repayLoan().subscribe(Customer =>{
       this.customer = Customer
-
-        // this.profileService.fetchCustomer().subscribe(Player => {
-        //   this.player = Player
-        //   console.log(Player.worth.worth)
-        //   this.refreshPage()
-        // },
-        // err => {
-        //   console.log(err)
-        //   return false
-        // })
-
-      console.log(Customer)
+      //console.log(Customer)
       this.refreshPage()
     },
     err => {
