@@ -105,18 +105,22 @@
         <div class="bootstrapTables">
           <div class="col-sm-12 col-xs-12 table-responsive">
             <table class="hover-table table table-hover">
-              <tr>
-                <th>Rank</th>
-                <th>Name</th>
-                <th>Worth</th>
-              </tr>
-              <div *ngFor="let player of playerList;">
+              <thead>
                 <tr>
-                  <!-- <td>{{player.rank}}</td> -->
-                  <td><img src="https://graph.facebook.com/v2.11/{{player.id}}/picture" alt="User Profile">{{player.name}}</td>
-                  <td>{{player.worth.worth}}</td>
+                  <th scope="col">Rank</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Worth</th>
                 </tr>
-              </div>
+              </thead>
+              <tbody>
+                <div *ngFor="let player of playerList;">
+                  <tr>
+                    <th scope="row">{{player.id}}</th>
+                    <td>{{player.name}}</td>
+                    <td>{{player.worth.worth}}</td>
+                  </tr>
+                </div>
+              </tbody>
             </table>
           </div>
         </div>
