@@ -113,13 +113,11 @@
                 </tr>
               </thead>
               <tbody>
-                <div *ngFor="let player of playerList;">
-                  <tr>
+                  <tr *ngFor="let player of playerList;">
                     <th scope="row">{{player.id}}</th>
                     <td>{{player.name}}</td>
                     <td>{{player.worth.worth}}</td>
                   </tr>
-                </div>
               </tbody>
             </table>
           </div>
