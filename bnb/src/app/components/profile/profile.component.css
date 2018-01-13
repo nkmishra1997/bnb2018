@@ -66,8 +66,16 @@ th ,.col-sm-12 td
     border-right: 0 !important;
 }
 
+.nopad
+{
+  padding: 8px !important;
+}
 @media only screen and (max-width: 500px) {
 
+  .nopad
+  {
+    padding: none !important;
+  }
    .header-l {
 
    text-align: center;
