@@ -23,6 +23,19 @@ exports.companyList = function(req, res){
   })
 }
 
+// try {
+//   exports.companyList = function(req, res){
+//     company.find({}).then(companies=>{
+//       var accountBal = {'accountBalance' : req.user.accountBalance}
+//       res.json(companies)
+//     })
+//   }
+// } catch(e) {
+//   console.log(e)
+//   res.send("unable to fetch company list")
+// } finally {
+//   console.log('works')
+// }
 
 exports.companyDetails = function(req, res){
   company.findById(req.params.id).then((compDetails)=>{
