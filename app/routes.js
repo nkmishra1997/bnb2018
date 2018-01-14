@@ -76,13 +76,13 @@ app.route('/admin/deleteUser/:id')
 // ============================================================================
 
 app.route('/companylist')
-    .get(passport.authenticate('facebook-token'), controller.companyList);
+    .get(isLoggedIn, controller.companyList);
 
 app.route('/companydetail/:id')
-    .get(passport.authenticate('facebook-token'), controller.companyDetails);
+    .get(isLoggedIn, controller.companyDetails);
 
 app.route('/newslist')
-    .get(passport.authenticate('facebook-token'), controller.newsList);
+    .get(isLoggedIn, controller.newsList);
 
 // ============================================================================
 // Customer  ===============================================================

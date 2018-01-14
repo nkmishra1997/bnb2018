@@ -16,7 +16,9 @@ const configDB = require('./config/database.js');
 // configuration ===============================================================
 
 const Connection = function(configDB, callback){
-  mongoose.connect(configDB.url)
+  mongoose.connect(configDB.url, function(err){
+    if (err) throw err
+  })
   mongoose.connection.once('open', callback)
 }
 
@@ -26,16 +28,18 @@ const callback = ()=>{
   console.log('Magic happens on port ' + port)
 }
 
-function databaseCheck(){
-  try{
-    Connection(configDB, callback)
-  } catch(e) {
-    console.log(e)
-    mongoose.disconnect()
-  }
-}
+Connection(configDB,callback)
 
-databaseCheck()
+// function databaseCheck(){
+//   try{
+//     Connection(configDB, callback)
+//   } catch(e) {
+//     console.log(e)
+//     mongoose.disconnect()
+//   }
+// }
+//
+// databaseCheck()
 
 require('./config/passport')(passport); // pass passport for configuration
 
