@@ -107,14 +107,14 @@
             <table class="hover-table table table-hover">
               <thead>
                 <tr>
-                  <th >Rank</th>
-                  <th >Name</th>
-                  <th >Worth</th>
+                  <td ><strong>Rank</strong></td>
+                  <td ><strong>Name</strong></td>
+                  <td ><strong>Worth</strong></td>
                 </tr>
               </thead>
               <tbody>
                   <tr *ngFor="let player of playerList;">
-                    <th >{{player.id}}</th>
+                    <th></th>
                     <td><img src="https://graph.facebook.com/v2.11/{{player.id}}/picture?type=large" alt="User Profile"  width="70" height="70" hspace="7"> {{player.name}}</td>
                     <td >{{player.worth.worth}}</td>
                   </tr>

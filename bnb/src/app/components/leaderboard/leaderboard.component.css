@@ -5,3 +5,18 @@ img {
 {
   padding-left: 10px !important;
 }
+body
+{
+    counter-reset: Serial;
+}
+
+/*table
+{
+    border-collapse: separate;
+}*/
+
+tr th:first-child:before
+{
+  counter-increment: Serial;
+  content: counter(Serial);
+}
