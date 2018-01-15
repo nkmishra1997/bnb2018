@@ -2,9 +2,9 @@ var mongoose = require('mongoose')
 var company = require('./models/company');
 var customer = require('./models/customer');
 var news = require('./models/news');
-var parameters = require('./parameters.js')
+var parameters = require('./parameters.js');
+var CronJob = require('cron').CronJob;
 mongoose.Promise = global.Promise;
-
 
 
 
