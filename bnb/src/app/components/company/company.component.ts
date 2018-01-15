@@ -46,9 +46,9 @@ private subscription: Subscription;
     this.subscription = Observable.timer(0,10000)
     .subscribe(() => {
         this.companyService.fetchCompany(this.id).subscribe(Company => {
-          this.company = Company; console.log("company fetched");
+          this.company = Company; console.log("company fetched")
 
-          var ctx = document.querySelector("#statsChart");
+          var ctx = document.querySelector("#statsChart")
 
           let D:Array<any> = new Array(20);
           for(var i=0;i<20;i++){
@@ -70,7 +70,7 @@ private subscription: Subscription;
               data: D
             }
             ]
-          };
+          }
 
           var areaChart = new Chart(ctx, {
             type:"line",
@@ -124,11 +124,11 @@ private subscription: Subscription;
               //   footerFontFamily:"Montserrat"
               // },
             }
-          });
+          })
         },
         err => {
-          console.log(err);
-          return false;
+          console.log(err)
+          return false
         });
       });
 
@@ -157,10 +157,11 @@ private subscription: Subscription;
   buyStock(form : any){
 
     console.log(this.buyForm.value) //for testing only
+    this.clearField()
 
     this.companyService.buy(this.id,form).subscribe(Info => {
       this.info = Info
-      this.refreshPage();
+      this.refreshPage()
     },
     err => {
       console.log(err)
@@ -174,7 +175,7 @@ private subscription: Subscription;
 
     this.companyService.sell(this.id,form).subscribe(Info => {
       this.info = Info
-      this.refreshPage();
+      this.refreshPage()
     },
     err => {
       console.log(err)
@@ -188,7 +189,7 @@ private subscription: Subscription;
 
     this.companyService.short(this.id,form).subscribe(Info => {
       this.info = Info
-      this.refreshPage();
+      this.refreshPage()
     },
     err => {
       console.log(err)
@@ -202,9 +203,7 @@ private subscription: Subscription;
 
     this.companyService.cover(this.id,form).subscribe(Info => {
       this.info = Info
-      this.refreshPage();
-
-
+      this.refreshPage()
 
     },
     err => {
@@ -216,11 +215,11 @@ private subscription: Subscription;
   refreshPage() {
     console.log("Inside RefreshPage()");
     this.companyService.fetchCompany(this.id).subscribe(Company => {
-      this.company = Company;
+      this.company = Company
     },
     err => {
-      console.log(err);
-      return false;
+      console.log(err)
+      return false
     });
   }
 }

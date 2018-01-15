@@ -15,17 +15,31 @@ const configDB = require('./config/database.js');
 
 // configuration ===============================================================
 
-var Connection = function(configDB, callback){
-  mongoose.connect(configDB.url);
-  mongoose.connection.once('open', callback);
-};
+const Connection = function(configDB, callback){
+  mongoose.connect(configDB.url, function(err){
+    if (err) throw err
+  })
+  mongoose.connection.once('open', callback)
+}
 
-Connection(configDB, ()=>{
-  console.log('MongoDB is live');
+const callback = ()=>{
+  console.log('MongoDB is live')
   app.listen(port);
-  console.log('Magic happens on port ' + port);
-});
- // connect to our database});
+  console.log('Magic happens on port ' + port)
+}
+
+Connection(configDB,callback)
+
+// function databaseCheck(){
+//   try{
+//     Connection(configDB, callback)
+//   } catch(e) {
+//     console.log(e)
+//     mongoose.disconnect()
+//   }
+// }
+//
+// databaseCheck()
 
 require('./config/passport')(passport); // pass passport for configuration
 

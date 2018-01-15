@@ -61,7 +61,7 @@
     <link rel="stylesheet" href="../css/font-awesome.min.css">
     <!-- Custom -->
     <link rel="stylesheet" type="text/css" href="../css/style.css">
-
+     <link rel="stylesheet" type="text/css" href="leaderboard.component.css">
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="57x57" href="../../assets/img/favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="../../assets/img/favicon/apple-icon-60x60.png">
@@ -107,19 +107,17 @@
             <table class="hover-table table table-hover">
               <thead>
                 <tr>
-                  <th scope="col">Rank</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Worth</th>
+                  <td ><strong>Rank</strong></td>
+                  <td ><strong>Name</strong></td>
+                  <td ><strong>Worth</strong></td>
                 </tr>
               </thead>
               <tbody>
-                <div *ngFor="let player of playerList;">
-                  <tr>
-                    <th scope="row">{{player.id}}</th>
-                    <td>{{player.name}}</td>
-                    <td>{{player.worth.worth}}</td>
+                  <tr *ngFor="let player of playerList;">
+                    <th></th>
+                    <td><img src="https://graph.facebook.com/v2.11/{{player.id}}/picture?type=large" alt="User Profile"  width="70" height="70" hspace="7"> {{player.name}}</td>
+                    <td >{{player.worth.worth}}</td>
                   </tr>
-                </div>
               </tbody>
             </table>
           </div>

@@ -132,6 +132,11 @@ exports.customerList = function(req, res) {
        }
        playerList.push(player)
      })
+
+    playerList.sort(function(a,b){
+      return b.worth.worth - a.worth.worth
+    })
+
     res.json(playerList)
 
   }).catch(err=>{
