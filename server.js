@@ -7,7 +7,7 @@ const port = process.env.PORT || '3000';
 const mongoose = require('mongoose');
 const passport = require('passport');
 const flash    = require('connect-flash');
-
+var cron = require('cron');
 const morgan       = require('morgan');
 const cookieParser = require('cookie-parser');
 const session      = require('express-session');
@@ -42,7 +42,6 @@ Connection(configDB,callback)
 // databaseCheck()
 
 require('./config/passport')(passport); // pass passport for configuration
-
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
@@ -50,6 +49,8 @@ app.use(cookieParser()); // read cookies (needed for auth)
 // Parsers for POST data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+let job1 = require('./app/task')(cron);
+
 app.use(express.static('views'));
 app.get('/', function(req, res) {
         res.sendfile('./views/index.html'); // load the index.ejs file
@@ -65,6 +66,7 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }));
+// app.use(CronJob.changePrice());
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session

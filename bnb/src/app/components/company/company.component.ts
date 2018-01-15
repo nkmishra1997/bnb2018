@@ -157,7 +157,7 @@ private subscription: Subscription;
   buyStock(form : any){
 
     console.log(this.buyForm.value) //for testing only
-    this.clearField()
+    // this.clearField()
 
     this.companyService.buy(this.id,form).subscribe(Info => {
       this.info = Info

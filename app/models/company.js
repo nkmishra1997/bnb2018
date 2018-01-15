@@ -67,7 +67,7 @@ const companySchema = new Schema({
       min: 0.0,
       max: parameters.maxNumberOfShares
     }
-  }],
+  }]
 });
 
 const company = module.exports = mongoose.model('company', companySchema);
