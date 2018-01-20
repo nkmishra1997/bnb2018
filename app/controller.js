@@ -92,8 +92,8 @@ exports.customerDetail = function(req, res) {
     var stockHoldingAmount = 0
     var stockShortedAmount = 0
     Customer.portfolio.forEach((element)=>{
-      stockHoldingAmount += element.company.stockPrice * element.stockHeld
-      stockShortedAmount += element.company.stockPrice * element.stockShorted
+      stockHoldingAmount += element.stockPrice * element.stockHeld
+      stockShortedAmount += element.stockPrice * element.stockShorted
     })
 		var worth = { 'worth' : Customer.accountBalance + stockHoldingAmount - stockShortedAmount - Customer.loan.amount }
 
@@ -120,8 +120,8 @@ exports.customerList = function(req, res) {
        var stockHoldingAmount = 0
        var stockShortedAmount = 0
        customer.portfolio.forEach((element)=>{
-         stockHoldingAmount += element.company.stockPrice * element.stockHeld
-         stockShortedAmount += element.company.stockPrice * element.stockShorted
+         stockHoldingAmount += element.stockPrice * element.stockHeld
+         stockShortedAmount += element.stockPrice * element.stockShorted
        })
    		var worth = { 'worth' : customer.accountBalance + stockHoldingAmount - stockShortedAmount - customer.loan.amount }
 

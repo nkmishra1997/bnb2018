@@ -21,16 +21,15 @@ module.exports = function (cron) {
             res.send("unable to fetch companies");
         }else{
             for(var i = 0; i<Company.length; i++){
-                rand = (Math.random() * (1 - (-1)) + (-1)).toFixed(3)
-                Company.stockPrice = Company.stockPrice * (1 + (parameters.controlUpdate3*rand));
-                // Company.history.push({
-                //     timeStamp : Date.now(),
-                //     stockPrice : Company.stockPrice,
-                //     availableQuantity : Company.availableQuantity
-                // });
-                console.log(Company, rand);
-                // Company.save();
-                console.log("working fine");
+                rand = (Math.random() * (2) + (-1)).toFixed(0);
+                rand=parseFloat(rand);
+                Company[i].stockPrice = (Company[i].stockPrice * (1 + (rand/10))).toFixed(0);
+                Company[i].history.push({
+                    timeStamp : Date.now(),
+                    stockPrice : Company[i].stockPrice,
+                    availableQuantity : Company[i].availableQuantity
+                });
+                Company[i].save();
             }                      
         }
       });
