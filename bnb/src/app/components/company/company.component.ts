@@ -34,6 +34,8 @@ shortForm : FormGroup;
 coverForm : FormGroup;
 private subscription: Subscription;
 
+
+
   constructor(private companyService : CompanyService,
               private route : ActivatedRoute,
               private formBuilder : FormBuilder) { }
@@ -43,23 +45,96 @@ private subscription: Subscription;
       this.id = params['id'];
     });
 
+    var ctx = document.querySelector("#statsChart")
+    let D:Array<any> = new Array(9);
+    var areaChart = null;
+    var l;
+    for(var i=0;i<9;i++){
+      D[i] = 0;
+    }
+    var data = {
+      labels: ["0","1","2","3","4","5","6","7","8"],
+      datasets: [
+      {
+        label: "Stock Price",
+        backgroundColor: "rgba(74,73,180,0.8)",
+        borderColor: "rgba(74,73,180,0.8)",
+        pointBorderColor: "rgb(74,73,180,59)",
+        pointBackgroundColor: "rgba(74,73,180,0.8)",
+        data: D
+      }
+      ]
+    }
+    areaChart = new Chart(ctx, {
+      type:"line",
+      data:data,
+
+      options: {
+        // tooltips: {
+        //   mode:"label",
+        //   backgroundColor:'rgba(25,25,25,0.9)',
+        //   cornerRadius:0,
+        //   footerFontFamily:"Montserrat"
+        // },
+        scaleLineColor: 'transparent',
+        elements:{
+          point: {
+            hitRadius:90
+          }
+        },
+
+        scales: {
+          yAxes: [{
+            stacked: true,
+            ticks: {
+              fontFamily: "Arial",
+              fontColor:"#586874;"
+
+            }
+          }],
+          xAxes: [{
+            stacked: true,
+            gridLines: {
+              drawOnChartArea: false
+          },
+            ticks: {
+              fontFamily: "Arial",
+              fontColor:"#586874"
+
+            },
+          }]
+        },
+        animation: {
+          duration: 1500
+        },
+        responsive: true,
+        legend: {
+          display: false,
+        },
+        tooltips: {
+          // mode:"label",
+          backgroundColor:'rgba(25,25,25,0.9)',
+          cornerRadius:0,
+          footerFontFamily:"Montserrat"
+        }
+      }
+    });
+
+
     this.subscription = Observable.timer(0,10000)
     .subscribe(() => {
         this.companyService.fetchCompany(this.id).subscribe(Company => {
           this.company = Company; console.log("company fetched")
-
-          var ctx = document.querySelector("#statsChart")
-
-          let D:Array<any> = new Array(20);
-          for(var i=0;i<20;i++){
-            D[i] = 0;
-          }
-          var l = this.company.compDetails.history.length;
-          for(var j=1;j<=l&&j<21;j++){
-            D[20-j] = this.company.compDetails.history[l-j].stockPrice;
+          
+          if(areaChart!=null)
+            areaChart.destroy();
+          
+          l = this.company.compDetails.history.length;
+          for(var j=1;j<=l&&j<10;j++){
+            D[9-j] = this.company.compDetails.history[l-j].stockPrice;
           }
           var data = {
-            labels: ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19"],
+            labels: ["0","1","2","3","4","5","6","7","8"],
             datasets: [
             {
               label: "Stock Price",
@@ -71,18 +146,20 @@ private subscription: Subscription;
             }
             ]
           }
-
-          var areaChart = new Chart(ctx, {
+          // if(areaChart !== undefined || areaChart !== null){
+          //   areaChart.destroy();
+          // }
+          areaChart = new Chart(ctx, {
             type:"line",
             data:data,
 
             options: {
-              tooltips: {
-                //mode:"label",
-                backgroundColor:'rgba(25,25,25,0.9)',
-                cornerRadius:0,
-                footerFontFamily:"Montserrat"
-              },
+              // tooltips: {
+              //   mode:"label",
+              //   backgroundColor:'rgba(25,25,25,0.9)',
+              //   cornerRadius:0,
+              //   footerFontFamily:"Montserrat"
+              // },
               scaleLineColor: 'transparent',
               elements:{
                 point: {
@@ -117,14 +194,15 @@ private subscription: Subscription;
               responsive: true,
               legend: {
                 display: false,
+              },
+              tooltips: {
+                // mode:"label",
+                backgroundColor:'rgba(25,25,25,0.9)',
+                cornerRadius:0,
+                footerFontFamily:"Montserrat"
               }
-              // tooltips: {
-              //   backgroundColor:'rgba(25,25,25,0.9)',
-              //   cornerRadius:0,
-              //   footerFontFamily:"Montserrat"
-              // },
             }
-          })
+          });
         },
         err => {
           console.log(err)
