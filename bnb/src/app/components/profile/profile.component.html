@@ -14,8 +14,7 @@
     <!-- Font-awesome -->
     <link rel="stylesheet" href="../css/font-awesome.min.css">
     <!-- Custom -->
-    <link rel="stylesheet" type="text/css" href=".../css/style.css">
-    <link rel="stylesheet" type="text/css" href="profile.component.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="57x57" href="../../assets/img/favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="../../assets/img/favicon/apple-icon-60x60.png">
@@ -113,8 +112,8 @@
                 <th>Shorted</th>
                 <th>Price</th>
               </tr>
-              <tr *ngFor="let company of player?.Customer.portfolio;">
-                <td [routerLink]="['/company', company.company._id]">{{company.company.symbol}}</td>
+              <tr *ngFor="let company of player?.Customer.portfolio;"  [routerLink]="['/company', company.company._id]">
+                <td>{{company.company.symbol}}</td>
                 <td>{{company.stockHeld}}</td>
                 <td>{{company.stockShorted}}</td>
                 <td>{{company.company.stockPrice}}</td>
