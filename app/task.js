@@ -21,9 +21,9 @@ module.exports = function (cron) {
             res.send("unable to fetch companies");
         }else{
             for(var i = 0; i<Company.length; i++){
-                rand = (Math.random() * (2) + (-1)).toFixed(0);
+                rand = (Math.random() * (2) + (-1)).toFixed(2);
                 rand=parseFloat(rand);
-                Company[i].stockPrice = (Company[i].stockPrice * (1 + (rand/10))).toFixed(0);
+                Company[i].stockPrice = (Company[i].stockPrice * (1 + (rand/100))).toFixed(0);
                 Company[i].history.push({
                     timeStamp : Date.now(),
                     stockPrice : Company[i].stockPrice,

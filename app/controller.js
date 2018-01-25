@@ -435,7 +435,6 @@ exports.addNews = function(req, res){
       newsText : req.body.newsText,
       youtubeSrc : req.body.youtubeSrc,
       isPublished : req.body.isPublished,
-      publishedOn: Date.now(),
       newsImpact : req.body.newsImpact
     })
     newNews.save().then(news=>{

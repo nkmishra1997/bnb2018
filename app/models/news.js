@@ -18,7 +18,6 @@ const newsSchema = new Schema({
 
   publishedOn:{
     type: Date,
-    default: Date.now()
   },
   
   newsImpact:[{
