@@ -6,7 +6,7 @@ module.exports = function (cron) {
 
 
   let companyPriceOnTime = new cron.CronJob({
-    cronTime : '* */5 * * * *',  // The time pattern when you want the job to start
+    cronTime : '*/30 * * * * *',  // The time pattern when you want the job to start
     onTick : changePrice, // Task to run
     onComplete : reset, // When job is completed and It stops.
     start : true, // immediately starts the job.

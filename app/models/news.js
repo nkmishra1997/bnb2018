@@ -10,9 +10,9 @@ const newsSchema = new Schema({
 
   youtubeSrc: String,
 
-  isPublished:{
-    type: Boolean,
-    default: false,
+  flag:{
+    type: Number,
+    default: 0,
     required:true
   },
 

@@ -3,10 +3,11 @@ module.exports = function (cron) {
     var parameters = require('./parameters');
     var company = require('./models/company');
     var mongoose = require('mongoose');
+    var news = require('./models/news.js');
   
   
     let companyPriceOnTime = new cron.CronJob({
-      cronTime : '* */5 * * * *',  // The time pattern when you want the job to start
+      cronTime : '* * * * * *',  // The time pattern when you want the job to start
       onTick : changePrice, // Task to run
       onComplete : reset, // When job is completed and It stops.
       start : true, // immediately starts the job.
@@ -14,26 +15,42 @@ module.exports = function (cron) {
     });
   
     let number = 0;
-    // function changePrice() {
-    //     company.find({} , function(err, Company) {
-    //       if (err){
-    //           console.log(err);
-    //           res.send("unable to fetch companies");
-    //       }else{
-    //           for(var i = 0; i<Company.length; i++){
-    //               rand = (Math.random() * (2) + (-1)).toFixed(2);
-    //               rand=parseFloat(rand);
-    //               Company[i].stockPrice = (Company[i].stockPrice * (1 + (rand/100))).toFixed(0);
-    //               Company[i].history.push({
-    //                   timeStamp : Date.now(),
-    //                   stockPrice : Company[i].stockPrice,
-    //                   availableQuantity : Company[i].availableQuantity
-    //               });
-    //               Company[i].save();
-    //           }                      
-    //       }
-    //     });
-    // }
+    function changePrice() {
+        company.find({} , function(err, Company) {
+          if (err){
+              console.log(err);
+              res.send("unable to fetch companies");
+          }else{
+              news.find({}, function(err, News){
+                  if (err) {
+                      console.log(err);
+                      res.send("unable to load news");
+                  }
+                  else{
+                    for(var i = 0; i<Company.length; i++){
+                        var j=0;
+                        var k=0;
+                        while(news[j].flag==1){
+                        Company[i].stockPrice = (Company[i].stockPrice * (1 + (rand/50))).toFixed(0);
+                        j++;}
+                        setInterval(function(){
+                            console.log("inc counter", k);
+                            k++;
+                         }, 3000);
+                        Company[i].history.push({
+                            timeStamp : Date.now(),
+                            stockPrice : Company[i].stockPrice,
+                            availableQuantity : Company[i].availableQuantity
+                        });
+                        Company[i].save();
+                    }  
+
+                  }
+              });
+                                  
+          }
+        });
+    }
     function reset() {
       console.log('Task update Completed');
       number=0;
@@ -42,3 +59,5 @@ module.exports = function (cron) {
     return companyPriceOnTime;
   
   };
+
+  
