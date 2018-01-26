@@ -30,7 +30,7 @@ module.exports = function (cron) {
                     availableQuantity : Company[i].availableQuantity
                 });
                 Company[i].save();
-            }                      
+            }
         }
       });
   }
