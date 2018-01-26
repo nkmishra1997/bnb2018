@@ -49,7 +49,7 @@ app.use(cookieParser()); // read cookies (needed for auth)
 // Parsers for POST data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-let job1 = require('./app/task')(cron);
+require('./app/task')(cron);
 
 app.use(express.static('views'));
 app.get('/', function(req, res) {
@@ -62,7 +62,7 @@ app.set('view engine', 'ejs'); // set up ejs for templating
 
 // required for passport
 app.use(session({
-    secret: 'fbloginboilerplate', // session secret
+    secret: 'stockMarket', // session secret
     resave: true,
     saveUninitialized: true
 }));

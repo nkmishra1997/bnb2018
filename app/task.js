@@ -4,7 +4,6 @@ module.exports = function (cron) {
   var company = require('./models/company');
   var mongoose = require('mongoose');
 
-
   let companyPriceOnTime = new cron.CronJob({
     cronTime : '*/30 * * * * *',  // The time pattern when you want the job to start
     onTick : changePrice, // Task to run
@@ -13,7 +12,7 @@ module.exports = function (cron) {
     timeZone : "Asia/Kolkata" // The timezone
   });
 
-  let number = 0;
+  var number = 0;
   function changePrice() {
       company.find({} , function(err, Company) {
         if (err){
@@ -30,7 +29,7 @@ module.exports = function (cron) {
                     availableQuantity : Company[i].availableQuantity
                 });
                 Company[i].save();
-            }                      
+            }
         }
       });
   }
