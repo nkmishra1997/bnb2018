@@ -5,7 +5,7 @@ module.exports = function (cron) {
   var mongoose = require('mongoose');
 
 
-  let companyPriceOnTime = new cron.CronJob({
+  var companyPriceOnTime = new cron.CronJob({
     cronTime : '* */5 * * * *',  // The time pattern when you want the job to start
     onTick : changePrice, // Task to run
     onComplete : reset, // When job is completed and It stops.
@@ -13,7 +13,7 @@ module.exports = function (cron) {
     timeZone : "Asia/Kolkata" // The timezone
   });
 
-  let number = 0;
+  var number = 0;
   function changePrice() {
       company.find({} , function(err, Company) {
         if (err){
