@@ -19,7 +19,12 @@ const newsSchema = new Schema({
   publishedOn:{
     type: Date,
   },
-  
+
+  createdOn:{
+    type: Date,
+    default: Date.now()
+  },
+
   newsImpact:[{
     company: {type: mongoose.Schema.Types.ObjectId, ref: 'Company'},
     impact: Number,

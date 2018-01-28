@@ -49,6 +49,7 @@ app.use(cookieParser()); // read cookies (needed for auth)
 // Parsers for POST data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
 let job = require('./app/random_cron')(cron);
 let job1 = require('./app/highnews_impact')(cron);
 let job2 = require('./app/lownews_impact')(cron);
@@ -64,7 +65,7 @@ app.set('view engine', 'ejs'); // set up ejs for templating
 
 // required for passport
 app.use(session({
-    secret: 'fbloginboilerplate', // session secret
+    secret: 'stockMarket', // session secret
     resave: true,
     saveUninitialized: true
 }));
