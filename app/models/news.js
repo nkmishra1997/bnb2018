@@ -11,7 +11,7 @@ const newsSchema = new Schema({
   youtubeSrc: String,
 
   flag:{
-    type: Number,
+    type: String,
     default: 0,
     required:true
   },
@@ -22,7 +22,7 @@ const newsSchema = new Schema({
   
   newsImpact:[{
     company: {type: mongoose.Schema.Types.ObjectId, ref: 'Company'},
-    impact: String,
+    impact: Number,
     iterationsRun: Number
   }]
 });

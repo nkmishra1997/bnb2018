@@ -7,13 +7,13 @@ module.exports = function (cron) {
   
   
     let companyPriceOnTime = new cron.CronJob({
-      cronTime : '* * * * * *',  // The time pattern when you want the job to start
+      cronTime : '*/5 * * * * *',  // The time pattern when you want the job to start
       onTick : changePrice, // Task to run
       onComplete : reset, // When job is completed and It stops.
       start : true, // immediately starts the job.
       timeZone : "Asia/Kolkata" // The timezone
     });
-  
+
     let number = 0;
     function changePrice() {
         company.find({} , function(err, Company) {
@@ -29,14 +29,15 @@ module.exports = function (cron) {
                   else{
                     for(var i = 0; i<Company.length; i++){
                         var j=0;
-                        var k=0;
-                        while(news[j].flag==1){
-                        Company[i].stockPrice = (Company[i].stockPrice * (1 + (rand/50))).toFixed(0);
-                        j++;}
-                        setInterval(function(){
-                            console.log("inc counter", k);
-                            k++;
-                         }, 3000);
+                        // console.log(News[j].flag,"one", Company[i].stockPrice)
+                        while(j<News.length){
+                        if(News[j].flag=="2"){
+                            // console.log(News[j].flag,"sec",News[j].newsImpact[i].impact)
+                            // console.log("value of j is",j,"task2")
+                        Company[i].stockPrice = (Company[i].stockPrice * (1 + (News[j].newsImpact[i].impact/1000))).toFixed(0);}
+                        j++;
+                        }
+
                         Company[i].history.push({
                             timeStamp : Date.now(),
                             stockPrice : Company[i].stockPrice,
@@ -44,13 +45,15 @@ module.exports = function (cron) {
                         });
                         Company[i].save();
                     }  
-
                   }
               });
                                   
           }
         });
     }
+
+
+
     function reset() {
       console.log('Task update Completed');
       number=0;
