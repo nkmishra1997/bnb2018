@@ -78,44 +78,7 @@ exports.newsList = function(req, res){
 
 
 
-var k=0;
-news.find({}, function(err, News){
-    // console.log(News[0].flag,"third");
-    if (err) {
-        console.log(err);
-        res.send("unable to load news");
-    }
-    else{ 
-        setInterval(function(){
-            if((k<=2)&&(News[k].flag=="1")){
-            News[k].flag="2";
-            // console.log("change in",k)
-            News[k].save();}
-            k++;
 
-         }, 30000);
-    }
-});
-
-
-var l=0;
-news.find({}, function(err, News){
-    // console.log(News[0].flag,"third");
-    if (err) {
-        console.log(err);
-        res.send("unable to load news");
-    }
-    else{ 
-        setInterval(function(){
-            if((l<=2)&&(News[k].flag=="2")){
-            News[l].flag="3";
-            // console.log("change in",k)
-            News[l].save();}
-            l++;
-
-         }, 30000);
-    }
-});
 
 // ============================================================================
 // Customer ===================================================================
