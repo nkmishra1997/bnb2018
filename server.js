@@ -12,7 +12,6 @@ const morgan       = require('morgan');
 const cookieParser = require('cookie-parser');
 const session      = require('express-session');
 const configDB = require('./config/database.js');
-require('./app/iterator.js');
 
 // configuration ===============================================================
 
@@ -76,6 +75,7 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 // routes ======================================================================
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+// require('./app/iterator.js');
 
 
 // Catch all other routes and return the index file
