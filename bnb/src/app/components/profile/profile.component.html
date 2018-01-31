@@ -54,9 +54,9 @@
       <div class="userProfile-header">
         <div class="row">
           <div class="header-l col-sm-6 col-xs-12">
-            <img *ngIf="player" src="https://graph.facebook.com/v2.11/{{player?.Customer.facebook.id}}/picture?type=large" alt="User image">
+            <img *ngIf="player" src="https://graph.facebook.com/v2.11/{{player?.id}}/picture?type=large" alt="User image">
             <div class="header-l-info">
-              <h3>{{player?.Customer.facebook.name}}</h3>
+              <h3>{{player?.name}}</h3>
               <span class="freelaner"><i class="fa fa-user" aria-hidden="true"></i> Trader</span>
             </div>
           </div>
@@ -66,7 +66,7 @@
             <table class="hover-table table table-hover">
               <tr>
                 <td>Your Balance : </td>
-                <td>	{{player?.Customer.accountBalance}} </td>
+                <td>	{{player?.accountBalance}} </td>
               </tr>
               <tr>
                 <td>Your Worth : </td>
@@ -74,7 +74,7 @@
               </tr>
               <tr>
                 <td>Loan Pending :</td>
-                <td>{{player?.Customer.loan.amount}}</td>
+                <td>{{player?.loan}}</td>
               </tr>
             </table>
           </div>
@@ -113,7 +113,7 @@
                 <th>Shorted</th>
                 <th>Price</th>
               </tr>
-              <tr *ngFor="let company of player?.Customer.portfolio;">
+              <tr *ngFor="let company of player?.portfolio;">
                 <td [routerLink]="['/company', company.company._id]">{{company.company.symbol}}</td>
                 <td>{{company.stockHeld}}</td>
                 <td>{{company.stockShorted}}</td>
@@ -134,7 +134,7 @@
                 <th>Price</th>
                 <th>Quantity</th>
               </tr>
-              <tr *ngFor="let activity of player?.Customer.activity | reverse;">
+              <tr *ngFor="let activity of player?.activity | reverse;">
                 <td>{{activity.company.symbol}}</td>
                 <td>{{activity.action}}</td>
                 <td>{{activity.price}}</td>

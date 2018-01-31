@@ -108,10 +108,10 @@ app.route('/cover/:id')
     .post(passport.authenticate('facebook-token'), controller.cover);
 
 app.route('/takeloan')
-    .post(isLoggedIn, controller.takeLoan);
+    .post(passport.authenticate('facebook-token'), controller.takeLoan);
 
 app.route('/repayloan')
-    .post(isLoggedIn, controller.repayLoan);
+    .post(passport.authenticate('facebook-token'), controller.repayLoan);
 
 // =============================================================================
 // AUTHENTICATE (FIRST LOGIN) ==================================================
