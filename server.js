@@ -49,7 +49,12 @@ app.use(cookieParser()); // read cookies (needed for auth)
 // Parsers for POST data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-let job1 = require('./app/task')(cron);
+
+let job = require('./app/random_cron')(cron);
+let job1 = require('./app/highnews_impact')(cron);
+// let job2 = require('./app/lownews_impact')(cron);
+let job4 = require('./app/newsDepublishing')(cron);
+let job3 = require('./app/newsPublishingcron')(cron);
 
 app.use(express.static('views'));
 app.get('/', function(req, res) {
@@ -62,7 +67,7 @@ app.set('view engine', 'ejs'); // set up ejs for templating
 
 // required for passport
 app.use(session({
-    secret: 'fbloginboilerplate', // session secret
+    secret: 'stockMarket', // session secret
     resave: true,
     saveUninitialized: true
 }));
@@ -72,6 +77,7 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 // routes ======================================================================
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+// require('./app/iterator.js');
 
 
 // Catch all other routes and return the index file

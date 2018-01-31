@@ -99,6 +99,10 @@ exports.newsList = function(req, res){
   })
 }
 
+
+
+
+
 // ============================================================================
 // Customer ===================================================================
 // ============================================================================
@@ -462,8 +466,7 @@ exports.addNews = function(req, res){
     const newNews = new news({
       newsText : req.body.newsText,
       youtubeSrc : req.body.youtubeSrc,
-      isPublished : req.body.isPublished,
-      publishedOn: Date.now(),
+      flag : req.body.flag,
       newsImpact : req.body.newsImpact
     })
     newNews.save().then(news=>{
@@ -481,7 +484,7 @@ exports.modifyNews = function(req, res){
 
           News.newsText = req.body.newsText
           News.youtubeSrc = req.body.youtubeSrc
-          News.isPublished = req.body.isPublished
+          News.flag = req.body.flag
           News.newsImpact.company = req.body.newsImpact.company
           News.newsImpact.impact = req.body.newsImpact.impact
           News.save().then(news=>{

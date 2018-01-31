@@ -10,20 +10,24 @@ const newsSchema = new Schema({
 
   youtubeSrc: String,
 
-  isPublished:{
-    type: Boolean,
-    default: false,
+  flag:{
+    type: String,
+    default: 0,
     required:true
   },
 
   publishedOn:{
     type: Date,
+  },
+
+  createdOn:{
+    type: Date,
     default: Date.now()
   },
-  
+
   newsImpact:[{
     company: {type: mongoose.Schema.Types.ObjectId, ref: 'Company'},
-    impact: String,
+    impact: Number,
     iterationsRun: Number
   }]
 });
