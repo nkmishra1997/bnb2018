@@ -26,9 +26,9 @@ module.exports = function (cron) {
             }
             else{ 
                 var l=0;
-        
-                 while((News[l].flag=="1")||(News[l].flag=="2")){ 
-                    if(l!=News.length-1){
+                
+                 while(l!=News.length-1){ 
+                    if((News[l].flag=="1")||(News[l].flag=="2")){
                       l++;}}
                           if((l<News.length)&&(News[l].flag=="0")){
                           News[l].flag="1";

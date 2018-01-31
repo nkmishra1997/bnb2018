@@ -24,9 +24,8 @@ module.exports = function (cron) {
         }
         else{ 
             var k=0;
-            
-          while(News[k].flag=="2") {
-          if(k!=News.length-1){
+          while(k!=News.length-1) {
+          if(News[k].flag=="2"){
           k++;}}
                 if((k<News.length)&&(News[k].flag=="1")){
                 News[k].flag="2";
