@@ -36,6 +36,7 @@ export class ProfileComponent implements OnInit {
       .subscribe(() => {
         this.profileService.fetchCustomer().subscribe(Player => {
           this.player = Player
+          //console.log(this.player)
           this.refreshPage()
         },
         err => {
@@ -62,7 +63,7 @@ export class ProfileComponent implements OnInit {
   }
 
   checkLoan(){
-    if(this.player.Customer.loan.amount == 0){
+    if(!this.player.loan){
       return true
     }
     else{
@@ -86,6 +87,7 @@ export class ProfileComponent implements OnInit {
     console.log("Inside refreshPage()")
     this.profileService.fetchCustomer().subscribe(Player => {
       this.player = Player
+      //console.log(this.player)
     },
     err => {
       console.log(err)

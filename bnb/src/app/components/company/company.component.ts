@@ -124,10 +124,11 @@ private subscription: Subscription;
     this.subscription = Observable.timer(0,10000)
     .subscribe(() => {
         this.companyService.fetchCompany(this.id).subscribe(Company => {
-          this.company = Company; console.log("company fetched")
+          this.company = Company
+          console.log("company fetched")
 
           if(areaChart!=null)
-            areaChart.destroy();
+            areaChart.destroy()
 
           l = this.company.history.length;
           for(var j=1;j<=l&&j<10;j++){

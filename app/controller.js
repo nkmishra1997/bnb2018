@@ -40,10 +40,10 @@ exports.companyDetails = function(req, res){
   company.findById(req.params.id).then((compDetails)=>{
     customer.findById(req.user._id).then(Customer=>{
       var accountBalance = Customer.accountBalance
-      var buyMax = Math.min(Math.floor(accountBalance/company.stockPrice),company.availableQuantity)
-      var sellMax = Math.min(Math.floor(accountBalance/company.stockPrice),(company.totalQuantity-company.availableQuantity))
+      var buyMax = Math.min(Math.floor(accountBalance/compDetails.stockPrice),compDetails.availableQuantity)
+      var sellMax = Math.min(Math.floor(accountBalance/compDetails.stockPrice),(compDetails.totalQuantity-compDetails.availableQuantity))
       var shortMax = parameters.shortMax
-      var coverMax = Math.min(Math.floor(accountBalance/company.stockPrice),shortMax)
+      var coverMax = Math.min(Math.floor(accountBalance/compDetails.stockPrice),shortMax)
 
       var details = {
         name: compDetails.name,
