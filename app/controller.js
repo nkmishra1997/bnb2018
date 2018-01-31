@@ -14,8 +14,20 @@ mongoose.Promise = global.Promise;
 
 exports.companyList = function(req, res){
   company.find({}).then(companies=>{
-    var accountBal = {'accountBalance' : req.user.accountBalance}
-    res.json(companies)
+    //var accountBal = {'accountBalance' : req.user.accountBalance}
+    var companylist = []
+    companies.forEach((element)=>{
+      var company = {
+        id: element._id,
+        symbol: element.symbol,
+        name: element.name,
+        stockPrice: element.stockPrice,
+        annualGrowthRate: element.annualGrowthRate,
+        availableQuantity: element.availableQuantity
+      }
+      companylist.push(company)
+    })
+    res.json(companylist)
   })
   .catch(err=>{
     console.log(err)
@@ -34,7 +46,12 @@ exports.companyDetails = function(req, res){
       var coverMax = Math.min(Math.floor(accountBalance/company.stockPrice),shortMax)
 
       var details = {
-        compDetails : compDetails,
+        name: compDetails.name,
+        stockPrice: compDetails.stockPrice,
+        availableQuantity: compDetails.availableQuantity,
+        marketcap: compDetails.marketcap,
+        annualGrowthRate: compDetails.annualGrowthRate,
+        history: compDetails.history,
         accountBalance : accountBalance,
         buyMax : buyMax,
         sellMax : sellMax,
@@ -54,7 +71,7 @@ exports.companyDetails = function(req, res){
 }
 
 
-exports.newsDetails = function(req, res) {    //yet to be tested
+exports.newsDetails = function(req, res) {    //what is the use?
   news
   .findById(req.params.id)
   .populate('newsImpact.Company')
@@ -69,7 +86,13 @@ exports.newsDetails = function(req, res) {    //yet to be tested
 
 exports.newsList = function(req, res){
   news.find({}).then(newslist=>{
-    res.json(newslist)
+    var news = []
+    newslist.forEach((element)=>{
+      if(element.isPublished){
+        news.push(element)
+      }
+    })
+    res.json(news)
   }).catch(err=>{
     console.log(err);
 		res.send("unable to fetch news list")

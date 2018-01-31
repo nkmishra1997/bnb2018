@@ -76,36 +76,36 @@ app.route('/admin/deleteUser/:id')
 // ============================================================================
 
 app.route('/companylist')
-    .get(isLoggedIn, controller.companyList);
+    .get(passport.authenticate('facebook-token'), controller.companyList);
 
 app.route('/companydetail/:id')
-    .get(isLoggedIn, controller.companyDetails);
+    .get(passport.authenticate('facebook-token'), controller.companyDetails);
 
 app.route('/newslist')
-    .get(isLoggedIn, controller.newsList);
+    .get(passport.authenticate('facebook-token'), controller.newsList);
 
 // ============================================================================
 // Customer  ===============================================================
 // ============================================================================
 
 app.route('/customerdetail')
-    .get(isLoggedIn, controller.customerDetail);
+    .get(passport.authenticate('facebook-token'), controller.customerDetail);
 
 
 app.route('/scoreboard')
-    .get(isLoggedIn, controller.customerList);
+    .get(passport.authenticate('facebook-token'), controller.customerList);
 
 app.route('/buy/:id')
-    .post(isLoggedIn, controller.buy);
+    .post(passport.authenticate('facebook-token'), controller.buy);
 
 app.route('/sell/:id')
-    .post(isLoggedIn, controller.sell);
+    .post(passport.authenticate('facebook-token'), controller.sell);
 
 app.route('/short/:id')
-    .post(isLoggedIn, controller.short);
+    .post(passport.authenticate('facebook-token'), controller.short);
 
 app.route('/cover/:id')
-    .post(isLoggedIn, controller.cover);
+    .post(passport.authenticate('facebook-token'), controller.cover);
 
 app.route('/takeloan')
     .post(isLoggedIn, controller.takeLoan);
