@@ -88,7 +88,7 @@ exports.newsList = function(req, res){
   news.find({}).then(newslist=>{
     var news = []
     newslist.forEach((element)=>{
-      if(element.isPublished){
+      if(element.flag>0){
         news.push(element)
       }
     })
