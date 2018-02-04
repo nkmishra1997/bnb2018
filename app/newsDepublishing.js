@@ -24,9 +24,12 @@ module.exports = function (cron) {
         }
         else{ 
             var k=0;
+            var l;
           while(k!=News.length-1) {
+            l=k;
           if(News[k].flag=="2"){
-          k++;}}
+          k++;}
+          if(k==l){break;}}
                 if((k<News.length)&&(News[k].flag=="1")){
                 News[k].flag="2";
                 // console.log("change in",k)

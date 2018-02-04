@@ -19,17 +19,18 @@ module.exports = function (cron) {
     var number = 0;
     function changePrice() {
         news.find({}, function(err, News){
-        
             if (err) {
                 console.log(err);
                 res.send("unable to load news");
             }
             else{ 
                 var l=0;
-                
+                var k;
                  while(l!=News.length-1){ 
+                     k=l;
                     if((News[l].flag=="1")||(News[l].flag=="2")){
-                      l++;}}
+                      l++;}
+                    if(l==k){break;}}
                           if((l<News.length)&&(News[l].flag=="0")){
                           News[l].flag="1";
                           // console.log("change in",k)

@@ -25,43 +25,43 @@ var path = require("path");
 
 
 app.route('/adminDashboard')
-    .get(isLoggedIn, isAdmin, controller.customerDetail);
+    .get(isLoggedIn, isAdmin,controller.customerDetail);
 
 app.route('/admin/companylist')
-    .get(isLoggedIn, isAdmin, controller.companyList);
+    .get(isLoggedIn, isAdmin,controller.companyList);
 
 app.route('/admin/userlist')
     .get(isLoggedIn, isAdmin, controller.customerList);
 
 app.route('/admin/newslist')
-    .get(isLoggedIn, isAdmin, controller.newsList);
+    .get(isLoggedIn, isAdmin,controller.newsList);
 
 app.route('/admin/addCompany')
     .post(passport.authenticate('facebook-token'), isAdmin, controller.addCompany);
 
 app.route('/admin/addNews')
-    .post(passport.authenticate('facebook-token'), isAdmin, controller.addNews);
+    .post(passport.authenticate('facebook-token'), isAdmin,controller.addNews);
 
 app.route('/admin/newsDetail/:id')
-    .get(isLoggedIn, isAdmin, controller.newsDetails);
+    .get(isLoggedIn, isAdmin,controller.newsDetails);
 
 app.route('/admin/companyDetail/:id')
     .get(isLoggedIn, isAdmin, controller.companyDetails);
 
 app.route('/admin/userDetails/:id')
-    .get(isLoggedIn, isAdmin, controller.customerDetail);
+    .get(isLoggedIn, isAdmin,controller.customerDetail);
 
 app.route('/admin/modifyCompany/:id')
-    .post(passport.authenticate('facebook-token'), isAdmin, controller.modifyCompany);
+    .post(passport.authenticate('facebook-token'), isAdmin,controller.modifyCompany);
 
 app.route('/admin/modifyNews/:id')
-    .post(passport.authenticate('facebook-token'), isAdmin, controller.modifyNews);
+    .post(passport.authenticate('facebook-token'), isAdmin,controller.modifyNews);
 
 app.route('/admin/deleteCompany/:id')
     .delete(passport.authenticate('facebook-token'), isAdmin, controller.deleteCompany);
 
 app.route('/admin/deleteNews/:id')
-    .post(passport.authenticate('facebook-token'), isAdmin, controller.deleteNews);
+    .post(passport.authenticate('facebook-token'), isAdmin,controller.deleteNews);
 
 app.route('/admin/modifyUser/:id')
     .post(passport.authenticate('facebook-token'), isAdmin, controller.modifyUser);
@@ -76,29 +76,29 @@ app.route('/admin/deleteUser/:id')
 // ============================================================================
 
 app.route('/companylist')
-    .get(isLoggedIn, controller.companyList);
+    .get(isLoggedIn,controller.companyList);
 
 app.route('/companydetail/:id')
-    .get(isLoggedIn, controller.companyDetails);
+    .get(isLoggedIn,controller.companyDetails);
 
 app.route('/newslist')
-    .get(isLoggedIn, controller.newsList);
+    .get(isLoggedIn,controller.newsList);
 
 // ============================================================================
 // Customer  ===============================================================
 // ============================================================================
 
 app.route('/customerdetail')
-    .get(isLoggedIn, controller.customerDetail);
+    .get(isLoggedIn,controller.customerDetail);
 
 app.route('/scoreboard')
-    .get(isLoggedIn, controller.customerList);
+    .get(isLoggedIn,controller.customerList);
 
 app.route('/buy/:id')
-    .post(isLoggedIn, controller.buy);
+    .post(isLoggedIn,controller.buy);
 
 app.route('/sell/:id')
-    .post(isLoggedIn, controller.sell);
+    .post(isLoggedIn,controller.sell);
 
 app.route('/short/:id')
     .post(isLoggedIn, controller.short);
@@ -107,10 +107,10 @@ app.route('/cover/:id')
     .post(isLoggedIn, controller.cover);
 
 app.route('/takeloan')
-    .post(isLoggedIn, controller.takeLoan);
+    .post(isLoggedIn,controller.takeLoan);
 
 app.route('/repayloan')
-    .post(isLoggedIn, controller.repayLoan);
+    .post(isLoggedIn,controller.repayLoan);
 
 // =============================================================================
 // AUTHENTICATE (FIRST LOGIN) ==================================================
@@ -119,7 +119,7 @@ app.route('/repayloan')
     // facebook -------------------------------
 
         // send to facebook to do the authentication
-        app.get('/auth/facebook', passport.authenticate('facebook', { scope : ['email'] }));
+        app.get('/auth/facebook',passport.authenticate('facebook', { scope : ['email'] }));
 
         // handle the callback after facebook has authenticated the user
         app.get('/auth/facebook/callback',
@@ -128,7 +128,7 @@ app.route('/repayloan')
                 successRedirect : '/market',
                 failureRedirect : '/'
             }));
-app.get('/auth/userdata', isLoggedIn, function(req, res) {
+app.get('/auth/userdata', isLoggedIn,function(req, res) {
     Donator.findById(req.user, function(err, fulluser) {
         if (err) throw err;
         res.json(fulluser);
@@ -142,7 +142,7 @@ app.get('/auth/userdata', isLoggedIn, function(req, res) {
     // facebook -------------------------------
 
         // send to facebook to do the authentication
-        app.get('/connect/facebook', passport.authorize('facebook', { scope : 'email' }));
+        app.get('/connect/facebook' , passport.authorize('facebook', { scope : 'email' }));
 
         // handle the callback after facebook has authorized the user
         app.get('/connect/facebook/callback',
@@ -155,7 +155,13 @@ app.get('/auth/userdata', isLoggedIn, function(req, res) {
 // route middleware to ensure user is logged in
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
+        if(req.user.ban==false){
         return next();}
+        else{
+            console.log('You are banned');
+            res.redirect('/');
+        }    
+    }
     else{
             console.log('no header');
             res.redirect('/');

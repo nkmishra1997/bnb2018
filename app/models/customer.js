@@ -8,7 +8,7 @@ var userSchema = mongoose.Schema({
 
     ban: {
       type: Boolean,
-      default: false,
+      default: true,
       required:true
     },
 
