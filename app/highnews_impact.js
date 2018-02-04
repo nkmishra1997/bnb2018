@@ -35,6 +35,8 @@ module.exports = function (cron) {
                             // console.log(News[j].flag,"sec",News[j].newsImpact[i].impact)
                             // console.log("value of j is",j)
                         Company[i].stockPrice = (Company[i].stockPrice * (1 + (News[j].newsImpact[i].impact/parameters.stockParameter))).toFixed(0);
+                        Company[i].annualGrowthRate = ((((Company[i].history[Company[i].history.length - 1].stockPrice-Company[i].stockPrice)/Company[i].stockPrice))*100).toFixed(2);
+                        console.log("growth rate is",Company[i].annualGrowthRate);
                         console.log("change in price by newsimpact",News[j].newsImpact[i].impact,"of",j,"news","in company",Company[i].symbol,"is",Company[i].stockPrice);}
                         j++;
                         }
@@ -48,7 +50,7 @@ module.exports = function (cron) {
                     }  
                   }
               });
-                                  
+                                
           }
         });
     }
