@@ -11,7 +11,7 @@ const newsSchema = new Schema({
   youtubeSrc: String,
 
   flag:{
-    type: Number,
+    type: String,
     default: 0,
     required:true
   },

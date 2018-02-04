@@ -17,6 +17,8 @@ const companySchema = new Schema({
 
   description: String,
 
+  isCrypto: Boolean,
+
   stockPrice: {
     type: Number,
     default:0,
@@ -42,8 +44,7 @@ const companySchema = new Schema({
   },
 
   annualGrowthRate: {
-    type: Number,
-    min: 0
+    type: Number
   },
 
   marketcap: {

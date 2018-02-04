@@ -14,8 +14,20 @@ mongoose.Promise = global.Promise;
 
 exports.companyList = function(req, res){
   company.find({}).then(companies=>{
-    var accountBal = {'accountBalance' : req.user.accountBalance}
-    res.json(companies)
+    //var accountBal = {'accountBalance' : req.user.accountBalance}
+    var companylist = []
+    companies.forEach((element)=>{
+      var company = {
+        id: element._id,
+        symbol: element.symbol,
+        name: element.name,
+        stockPrice: element.stockPrice,
+        annualGrowthRate: element.annualGrowthRate,
+        availableQuantity: element.availableQuantity
+      }
+      companylist.push(company)
+    })
+    res.json(companylist)
   })
   .catch(err=>{
     console.log(err)
@@ -28,13 +40,18 @@ exports.companyDetails = function(req, res){
   company.findById(req.params.id).then((compDetails)=>{
     customer.findById(req.user._id).then(Customer=>{
       var accountBalance = Customer.accountBalance
-      var buyMax = Math.min(Math.floor(accountBalance/company.stockPrice),company.availableQuantity)
-      var sellMax = Math.min(Math.floor(accountBalance/company.stockPrice),(company.totalQuantity-company.availableQuantity))
+      var buyMax = Math.min(Math.floor(accountBalance/compDetails.stockPrice),compDetails.availableQuantity)
+      var sellMax = Math.min(Math.floor(accountBalance/compDetails.stockPrice),(compDetails.totalQuantity-compDetails.availableQuantity))
       var shortMax = parameters.shortMax
-      var coverMax = Math.min(Math.floor(accountBalance/company.stockPrice),shortMax)
+      var coverMax = Math.min(Math.floor(accountBalance/compDetails.stockPrice),shortMax)
 
       var details = {
-        compDetails : compDetails,
+        name: compDetails.name,
+        stockPrice: compDetails.stockPrice,
+        availableQuantity: compDetails.availableQuantity,
+        marketcap: compDetails.marketcap,
+        annualGrowthRate: compDetails.annualGrowthRate,
+        history: compDetails.history,
         accountBalance : accountBalance,
         buyMax : buyMax,
         sellMax : sellMax,
@@ -54,7 +71,7 @@ exports.companyDetails = function(req, res){
 }
 
 
-exports.newsDetails = function(req, res) {    //yet to be tested
+exports.newsDetails = function(req, res) {    //what is the use?
   news
   .findById(req.params.id)
   .populate('newsImpact.Company')
@@ -69,12 +86,22 @@ exports.newsDetails = function(req, res) {    //yet to be tested
 
 exports.newsList = function(req, res){
   news.find({}).then(newslist=>{
-    res.json(newslist)
+    var news = []
+    newslist.forEach((element)=>{
+      if(element.flag>0){
+        news.push(element)
+      }
+    })
+    res.json(news)
   }).catch(err=>{
     console.log(err);
 		res.send("unable to fetch news list")
   })
 }
+
+
+
+
 
 // ============================================================================
 // Customer ===================================================================
@@ -98,7 +125,12 @@ exports.customerDetail = function(req, res) {
 		var worth = { 'worth' : Customer.accountBalance + stockHoldingAmount - stockShortedAmount - Customer.loan.amount }
 
     var player = {
-      Customer : Customer,
+      name : Customer.facebook.name,
+      id: Customer.facebook.id,
+      accountBalance: Customer.accountBalance,
+      loan: Customer.loan.amount,
+      portfolio: Customer.portfolio,
+      activity: Customer.activity,
       worth : worth
     }
     res.json(player)
@@ -176,7 +208,7 @@ exports.buy = function(req, res){
           Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'BUY', quantity:stock, price:Company.stockPrice})
           Customer.save()
           Company.save()
-          res.json({'success':true, Company, Customer})
+          res.json({'success':true, bal:Customer.accountBalance, quan:Company.availableQuantity})
           return
         }
         else{
@@ -197,7 +229,7 @@ exports.sell = function(req, res){
   company.findById(req.params.id).then(Company=>{
     customer.findById(req.user._id).then(Customer=>{
 
-        console.log(req.body) //for testing only
+        //console.log(req.body) //for testing only
         var stock = parseInt(req.body.amount);
         if(stock == null || stock == undefined || stock <= 0){
           res.json({'success':false});
@@ -213,7 +245,7 @@ exports.sell = function(req, res){
             flag = 1
             Customer.save()
             Company.save()
-            res.json({'success':true, Company, Customer})
+            res.json({'success':true, bal:Customer.accountBalance, quan:Company.availableQuantity})
             return
           }
         }
@@ -255,7 +287,7 @@ exports.short = function(req, res){
           Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'SHORT', quantity:stock, price:Company.stockPrice})
           Customer.save()
           Company.save()
-          res.json({'success':true, Company, Customer})
+          res.json({'success':true, bal:Customer.accountBalance, quan:Company.availableQuantity})
           return
         }
         else if (stock< parameters.stockLimit-totalStocks && Customer.portfolio[index].stockHeld == 0){
@@ -265,7 +297,7 @@ exports.short = function(req, res){
           Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'SHORT', quantity:stock, price:Company.stockPrice})
           Customer.save()
           Company.save()
-          res.json({'success':true, Company, Customer})
+          res.json({'success':true, bal:Customer.accountBalance, quan:Company.availableQuantity})
           return
         }
         else{
@@ -287,7 +319,7 @@ exports.cover = function(req, res){
     company.findById(req.params.id).then(Company=>{
       customer.findById(req.user._id).then(Customer=>{
 
-          console.log(req.body) //for testing only
+        //  console.log(req.body) //for testing only
           var stock = parseInt(req.body.amount);
           if(stock == null || stock == undefined || stock <= 0){
             res.json({'success':false});
@@ -304,7 +336,7 @@ exports.cover = function(req, res){
               flag = 1
               Customer.save()
               Company.save()
-              res.json({'success':true, Company, Customer})
+              res.json({'success':true, bal:Customer.accountBalance, quan:Company.availableQuantity})
               return
             }
           }
@@ -339,7 +371,7 @@ exports.takeLoan = function(req, res){
             Customer.accountBalance += amount
           }
           Customer.save()
-          res.json(Customer)
+          res.json({amount:Customer.loan.amount})
 
     }).catch(err=>{
       console.log(err)
@@ -364,7 +396,7 @@ exports.repayLoan = function(req, res){
             Customer.accountBalance -= amount
           }
           Customer.save()
-          res.json(Customer)
+          res.json({amount:Customer.loan.amount})
 
     }).catch(err=>{
       console.log(err)

@@ -5,7 +5,7 @@ module.exports = function (cron) {
   var mongoose = require('mongoose');
 
   let companyPriceOnTime = new cron.CronJob({
-    cronTime : '*/30 * * * * *',  // The time pattern when you want the job to start
+    cronTime : '*/6 * * * * *',  // The time pattern when you want the job to start
     onTick : changePrice, // Task to run
     onComplete : reset, // When job is completed and It stops.
     start : true, // immediately starts the job.
@@ -23,6 +23,8 @@ module.exports = function (cron) {
                 rand = (Math.random() * (2) + (-1)).toFixed(2);
                 rand=parseFloat(rand);
                 Company[i].stockPrice = (Company[i].stockPrice * (1 + (rand/100))).toFixed(0);
+
+                console.log("change in price by random change",rand,"in company",Company[i].symbol,"is",Company[i].stockPrice);
                 Company[i].history.push({
                     timeStamp : Date.now(),
                     stockPrice : Company[i].stockPrice,

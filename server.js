@@ -49,7 +49,13 @@ app.use(cookieParser()); // read cookies (needed for auth)
 // Parsers for POST data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-require('./app/task')(cron);
+
+let job = require('./app/random_cron')(cron);
+let job1 = require('./app/highnews_impact')(cron);
+let job4 = require('./app/newsDepublishing')(cron);
+let job3 = require('./app/newsPublishingcron')(cron);
+// let job2 = require('./app/lownews_impact')(cron);
+
 
 app.use(express.static('views'));
 app.get('/', function(req, res) {
@@ -72,6 +78,7 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 // routes ======================================================================
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+// require('./app/iterator.js');
 
 
 // Catch all other routes and return the index file
