@@ -5,5 +5,6 @@ module.exports = {
 	shortMax : 100,
 	stock : 10,
 	stockLimit : 200,
-	stockParameter : 259.8//r=0.0192448764
+	stockParameter : 259.8, //r=0.0192448764
+	randomImpact : 100
 };

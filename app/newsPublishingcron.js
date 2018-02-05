@@ -9,7 +9,7 @@ module.exports = function (cron) {
     
   
     let companyPriceOnTime = new cron.CronJob({
-      cronTime : '*/6 * * * * *',  // The time pattern when you want the job to start
+      cronTime : '* */10 * * * *',  // The time pattern when you want the job to start
       onTick : changePrice, // Task to run
       onComplete : reset, // When job is completed and It stops.
       start : true, // immediately starts the job.
@@ -19,7 +19,7 @@ module.exports = function (cron) {
     var number = 0;
     function changePrice() {
         news.find({}, function(err, News){
-            if (err) {
+            if (err||(News.length==0)) {
                 console.log(err);
                 res.send("unable to load news");
             }

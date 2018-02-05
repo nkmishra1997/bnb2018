@@ -17,6 +17,7 @@ exports.companyList = function(req, res){
     //var accountBal = {'accountBalance' : req.user.accountBalance}
     var companylist = []
     companies.forEach((element)=>{
+      if(element.isCrypto==false){
       var company = {
         id: element._id,
         symbol: element.symbol,
@@ -25,13 +26,37 @@ exports.companyList = function(req, res){
         annualGrowthRate: element.annualGrowthRate,
         availableQuantity: element.availableQuantity
       }
-      companylist.push(company)
+      companylist.push(company)}
     })
     res.json(companylist)
   })
   .catch(err=>{
     console.log(err)
 		res.send("unable to fetch company list")
+  })
+}
+
+exports.cryptoList = function(req, res){
+  company.find({}).then(companies=>{
+    //var accountBal = {'accountBalance' : req.user.accountBalance}
+    var cryptolist = []
+    companies.forEach((element)=>{
+      if(element.isCrypto==true){
+      var crypto = {
+        id: element._id,
+        symbol: element.symbol,
+        name: element.name,
+        stockPrice: element.stockPrice,
+        annualGrowthRate: element.annualGrowthRate,
+        availableQuantity: element.availableQuantity
+      }
+      companylist.push(crypto)}
+    })
+    res.json(cryptolist)
+  })
+  .catch(err=>{
+    console.log(err)
+		res.send("unable to fetch crypto list")
   })
 }
 
@@ -71,17 +96,17 @@ exports.companyDetails = function(req, res){
 }
 
 
-exports.newsDetails = function(req, res) {    //what is the use?
-  news
-  .findById(req.params.id)
-  .populate('newsImpact.Company')
-  .then(newsDetails=>{
-    res.json(newsDetails)
-  }).catch(err=>{
-    console.log(err)
-  	res.send("unable to fetch news details")
-  })
-}
+// exports.newsDetails = function(req, res) {   
+//   news
+//   .findById(req.params.id)
+//   .populate('newsImpact.Company')
+//   .then(newsDetails=>{
+//     res.json(newsDetails)
+//   }).catch(err=>{
+//     console.log(err)
+//   	res.send("unable to fetch news details")
+//   })
+// }
 
 
 exports.newsList = function(req, res){

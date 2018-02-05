@@ -42,8 +42,8 @@ app.route('/admin/addCompany')
 app.route('/admin/addNews')
     .post(passport.authenticate('facebook-token'), isAdmin,controller.addNews);
 
-app.route('/admin/newsDetail/:id')
-    .get(isLoggedIn, isAdmin,controller.newsDetails);
+// app.route('/admin/newsDetail/:id')
+//     .get(isLoggedIn, isAdmin,controller.newsDetails);
 
 app.route('/admin/companyDetail/:id')
     .get(isLoggedIn, isAdmin, controller.companyDetails);
@@ -77,6 +77,9 @@ app.route('/admin/deleteUser/:id')
 
 app.route('/companylist')
     .get(isLoggedIn,controller.companyList);
+
+app.route('/cryptolist')
+    .get(isLoggedIn,controller.cryptoList);
 
 app.route('/companydetail/:id')
     .get(isLoggedIn,controller.companyDetails);
