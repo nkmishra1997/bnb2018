@@ -20,7 +20,7 @@ module.exports = function (cron) {
     
         if (err||(News.length==0)) {
             console.log(err);
-            res.send("unable to load news");
+            // res.send("unable to load news");
         }
         else{ 
             var k=0;

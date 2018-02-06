@@ -12,6 +12,7 @@ const morgan       = require('morgan');
 const cookieParser = require('cookie-parser');
 const session      = require('express-session');
 const configDB = require('./config/database.js');
+const circDp = require('./circDependency')
 
 // configuration ===============================================================
 

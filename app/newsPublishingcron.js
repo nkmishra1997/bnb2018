@@ -21,7 +21,7 @@ module.exports = function (cron) {
         news.find({}, function(err, News){
             if (err||(News.length==0)) {
                 console.log(err);
-                res.send("unable to load news");
+                // res.send("unable to load news");
             }
             else{ 
                 var l=0;
