@@ -20,6 +20,7 @@ module.exports = function (cron) {
           if (err){
               console.log(err||(News.length==0));
             //   res.send("unable to fetch news");
+
           }else{
               var k=0;
               var i=0;
@@ -31,7 +32,6 @@ module.exports = function (cron) {
                 console.log(Company.name, k);
                   if (err) {
                       console.log(err);
-                    //   res.send("unable to load company");
                   }
                   else{
 

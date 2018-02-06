@@ -19,12 +19,12 @@ module.exports = function (cron) {
         company.find({} , function(err, Company) {
           if (err){
               console.log(err);
-              res.send("unable to fetch companies");
+            //   res.send("unable to fetch companies");
           }else{
               news.find({}, function(err, News){
                   if (err) {
                       console.log(err);
-                      res.send("unable to load news");
+                    //   res.send("unable to load news");
                   }
                   else{
                     for(var i = 0; i<Company.length; i++){

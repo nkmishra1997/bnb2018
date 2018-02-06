@@ -34,13 +34,13 @@ app.route('/admin/userlist')
     .get(isLoggedIn, isAdmin, controller.customerList);
 
 app.route('/admin/newslist')
-    .get(isLoggedIn, isAdmin,controller.newsList);
+    .get(isLoggedIn, isAdmin,controller.adminNewsList);
 
 app.route('/admin/addCompany')
     .post(passport.authenticate('facebook-token'), isAdmin, controller.addCompany);
 
 app.route('/admin/addNews')
-    .post(passport.authenticate('facebook-token'), isAdmin,controller.addNews);
+    .post(isLoggedIn, isAdmin,controller.addNews);
 
 // app.route('/admin/newsDetail/:id')
 //     .get(isLoggedIn, isAdmin,controller.newsDetails);
@@ -61,7 +61,7 @@ app.route('/admin/deleteCompany/:id')
     .delete(passport.authenticate('facebook-token'), isAdmin, controller.deleteCompany);
 
 app.route('/admin/deleteNews/:id')
-    .post(passport.authenticate('facebook-token'), isAdmin,controller.deleteNews);
+    .post(isLoggedIn, isAdmin,controller.deleteNews);
 
 app.route('/admin/modifyUser/:id')
     .post(passport.authenticate('facebook-token'), isAdmin, controller.modifyUser);

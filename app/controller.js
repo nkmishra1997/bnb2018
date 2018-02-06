@@ -50,7 +50,7 @@ exports.cryptoList = function(req, res){
         annualGrowthRate: element.annualGrowthRate,
         availableQuantity: element.availableQuantity
       }
-      companylist.push(crypto)}
+      cryptolist.push(crypto)}
     })
     res.json(cryptolist)
   })
@@ -125,6 +125,18 @@ exports.newsList = function(req, res){
 }
 
 
+exports.adminNewsList = function(req, res){
+  news.find({}).then(newslist=>{
+    var news = []
+    newslist.forEach((element)=>{
+        news.push(element)
+    })
+    res.json(news)
+  }).catch(err=>{
+    console.log(err);
+		res.send("unable to fetch news list")
+  })
+}
 
 
 
@@ -488,12 +500,19 @@ exports.deleteCompany = function(req, res){
 
 
 exports.addNews = function(req, res){
-    const newNews = new news({
-      newsText : req.body.newsText,
-      youtubeSrc : req.body.youtubeSrc,
-      flag : req.body.flag,
-      newsImpact : req.body.newsImpact
-    })
+  console.log(req.body);
+    var newNews = new news(req.body)
+    //   {
+    //   newsText : req.body.newsText,
+    //   youtubeSrc : req.body.youtubeSrc,
+    //   flag : req.body.flag,
+    //   newsImpact : req.body.newsImpact
+    // }
+  // )
+    // for (var key in req.body.newsImpact) {
+    //   console.log(key);
+    //   newNews.newsImpact.push(key);
+    // }
     newNews.save().then(news=>{
 
           res.json({success:true,msg:'News saved successfully'});

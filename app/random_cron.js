@@ -17,7 +17,7 @@ module.exports = function (cron) {
       company.find({} , function(err, Company) {
         if (err||(Company.length==0)){
             console.log(err);
-            res.send("unable to fetch companies");
+            // res.send("unable to fetch companies");
         }else{
             for(var i = 0; i<Company.length; i++){
                 rand = (Math.random() * (2) + (-1)).toFixed(2);
