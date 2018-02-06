@@ -22,6 +22,7 @@ require('../js/script.js');
 })
 export class MarketComponent implements OnInit {
   companies: any;
+  cryptocompanies: any;
   customer: any;
   user: any;
   private subscription: Subscription;
@@ -44,6 +45,14 @@ export class MarketComponent implements OnInit {
       .subscribe(() => {
         this.marketService.fetchCompanies().subscribe(Companies => {
           this.companies = Companies; console.log("company fetched");
+        },
+        err => {
+          console.log(err);
+          return false;
+        });
+
+        this.marketService.fetchcryptoCompanies().subscribe(Companies => {
+          this.cryptocompanies = Companies; console.log("company fetched");
         },
         err => {
           console.log(err);
