@@ -27,12 +27,12 @@
                   <td>Available : </td>
                   <td>{{company?.availableQuantity}}</td>
                 </tr>
-                <tr>
+                <!-- <tr>
                   <td>Market Capitalisation (in cr.):</td>
                   <td>{{company?.marketcap}}</td>
-                </tr>
+                </tr> -->
                 <tr>
-                  <td>Growth Rate(%):</td>
+                  <td>Growth(%):</td>
                   <td>{{company?.annualGrowthRate}}</td>
                 </tr>
               </table>
@@ -42,9 +42,10 @@
         </div>
       </div>
    
-
+      <flash-messages></flash-messages>
       <div class="row form-wrapper">
         <div class="inline-form col-xs-12">
+          <h3>Buy/Sell/Short/Cover</h3>
           <!-- <h3>Inline Form</h3> -->
           <form class="form-inline" [formGroup]="buyForm" novalidate (ngSubmit)="buyStock(buyForm.value)" style="margin-bottom:-25px;">
             <div class="form-group">

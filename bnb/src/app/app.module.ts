@@ -25,6 +25,8 @@ import { AdminnewslistComponent } from './components/adminnewslist/adminnewslist
 import { AdminService } from './services/admin.service';
 import { AdminaddnewsComponent } from './components/adminaddnews/adminaddnews.component';
 
+import { FlashMessagesModule } from 'angular2-flash-messages';
+
 const appRoutes: Routes = [
   { path:'news', component : NewsComponent },
   { path:'market', component : MarketComponent, },
@@ -54,7 +56,8 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    FlashMessagesModule
   ],
   providers: [AuthService, NewsService, MarketService, CompanyService, ProfileService, LeaderboardService, AdminService],
   bootstrap: [AppComponent]

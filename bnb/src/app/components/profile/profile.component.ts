@@ -25,6 +25,7 @@ export class ProfileComponent implements OnInit {
   customer : any;
   company: any;
   private subscription: Subscription;
+  isDataAvailable:boolean = false;
   constructor(private profileService : ProfileService,
               private router : Router,
               private http : Http ) { }
@@ -33,9 +34,11 @@ export class ProfileComponent implements OnInit {
     this.subscription = Observable.timer(0, 10000)
       .subscribe(() => {
         this.profileService.fetchCustomer().subscribe((Player) => {
-          this.player = Player
+          this.player = Player;
+          this.isDataAvailable = true;
+          console.log('Customer fetched');
           //console.log(this.player)
-          this.refreshPage()
+          // this.refreshPage();
         },
         err => {
           console.log(err)
@@ -46,7 +49,7 @@ export class ProfileComponent implements OnInit {
 
   loanMoney(){
     this.profileService.takeLoan().subscribe(Customer =>{
-      this.customer = Customer
+      this.customer = Customer;
       //console.log(Customer)
       this.refreshPage()
     },
