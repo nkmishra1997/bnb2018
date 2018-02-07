@@ -23,6 +23,7 @@ const companySchema = new Schema({
     type: Number,
     default:0,
     min: 0.0,
+    max: 5000,
     required:true
   },
 
@@ -41,10 +42,6 @@ const companySchema = new Schema({
     min: 0.0,
     max: parameters.maxNumberOfShares,
     required:true
-  },
-
-  annualGrowthRate: {
-    type: Number
   },
 
   marketcap: {

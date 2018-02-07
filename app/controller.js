@@ -450,10 +450,10 @@ exports.addCompany = function(req, res){
         name: req.body.name,
         symbol: req.body.symbol,
         description: req.body.description,
+        isCrypto: req.body.isCrypto,
         stockPrice: req.body.stockPrice,
         availableQuantity: req.body.availableQuantity,
         totalQuantity: req.body.totalQuantity,
-        annualGrowthRate: req.body.annualGrowthRate,
         marketcap: req.body.marketcap
     })
 

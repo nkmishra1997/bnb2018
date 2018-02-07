@@ -13,8 +13,16 @@ export class AdminaddnewsComponent implements OnInit {
   youtubeSrc : String;
   flag : Boolean;
   newsImpact : Array<Object>;
-  company: String;
-  impact: String;
+  company1: String;
+  impact1: String;
+  company2: String = '';
+  impact2: String = '';
+  company3: String = '';
+  impact3: String = '';
+  company4: String = '';
+  impact4: String = '';
+  company5: String = '';
+  impact5: String = '';
 
   constructor(
     private adminService: AdminService,
@@ -30,9 +38,33 @@ export class AdminaddnewsComponent implements OnInit {
       youtubeSrc : this.youtubeSrc,
       flag : this.flag,
       newsImpact : [{
-        company : { _id: this.company },
-        impact : this.impact
+        company : { _id: this.company1 },
+        impact : this.impact1
       }]
+    }
+    if(this.company2!=''){
+      news.newsImpact.push({
+        company : { _id: this.company2 },
+        impact : this.impact2
+      });
+    }
+    if(this.company3!=''){
+      news.newsImpact.push({
+        company : { _id: this.company3 },
+        impact : this.impact3
+      });
+    }
+    if(this.company4!=''){
+      news.newsImpact.push({
+        company : { _id: this.company4 },
+        impact : this.impact4
+      });
+    }
+    if(this.company5!=''){
+      news.newsImpact.push({
+        company : { _id: this.company5 },
+        impact : this.impact5
+      });
     }
   
     this.adminService.addNews(news).subscribe(data => {

@@ -6,5 +6,6 @@ module.exports = {
 	stock : 10,
 	stockLimit : 200,
 	stockParameter : 259.8, //r=0.0192448764
-	randomImpact : 100
+	randomImpact : 100,
+	maxStockPriceValue : 5000
 };
