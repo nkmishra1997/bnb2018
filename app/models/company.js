@@ -26,7 +26,10 @@ const companySchema = new Schema({
     max: 5000,
     required:true
   },
-
+  isIncreasing: {
+    type:boolean,
+    default: false
+  },
   availableQuantity: {
     type: Number,
     default: 0,
