@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from "rxjs";
 import 'rxjs/add/observable/timer';
 import {Subscription} from "rxjs";
+import {FlashMessagesService} from 'angular2-flash-messages';
 
 declare var require: any;
 declare var Chart:any;
@@ -38,7 +39,9 @@ private subscription: Subscription;
 
   constructor(private companyService : CompanyService,
               private route : ActivatedRoute,
-              private formBuilder : FormBuilder) { }
+              private formBuilder : FormBuilder,
+              private flashMessage:FlashMessagesService
+            ) { }
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
@@ -239,10 +242,12 @@ private subscription: Subscription;
     // this.clearField()
     this.buyForm.reset();
     this.companyService.buy(this.id,form).subscribe(Info => {
-      this.info = Info
-      this.refreshPage()
+      this.flashMessage.show('Buy successful', {cssClass: 'alert-success', timeout: 3000});
+      this.info = Info;
+      this.refreshPage();
     },
     err => {
+      this.flashMessage.show('Buy unsuccessful', {cssClass: 'alert-danger', timeout: 3000});
       console.log(err)
       return false
     })
@@ -253,10 +258,12 @@ private subscription: Subscription;
     console.log(this.sellForm.value)  //for testing only
     this.sellForm.reset();
     this.companyService.sell(this.id,form).subscribe(Info => {
-      this.info = Info
-      this.refreshPage()
+      this.flashMessage.show('Sell successful', {cssClass: 'alert-success', timeout: 3000});
+      this.info = Info;
+      this.refreshPage();
     },
     err => {
+      this.flashMessage.show('Sell unsuccessful', {cssClass: 'alert-danger', timeout: 3000});
       console.log(err)
       return false
     })
@@ -267,10 +274,12 @@ private subscription: Subscription;
     console.log(this.shortForm.value) //for testing only
     this.shortForm.reset();
     this.companyService.short(this.id,form).subscribe(Info => {
-      this.info = Info
-      this.refreshPage()
+      this.flashMessage.show('Short successful', {cssClass: 'alert-success', timeout: 3000});
+      this.info = Info;
+      this.refreshPage();
     },
     err => {
+      this.flashMessage.show('Shortunsuccessful', {cssClass: 'alert-danger', timeout: 3000});
       console.log(err)
       return false
     })
@@ -281,11 +290,13 @@ private subscription: Subscription;
     console.log(this.coverForm.value) //for testing only
     this.coverForm.reset();
     this.companyService.cover(this.id,form).subscribe(Info => {
-      this.info = Info
-      this.refreshPage()
+      this.flashMessage.show('Cover successful', {cssClass: 'alert-success', timeout: 3000});
+      this.info = Info;
+      this.refreshPage();
 
     },
     err => {
+      this.flashMessage.show('Cover unsuccessful', {cssClass: 'alert-danger', timeout: 3000});
       console.log(err)
       return false
     })
