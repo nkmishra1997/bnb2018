@@ -24,10 +24,14 @@ module.exports = function (cron) {
                  company.findById(id).then(Company=>{
                   Company.stockPrice = (Company.stockPrice * (1 + (impact.impact/parameters.stockParameter))).toFixed(0);
                   Company.annualGrowthRate = ((((Company.history[Company.history.length - 1].stockPrice-Company.stockPrice)/Company.stockPrice))*100).toFixed(2);
-                 })
+                 }).catch(err=>{
+                  console.log(err)
+                })
                })
              })
           
+        }).catch(err=>{
+          console.log(err)
         });
     }
 
