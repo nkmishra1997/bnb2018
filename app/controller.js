@@ -381,7 +381,7 @@ exports.repayLoan = function(req, res){
     .findById(req.user._id)
     .then(Customer=>{
 
-        var amount = parameters.loanAmount
+        var amount = parameters.repayAmount
           if(Customer.loan.taken === false){
             res.send('Please loan some money first')
           }
