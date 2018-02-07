@@ -44,7 +44,7 @@ export class MarketComponent implements OnInit {
       this.subscription = Observable.timer(0, 10000)
       .subscribe(() => {
         this.marketService.fetchCompanies().subscribe(Companies => {
-          this.companies = Companies; console.log("company fetched");
+          this.companies = Companies; console.log(Companies);
         },
         err => {
           console.log(err);
