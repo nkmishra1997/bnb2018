@@ -197,7 +197,8 @@ exports.customerList = function(req, res) {
        var player = {
          name : customer.facebook.name,
          id : customer.facebook.id,
-         worth : worth
+         worth : worth,
+         rank : 0
        }
        playerList.push(player)
      })
@@ -206,6 +207,9 @@ exports.customerList = function(req, res) {
       return b.worth.worth - a.worth.worth
     })
 
+    for (var i = 0; i < playerList.length; i++) {
+      playerList[i].rank = i+1;
+    }
     res.json(playerList)
 
   }).catch(err=>{
