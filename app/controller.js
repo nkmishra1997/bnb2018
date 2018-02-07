@@ -204,6 +204,9 @@ exports.customerList = function(req, res) {
      })
 
     playerList.sort(function(a,b){
+      if(a.worth.worth == b.worth.worth){
+        return a.name > b.name
+      }
       return b.worth.worth - a.worth.worth
     })
 
