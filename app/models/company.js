@@ -38,7 +38,7 @@ const companySchema = new Schema({
 
   annualReport: {
     type: String,
-  }.
+  },
 
   totalQuantity: {
     type: Number,
