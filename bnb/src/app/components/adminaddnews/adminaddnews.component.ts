@@ -13,8 +13,8 @@ export class AdminaddnewsComponent implements OnInit {
   youtubeSrc : String;
   flag : Boolean;
   newsImpact : Array<Object>;
-  company1: String;
-  impact1: String;
+  company1: String = '';
+  impact1: String = '';
   company2: String = '';
   impact2: String = '';
   company3: String = '';
@@ -37,10 +37,13 @@ export class AdminaddnewsComponent implements OnInit {
       newsText : this.newsText,
       youtubeSrc : this.youtubeSrc,
       flag : this.flag,
-      newsImpact : [{
+      newsImpact : []
+    }
+    if(this.company1!=''){
+      news.newsImpact.push({
         company : { _id: this.company1 },
         impact : this.impact1
-      }]
+      });
     }
     if(this.company2!=''){
       news.newsImpact.push({
