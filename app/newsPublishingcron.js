@@ -9,7 +9,7 @@ module.exports = function (cron) {
     
   
     let companyPriceOnTime = new cron.CronJob({
-      cronTime : '*/60 * * * * *',  // The time pattern when you want the job to start
+      cronTime : '*/6 * * * * *',  // The time pattern when you want the job to start
       onTick : changePrice, // Task to run
       onComplete : reset, // When job is completed and It stops.
       start : true, // immediately starts the job.
@@ -32,8 +32,9 @@ module.exports = function (cron) {
                       l++;}
                     if(l==k){break;}}
                           if((l<News.length)&&(News[l].flag=="0")){
-                            News.publishedOn = Date.now();
                           News[l].flag="1";
+                          News[l].publishedOn = Date.now();
+                          console.log(News.publishedOn);
                           // console.log("change in",k)
                           console.log("news available is",l);
                           News[l].save();

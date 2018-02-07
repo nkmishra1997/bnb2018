@@ -49,7 +49,7 @@ export class ProfileComponent implements OnInit {
 
   loanMoney(){
     this.profileService.takeLoan().subscribe(Customer =>{
-      this.customer = Customer;
+      this.customer = Customer
       //console.log(Customer)
       this.refreshPage()
     },

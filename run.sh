@@ -1,7 +1,7 @@
 #!/bin/bash
-npm install
+sudo npm install
 cd bnb
-npm install
+sudo npm install
 cd ..
-npm run build
-nodemon
+sudo npm run build
+pm2 restart server
