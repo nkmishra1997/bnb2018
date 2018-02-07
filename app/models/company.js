@@ -27,7 +27,7 @@ const companySchema = new Schema({
     required:true
   },
   isIncreasing: {
-    type:boolean,
+    type: Boolean,
     default: false
   },
   availableQuantity: {
