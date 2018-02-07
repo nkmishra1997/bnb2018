@@ -27,13 +27,13 @@ module.exports = function (cron) {
             var l;
           while(k!=News.length-1) {
             l=k;
-          if(News[k].flag=="3"){
+          if((News[k].flag=="2")||(News[k].flag=="3")){
           k++;}
           if(k==l){break;}}
-                if((k<News.length)&&(News[k].flag=="2")){
-                News[k].flag="3";
+                if((k<News.length)&&(News[k].flag=="1")){
+                News[k].flag="2";
                 // console.log("change in",k)
-                console.log("news not available is",k);
+                console.log("news effect available is",k);
                 News[k].save();
                 if(k<News.length-1){k++};
                 }

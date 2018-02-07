@@ -7,7 +7,7 @@ module.exports = function (cron) {
   
   
     let companyPriceOnTime = new cron.CronJob({
-      cronTime : '* */2 * * * *',  // The time pattern when you want the job to start
+      cronTime : '*/6 * * * * *',  // The time pattern when you want the job to start
       onTick : changePrice, // Task to run
       onComplete : reset, // When job is completed and It stops.
       start : true, // immediately starts the job.
@@ -16,42 +16,18 @@ module.exports = function (cron) {
 
     let number = 0;
     function changePrice() {
-        company.find({} , function(err, Company) {
-          if (err){
-              console.log(err||(Company.length==0));
-            //   res.send("unable to fetch companies");
-          }else{
-              news.find({}, function(err, News){
-                  if (err||(News.length==0)) {
-                      console.log(err);
-                    //   res.send("unable to load news");
-                  }
-                  else{
-                    for(var i = 0; i<Company.length; i++){
-                        var j=0;
-                        // console.log(News[j].flag,"one", Company[i].stockPrice)
-                        while(j<News.length){
-                        if(News[j].flag=="1"){
-                            // console.log(News[j].flag,"sec",News[j].newsImpact[i].impact)
-                            // console.log("value of j is",j)
-                        Company[i].stockPrice = (Company[i].stockPrice * (1 + (News[j].newsImpact[i].impact/parameters.stockParameter))).toFixed(0);
-                        Company[i].annualGrowthRate = ((((Company[i].history[Company[i].history.length - 1].stockPrice-Company[i].stockPrice)/Company[i].stockPrice))*100).toFixed(2);
-                        console.log("growth rate is",Company[i].annualGrowthRate);
-                        console.log("change in price by newsimpact",News[j].newsImpact[i].impact,"of",j,"news","in company",Company[i].symbol,"is",Company[i].stockPrice);}
-                        j++;
-                        }
-
-                        Company[i].history.push({
-                            timeStamp : Date.now(),
-                            stockPrice : Company[i].stockPrice,
-                            availableQuantity : Company[i].availableQuantity
-                        });
-                        Company[i].save();
-                    }  
-                  }
-              });
-                                
-          }
+        news.find({}).then(News=>{
+             News.forEach((element)=>{
+               var id;
+               element.newsImpact.forEach((impact)=>{
+                 id = impact.company;
+                 company.findById(id).then(Company=>{
+                  Company.stockPrice = (Company.stockPrice * (1 + (impact.impact/parameters.stockParameter))).toFixed(0);
+                  Company.annualGrowthRate = ((((Company.history[Company.history.length - 1].stockPrice-Company.stockPrice)/Company.stockPrice))*100).toFixed(2);
+                 })
+               })
+             })
+          
         });
     }
 
