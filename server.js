@@ -52,10 +52,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 let job = require('./app/random_cron')(cron);
+let job4 = require('./app/newsPublishingcron')(cron);
+let job3 = require('./app/newseffect')(cron);
 let job1 = require('./app/highnews_impact')(cron);
-let job4 = require('./app/newsDepublishing')(cron);
-let job3 = require('./app/newsPublishingcron')(cron);
-// let job2 = require('./app/lownews_impact')(cron);
+let job2 = require('./app/newsDepublishing')(cron);
 
 
 app.use(express.static('views'));
