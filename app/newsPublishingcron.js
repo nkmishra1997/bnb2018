@@ -32,6 +32,7 @@ module.exports = function (cron) {
                       l++;}
                     if(l==k){break;}}
                           if((l<News.length)&&(News[l].flag=="0")){
+                            News.publishedOn = Date.now();
                           News[l].flag="1";
                           // console.log("change in",k)
                           console.log("news available is",l);
