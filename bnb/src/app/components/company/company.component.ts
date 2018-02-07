@@ -237,7 +237,7 @@ private subscription: Subscription;
 
     console.log(this.buyForm.value) //for testing only
     // this.clearField()
-
+    this.buyForm.reset();
     this.companyService.buy(this.id,form).subscribe(Info => {
       this.info = Info
       this.refreshPage()
@@ -251,7 +251,7 @@ private subscription: Subscription;
   sellStock(form : any){
 
     console.log(this.sellForm.value)  //for testing only
-
+    this.sellForm.reset();
     this.companyService.sell(this.id,form).subscribe(Info => {
       this.info = Info
       this.refreshPage()
@@ -265,7 +265,7 @@ private subscription: Subscription;
   shortStock(form : any){
 
     console.log(this.shortForm.value) //for testing only
-
+    this.shortForm.reset();
     this.companyService.short(this.id,form).subscribe(Info => {
       this.info = Info
       this.refreshPage()
@@ -279,7 +279,7 @@ private subscription: Subscription;
   coverStock(form : any){
 
     console.log(this.coverForm.value) //for testing only
-
+    this.coverForm.reset();
     this.companyService.cover(this.id,form).subscribe(Info => {
       this.info = Info
       this.refreshPage()
