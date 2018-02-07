@@ -58,8 +58,8 @@
                 <th>Shorted</th>
                 <th>Price</th>
               </tr>
-              <tr *ngFor="let company of player?.portfolio;">
-                <td [routerLink]="['/company', company.company._id]">{{company.company.symbol}}</td>
+              <tr *ngFor="let company of player?.portfolio;"  [routerLink]="['/company', company.company._id]">
+                <td>{{company.company.symbol}}</td>
                 <td>{{company.stockHeld}}</td>
                 <td>{{company.stockShorted}}</td>
                 <td>{{company.company.stockPrice}}</td>

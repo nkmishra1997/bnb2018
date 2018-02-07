@@ -41,7 +41,7 @@ exports.cryptoList = function(req, res){
     //var accountBal = {'accountBalance' : req.user.accountBalance}
     var cryptolist = []
     companies.forEach((element)=>{
-      console.log(element);
+      console.log(element.annualGrowthRate);
       if(element.isCrypto==true){
       var crypto = {
         id: element._id,
