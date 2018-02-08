@@ -18,13 +18,16 @@ exports.companyList = function(req, res){
     var companylist = []
     companies.forEach((element)=>{
       if(element.isCrypto==false){
+     
       var company = {
+        
         id: element._id,
         symbol: element.symbol,
         name: element.name,
         stockPrice: element.stockPrice,
-        annualGrowthRate: element.annualGrowthRate,
-        availableQuantity: element.availableQuantity
+        annualGrowthRate: (((element.history[element.history.length-1].stockPrice-element.stockPrice)/element.stockPrice)*100).toFixed(2),
+        availableQuantity: element.availableQuantity,
+        isIncreasing: element.isIncreasing
       }
       companylist.push(company)}
     })
@@ -42,13 +45,15 @@ exports.cryptoList = function(req, res){
     var cryptolist = []
     companies.forEach((element)=>{
       if(element.isCrypto==true){
+        
       var crypto = {
         id: element._id,
         symbol: element.symbol,
         name: element.name,
         stockPrice: element.stockPrice,
-        annualGrowthRate: element.annualGrowthRate,
-        availableQuantity: element.availableQuantity
+        annualGrowthRate: (((element.history[element.history.length-1].stockPrice-element.stockPrice)/element.stockPrice)*100).toFixed(2),
+        availableQuantity: element.availableQuantity,
+        isIncreasing: element.isIncreasing
       }
       cryptolist.push(crypto)}
     })
@@ -65,10 +70,10 @@ exports.companyDetails = function(req, res){
   company.findById(req.params.id).then((compDetails)=>{
     customer.findById(req.user._id).then(Customer=>{
       var accountBalance = Customer.accountBalance
-      var buyMax = Math.min(Math.floor(accountBalance/compDetails.stockPrice),compDetails.availableQuantity)
-      var sellMax = Math.min(Math.floor(accountBalance/compDetails.stockPrice),(compDetails.totalQuantity-compDetails.availableQuantity))
-      var shortMax = parameters.shortMax
-      var coverMax = Math.min(Math.floor(accountBalance/compDetails.stockPrice),shortMax)
+      // var buyMax = Math.min(Math.floor(accountBalance/compDetails.stockPrice),compDetails.availableQuantity)
+      // var sellMax = Math.min(Math.floor(accountBalance/compDetails.stockPrice),(compDetails.totalQuantity-compDetails.availableQuantity))
+      // var shortMax = parameters.shortMax
+      // var coverMax = Math.min(Math.floor(accountBalance/compDetails.stockPrice),shortMax)
 
       var details = {
         name: compDetails.name,
@@ -76,12 +81,8 @@ exports.companyDetails = function(req, res){
         availableQuantity: compDetails.availableQuantity,
         marketcap: compDetails.marketcap,
         annualGrowthRate: compDetails.annualGrowthRate,
-        history: compDetails.history,
+        history: compDetails.history,  ////dont send entire history
         accountBalance : accountBalance,
-        buyMax : buyMax,
-        sellMax : sellMax,
-        shortMax : shortMax,
-        coverMax : coverMax
       }
       res.json(details)
 
@@ -94,20 +95,6 @@ exports.companyDetails = function(req, res){
     res.send("unable to fetch company details")
   })
 }
-
-
-// exports.newsDetails = function(req, res) {   
-//   news
-//   .findById(req.params.id)
-//   .populate('newsImpact.Company')
-//   .then(newsDetails=>{
-//     res.json(newsDetails)
-//   }).catch(err=>{
-//     console.log(err)
-//   	res.send("unable to fetch news details")
-//   })
-// }
-
 
 exports.newsList = function(req, res){
   news.find({}).then(newslist=>{
@@ -151,16 +138,6 @@ exports.customerDetail = function(req, res) {
   .populate('portfolio.company')
   .populate('activity.company')
   .then(Customer => {
-
-		//evaluate the worth of customer
-    var stockHoldingAmount = 0
-    var stockShortedAmount = 0
-    Customer.portfolio.forEach((element)=>{
-      stockHoldingAmount += element.company.stockPrice * element.stockHeld
-      stockShortedAmount += element.company.stockPrice * element.stockShorted
-    })
-		var worth = { 'worth' : Customer.accountBalance + stockHoldingAmount - stockShortedAmount - Customer.loan.amount }
-
     var player = {
       name : Customer.facebook.name,
       id: Customer.facebook.id,
@@ -168,7 +145,7 @@ exports.customerDetail = function(req, res) {
       loan: Customer.loan.amount,
       portfolio: Customer.portfolio,
       activity: Customer.activity,
-      worth : worth
+      worth : Customer.worth
     }
     res.json(player)
 
@@ -181,37 +158,17 @@ exports.customerDetail = function(req, res) {
 
 exports.customerList = function(req, res) {
   customer.find({})
-  .populate('portfolio.company')
-  .populate('activity.company')
+  .sort({ worth: -1 })
   .then(customerlist=> {
     var playerList = []
-     customerlist.map((customer)=>{
-       var stockHoldingAmount = 0
-       var stockShortedAmount = 0
-       customer.portfolio.forEach((element)=>{
-         stockHoldingAmount += element.company.stockPrice * element.stockHeld
-         stockShortedAmount += element.company.stockPrice * element.stockShorted
-       })
-   		var worth = { 'worth' : customer.accountBalance + stockHoldingAmount - stockShortedAmount - customer.loan.amount }
-
-       var player = {
-         name : customer.facebook.name,
-         id : customer.facebook.id,
-         worth : worth,
-         rank : 0
-       }
-       playerList.push(player)
-     })
-
-    playerList.sort(function(a,b){
-      if(a.worth.worth == b.worth.worth){
-        return a.name > b.name
+    for(var i=0;i<customerlist.length;i++){
+      var player = {
+        name : customerlist[i].facebook.name,
+        id : customerlist[i].facebook.id,
+        worth : customerlist[i].worth,
+        rank : i+1
       }
-      return b.worth.worth - a.worth.worth
-    })
-
-    for (var i = 0; i < playerList.length; i++) {
-      playerList[i].rank = i+1;
+      playerList.push(player)
     }
     res.json(playerList)
 
@@ -429,7 +386,7 @@ exports.repayLoan = function(req, res){
     .findById(req.user._id)
     .then(Customer=>{
 
-        var amount = parameters.loanAmount
+        var amount = parameters.repayAmount
           if(Customer.loan.taken === false){
             res.send('Please loan some money first')
           }

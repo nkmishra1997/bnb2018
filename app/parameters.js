@@ -1,7 +1,8 @@
 module.exports = {
 	accountBalance: 100000,
 	loanAmount : 2500,
-	maxNumberOfShares : 1000000,
+	repayAmount : 3000,
+	maxNumberOfShares : 100000,
 	shortMax : 100,
 	stock : 10,
 	stockLimit : 200,

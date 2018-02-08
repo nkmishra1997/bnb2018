@@ -26,10 +26,6 @@ const companySchema = new Schema({
     max: 5000,
     required:true
   },
-  isIncreasing: {
-    type: Boolean,
-    default: false
-  },
   availableQuantity: {
     type: Number,
     default: 0,
@@ -49,11 +45,6 @@ const companySchema = new Schema({
     min: 0.0,
     max: parameters.maxNumberOfShares,
     required:true
-  },
-
-  annualGrowthRate: {
-    type: Number,
-    default: 0
   },
 
   marketcap: {

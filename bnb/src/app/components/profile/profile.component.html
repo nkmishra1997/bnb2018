@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div *ngIf="isDataAvailable">
     <!-- Preloader -->
     <div class="load-bar">
@@ -118,4 +119,126 @@
     <br>
     </div>
   </div>
+=======
+<div *ngIf="isDataAvailable">
+    <!-- Preloader -->
+    <div class="load-bar">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+    <!-- Page content -->
+    <div class="contentWrapper">
+      <div class="userProfile-header">
+        <div class="row">
+          <div class="header-l col-sm-6 col-xs-12">
+            <img *ngIf="player" src="https://graph.facebook.com/v2.11/{{player.id}}/picture?type=large" alt="User image">
+            <div class="header-l-info">
+              <h3>{{player?.name}}</h3>
+              <span class="freelaner"><i class="fa fa-user" aria-hidden="true"></i> Trader</span>
+            </div>
+          </div>
+          <div class="header-r col-sm-6 col-xs-12 table-responsive">
+            <h3 class="removemargin">Basic Info</h3>
+            <div class="bootstrapTables noborder">
+            <table class="hover-table table table-hover">
+              <tr>
+                <td>Your Balance : </td>
+                <td>	{{player?.accountBalance}} </td>
+              </tr>
+              <tr>
+                <td>Your Worth : </td>
+                <td>{{player?.worth}}</td>
+              </tr>
+              <tr>
+                <td>Loan Pending :</td>
+                <td>{{player?.loan}}</td>
+              </tr>
+            </table>
+          </div>
+              <div class="buttons1">
+                <div *ngIf="checkLoan()">
+                  <button class="btn btn-success" (click)="loanMoney()">Take Loan</button>
+                </div>
+                <div *ngIf="!checkLoan()">
+                  <button class="btn btn-danger" (click)="repayMoney()">Repay Loan</button>
+                </div>
+                 </div>
+          </div>
+        </div>
+
+        </div>
+         <div class="row ">
+           <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6 nopad">
+         <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 userProfile-header" style="max-height:400px;overflow-y:scroll;">
+            <h3 class="removemargin1">Portfolio</h3>
+            <div class="bootstrapTables table-responsive">
+            <table class="hover-table table table-hover">
+              <tr>
+                <th>Company</th>
+                <th>Holding</th>
+                <th>Shorted</th>
+                <th>Price</th>
+              </tr>
+              <tr *ngFor="let company of player?.portfolio;"  [routerLink]="['/company', company.company._id]">
+                <td>{{company.company.symbol}}</td>
+                <td>{{company.stockHeld}}</td>
+                <td>{{company.stockShorted}}</td>
+                <td>{{company.company.stockPrice}}</td>
+              </tr>
+            </table>
+        </div>
+       </div>
+     </div>
+     <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6  nopad">
+       <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 userProfile-header" style="max-height:400px;overflow-y:scroll;">
+        <h3 class="removemargin1">Your Activity</h3>
+        <div class="bootstrapTables table-responsive">
+            <table class="hover-table table table-hover cursors">
+              <tr>
+                <th>Company</th>
+                <th>Action</th>
+                <th>Price</th>
+                <th>Quantity</th>
+              </tr>
+              <tr *ngFor="let activity of player?.activity | reverse;">
+                <td>{{activity.company.symbol}}</td>
+                <td>{{activity.action}}</td>
+                <td>{{activity.price}}</td>
+                <td>{{activity.quantity}}</td>
+              </tr>
+            </table>
+        </div>
+      </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    </div>
+  </div>
+>>>>>>> 3c026e976605fb45e19238c1ab1f4e52421f4e02
   </div>

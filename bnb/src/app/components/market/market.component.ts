@@ -25,6 +25,7 @@ export class MarketComponent implements OnInit {
   cryptocompanies: any;
   customer: any;
   user: any;
+  isInc: boolean;
   private subscription: Subscription;
   constructor(private marketService: MarketService,
               private router: Router,
@@ -44,7 +45,7 @@ export class MarketComponent implements OnInit {
       this.subscription = Observable.timer(0, 10000)
       .subscribe(() => {
         this.marketService.fetchCompanies().subscribe(Companies => {
-          this.companies = Companies; console.log("company fetched");
+          this.companies = Companies; console.log("Companies fetched");
         },
         err => {
           console.log(err);
@@ -60,6 +61,7 @@ export class MarketComponent implements OnInit {
         });
       });
   }
+  
 
   ngOnDestroy() {
     this.subscription.unsubscribe();

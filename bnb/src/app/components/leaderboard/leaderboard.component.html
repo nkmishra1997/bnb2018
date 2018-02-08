@@ -6,6 +6,9 @@
       <div class="bar"></div>
     </div>
     <div class="contentWrapper">
+      <h1>Your Rank: {{playerRank}}</h1>
+    </div>
+    <div class="contentWrapper">
       <div class="row">
         <h1>Leaderboard</h1>
         <!--<h4>Bootstrap comes with multiple useful table variants.</h4>-->
@@ -27,7 +30,7 @@
                     <td>{{player.rank}}</td>
                     <td><img src="https://graph.facebook.com/v2.11/{{player.id}}/picture?type=large" alt="User Profile"  width="40" height="40" hspace="5"> </td>
                     <td>{{player.name}}</td>
-                    <td >{{player.worth.worth}}</td>
+                    <td >{{player.worth}}</td>
                   </tr>
               </tbody>
             </table>
