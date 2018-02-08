@@ -188,28 +188,34 @@ exports.buy = function(req, res){
           res.json({'success':false});
           return
         }
-        var totalStocks = 0
+        var totalHeld = 0
         var index = -1
         for(var i=0;i<Customer.portfolio.length;i++){
-          totalStocks = Customer.portfolio[i].stockHeld + Customer.portfolio[i].stockShorted
+          totalHeld += Customer.portfolio[i].stockHeld
           if(Customer.portfolio[i].company.toString() === Company._id.toString() ){
             index = i
           }
         }
 
-        if (0 < stock && stock <= Math.min(Math.floor(Customer.accountBalance / Company.stockPrice), Company.availableQuantity, parameters.stockLimit-totalStocks)){
+        if (0 < stock && stock <= Math.min(Math.floor(Customer.accountBalance / Company.stockPrice), Company.availableQuantity, parameters.heldLimit-totalHeld)){
           if(index === -1){
             Customer.portfolio.push({company : Company._id, stockHeld : stock, stockShorted : 0})
           }
           else{
-            Customer.portfolio[index].stockHeld += stock
+            if(Customer.portfolio[index].stockShorted == 0){
+              Customer.portfolio[index].stockHeld += stock
+            }
+            else{
+              res.json({'success':false})
+              return
+            }
           }
           Customer.accountBalance -= stock * Company.stockPrice
           Company.availableQuantity -= stock
           Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'BUY', quantity:stock, price:Company.stockPrice})
           Customer.save()
           Company.save()
-          res.json({'success':true, bal:Customer.accountBalance, quan:Company.availableQuantity})
+          res.json({'success':true})
           return
         }
         else{
@@ -246,7 +252,7 @@ exports.sell = function(req, res){
             flag = 1
             Customer.save()
             Company.save()
-            res.json({'success':true, bal:Customer.accountBalance, quan:Company.availableQuantity})
+            res.json({'success':true})
             return
           }
         }
@@ -273,15 +279,15 @@ exports.short = function(req, res){
           res.json({'success':false});
           return
         }
-        var totalStocks = 0
+        var shortedStocks = 0
         var index = -1
         for(var i=0;i<Customer.portfolio.length;i++){
-          totalStocks = Customer.portfolio[i].stockHeld + Customer.portfolio[i].stockShorted
+          shortedStocks += Customer.portfolio[i].stockShorted
           if(Customer.portfolio[i].company.toString() === Company._id.toString() ){
             index = i
           }
         }
-        if(index == -1 && stock < parameters.stockLimit-totalStocks ){
+        if(index == -1 && stock < parameters.shortLimit-shortedStocks ){
           Customer.portfolio.push({company : Company._id, stockHeld : 0, stockShorted : stock})
           Customer.accountBalance += stock * Company.stockPrice
           Company.availableQuantity -= stock
@@ -291,15 +297,36 @@ exports.short = function(req, res){
           res.json({'success':true, bal:Customer.accountBalance, quan:Company.availableQuantity})
           return
         }
-        else if (stock< parameters.stockLimit-totalStocks && Customer.portfolio[index].stockHeld == 0){
-          Customer.portfolio[index].stockShorted += stock
-          Customer.accountBalance += stock * Company.stockPrice
-          Company.availableQuantity -= stock
-          Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'SHORT', quantity:stock, price:Company.stockPrice})
-          Customer.save()
-          Company.save()
-          res.json({'success':true, bal:Customer.accountBalance, quan:Company.availableQuantity})
-          return
+        else if (stock< parameters.shortLimit-shortedStocks){
+          if(Customer.portfolio[index].stockHeld >= stock){
+            //sell the stocks
+            Customer.portfolio[i].stockHeld -= stock
+            Customer.accountBalance += stock * Company.stockPrice
+            Company.availableQuantity += stock
+            Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'SELL', quantity:stock, price:Company.stockPrice})
+            flag = 1
+            Customer.save()
+            Company.save()
+            res.json({'success':true})
+            return
+          }
+          else{
+            //sell all stocks
+
+            //short remaining stocks
+            toSell = Customer.portfolio[index].stockHeld;
+            toShort = stock - Customer.portfolio[index].stockHeld
+            Customer.portfolio[index].stockShorted += toShort
+            Customer.portfolio[index].stockHeld = 0;
+            Customer.accountBalance += stock * Company.stockPrice
+            Company.availableQuantity += (toSell - toShort)
+            Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'SELL', quantity:toSell, price:Company.stockPrice})
+            Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'SHORT', quantity:toShort, price:Company.stockPrice})
+            Customer.save()
+            Company.save()
+            res.json({'success':true})
+            return
+          }
         }
         else{
           res.json({'success':false})
@@ -319,8 +346,6 @@ exports.short = function(req, res){
 exports.cover = function(req, res){
     company.findById(req.params.id).then(Company=>{
       customer.findById(req.user._id).then(Customer=>{
-
-        //  console.log(req.body) //for testing only
           var stock = parseInt(req.body.amount);
           if(stock == null || stock == undefined || stock <= 0){
             res.json({'success':false});
@@ -332,7 +357,7 @@ exports.cover = function(req, res){
             if(Customer.portfolio[i].company.toString() === Company._id.toString() && stock<=Customer.portfolio[i].stockShorted){
               Customer.portfolio[i].stockShorted -= stock
               Customer.accountBalance -= stock * Company.stockPrice
-              Company.availableQuantity += stock
+              Company.availableQuantity += stock//check
               Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'COVER', quantity:stock, price:Company.stockPrice})
               flag = 1
               Customer.save()
