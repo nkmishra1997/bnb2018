@@ -89,6 +89,7 @@ exports.companyDetails = function(req, res){
         annualGrowthRate: compDetails.annualGrowthRate,
         history: compDetails.history,  ////dont send entire history
         accountBalance : accountBalance,
+        annualReport: compDetails.annualReport
       }
       res.json(details)
 
