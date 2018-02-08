@@ -22,8 +22,14 @@
         </div>
         <!-- Collect the nav links, forms, and other content and hide -->
         <div  class="collapse navbar-collapse hidden-xs">
+          
           <ul class="user-profile nav navbar-nav navbar-right">
             <li class="dropdown">
+                <a class="user-block" href="https://goo.gl/JA1r8Z " role="button" aria-haspopup="true" aria-expanded="false">
+                  <span class="user-name" style="margin-right:20px !important;">Rule Book </span>
+                </a>
+            </li>
+            <li>
               <a class="user-block" href="/profile" role="button" aria-haspopup="true" aria-expanded="false">
                 <span class="user-name" style="margin-right:20px !important;">Hi, {{customer?.name}} </span>
                 <img *ngIf="customer" src="https://graph.facebook.com/v2.11/{{customer.id}}/picture?type=large" alt="User Profile">
@@ -31,6 +37,9 @@
 
             </li>
           </ul>
+          <!-- <ul class="nav navbar-nav navbar-right">
+              <span class="user-name" style="margin-right:20px !important;">Rule Book</span>
+          </ul> -->
         </div><!-- end .navbar-collapse -->
       </div><!-- end .container-fluid -->
     </nav><!-- end .nav-top -->
