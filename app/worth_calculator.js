@@ -5,7 +5,7 @@ module.exports = function (cron) {
 	var customer = require('./models/customer.js');
 
     let customerWorth = new cron.CronJob({
-      cronTime : '*/10 * * * * *',  // The time pattern when you want the job to start
+      cronTime : '*/60 * * * * *',  // The time pattern when you want the job to start
       onTick : calculateWorth, // Task to run
       onComplete : reset, // When job is completed and It stops.
       start : true, // immediately starts the job.
