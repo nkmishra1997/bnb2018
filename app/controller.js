@@ -18,14 +18,14 @@ exports.companyList = function(req, res){
     var companylist = []
     companies.forEach((element)=>{
       if(element.isCrypto==false){
-        if(element.annualGrowthRate>=0){element.isIncreasing=true;}
-                  else{element.isIncreasing=false;}
+     
       var company = {
+        
         id: element._id,
         symbol: element.symbol,
         name: element.name,
         stockPrice: element.stockPrice,
-        annualGrowthRate: element.annualGrowthRate,
+        annualGrowthRate: (((element.history[element.history.length-1].stockPrice-element.stockPrice)/element.stockPrice)*100).toFixed(2),
         availableQuantity: element.availableQuantity,
         isIncreasing: element.isIncreasing
       }
@@ -45,14 +45,13 @@ exports.cryptoList = function(req, res){
     var cryptolist = []
     companies.forEach((element)=>{
       if(element.isCrypto==true){
-        if(element.annualGrowthRate>=0){element.isIncreasing=true;}
-                  else{element.isIncreasing=false;}
+        
       var crypto = {
         id: element._id,
         symbol: element.symbol,
         name: element.name,
         stockPrice: element.stockPrice,
-        annualGrowthRate: element.annualGrowthRate,
+        annualGrowthRate: (((element.history[element.history.length-1].stockPrice-element.stockPrice)/element.stockPrice)*100).toFixed(2),
         availableQuantity: element.availableQuantity,
         isIncreasing: element.isIncreasing
       }
