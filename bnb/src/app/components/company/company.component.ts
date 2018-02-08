@@ -124,7 +124,7 @@ private subscription: Subscription;
     });
 
 
-    this.subscription = Observable.timer(0,10000)
+    this.subscription = Observable.timer(0,60000)
     .subscribe(() => {
         this.companyService.fetchCompany(this.id).subscribe(Company => {
           this.company = Company
