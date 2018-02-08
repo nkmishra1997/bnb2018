@@ -29,6 +29,7 @@ const companySchema = new Schema({
   isIncreasing: {
     type:Boolean,
     default: true
+
   },
   availableQuantity: {
     type: Number,

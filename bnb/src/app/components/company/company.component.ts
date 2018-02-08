@@ -49,14 +49,14 @@ private subscription: Subscription;
     });
 
     var ctx = document.querySelector("#statsChart")
-    let D:Array<any> = new Array(9);
+    let D:Array<any> = new Array(20);
     var areaChart = null;
     var l;
-    for(var i=0;i<9;i++){
+    for(var i=0;i<20;i++){
       D[i] = 0;
     }
     var data = {
-      labels: ["0","1","2","3","4","5","6","7","8"],
+      labels: ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19"],
       datasets: [
       {
         label: "Stock Price",
@@ -134,11 +134,11 @@ private subscription: Subscription;
             areaChart.destroy()
 
           l = this.company.history.length;
-          for(var j=1;j<=l&&j<10;j++){
-            D[9-j] = this.company.history[l-j].stockPrice;
+          for(var j=1;j<=l&&j<21;j++){
+            D[20-j] = this.company.history[l-j].stockPrice;
           }
           var data = {
-            labels: ["0","1","2","3","4","5","6","7","8"],
+            labels: ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19"],
             datasets: [
             {
               label: "Stock Price",
@@ -242,12 +242,16 @@ private subscription: Subscription;
     // this.clearField()
     this.buyForm.reset();
     this.companyService.buy(this.id,form).subscribe(Info => {
-      this.flashMessage.show('Buy successful', {cssClass: 'alert-success', timeout: 3000});
       this.info = Info;
+      if(this.info.success){
+        this.flashMessage.show('Buy successful', {cssClass: 'alert-success', timeout: 3000});
+      }
+      if(!this.info.success){
+        this.flashMessage.show('Buy unsuccessful', {cssClass: 'alert-danger', timeout: 3000});
+      }
       this.refreshPage();
     },
     err => {
-      this.flashMessage.show('Buy unsuccessful', {cssClass: 'alert-danger', timeout: 3000});
       console.log(err)
       return false
     })
@@ -258,12 +262,16 @@ private subscription: Subscription;
     console.log(this.sellForm.value)  //for testing only
     this.sellForm.reset();
     this.companyService.sell(this.id,form).subscribe(Info => {
-      this.flashMessage.show('Sell successful', {cssClass: 'alert-success', timeout: 3000});
       this.info = Info;
+      if(this.info.success){
+        this.flashMessage.show('Sell successful', {cssClass: 'alert-success', timeout: 3000});
+      }
+      if(!this.info.success){
+        this.flashMessage.show('Sell unsuccessful', {cssClass: 'alert-danger', timeout: 3000});
+      }
       this.refreshPage();
     },
     err => {
-      this.flashMessage.show('Sell unsuccessful', {cssClass: 'alert-danger', timeout: 3000});
       console.log(err)
       return false
     })
@@ -274,12 +282,16 @@ private subscription: Subscription;
     console.log(this.shortForm.value) //for testing only
     this.shortForm.reset();
     this.companyService.short(this.id,form).subscribe(Info => {
-      this.flashMessage.show('Short successful', {cssClass: 'alert-success', timeout: 3000});
       this.info = Info;
+      if(this.info.success){
+        this.flashMessage.show('Short successful', {cssClass: 'alert-success', timeout: 3000});
+      }
+      if(!this.info.success){
+        this.flashMessage.show('Short unsuccessful', {cssClass: 'alert-danger', timeout: 3000});
+      }
       this.refreshPage();
     },
     err => {
-      this.flashMessage.show('Shortunsuccessful', {cssClass: 'alert-danger', timeout: 3000});
       console.log(err)
       return false
     })
@@ -290,13 +302,17 @@ private subscription: Subscription;
     console.log(this.coverForm.value) //for testing only
     this.coverForm.reset();
     this.companyService.cover(this.id,form).subscribe(Info => {
-      this.flashMessage.show('Cover successful', {cssClass: 'alert-success', timeout: 3000});
       this.info = Info;
+      if(this.info.success){
+        this.flashMessage.show('Cover successful', {cssClass: 'alert-success', timeout: 3000});
+      }
+      if(!this.info.success){
+        this.flashMessage.show('Cover unsuccessful', {cssClass: 'alert-danger', timeout: 3000});
+      }
       this.refreshPage();
 
     },
     err => {
-      this.flashMessage.show('Cover unsuccessful', {cssClass: 'alert-danger', timeout: 3000});
       console.log(err)
       return false
     })

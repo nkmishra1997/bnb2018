@@ -25,7 +25,8 @@ var userSchema = mongoose.Schema({
     },
 
     accountBalance : { type : Number, default: parameters.accountBalance, min: 0, required:true },
-
+    worth : { type : Number, default: parameters.accountBalance, required:true },
+    
     activity :[{
       company: {type: mongoose.Schema.Types.ObjectId, ref:'company'},
       timeStamp: { type: Date, default: Date.now()},
