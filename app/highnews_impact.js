@@ -18,17 +18,19 @@ module.exports = function (cron) {
     function changePrice() {
         news.find({}).then(News=>{
              News.forEach((element)=>{
+               if(element.flag==2){
                var id;
                element.newsImpact.forEach((impact)=>{
                  id = impact.company;
                  company.findById(id).then(Company=>{
                   Company.stockPrice = (Company.stockPrice * (1 + (impact.impact/parameters.stockParameter))).toFixed(0);
                   Company.annualGrowthRate = ((((Company.history[Company.history.length - 1].stockPrice-Company.stockPrice)/Company.stockPrice))*100).toFixed(2);
-                  
+                  Company.save();
                  }).catch(err=>{
                   console.log(err)
                 })
                })
+              }
              })
           
         }).catch(err=>{
