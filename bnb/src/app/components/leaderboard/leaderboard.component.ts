@@ -5,6 +5,7 @@ import {Http, Response, RequestOptions, Headers} from '@angular/http';
 import { Observable } from "rxjs";
 import 'rxjs/add/observable/timer';
 import {Subscription} from "rxjs";
+import {ProfileService } from '../../services/profile.service';
 
 declare var require: any;
 require('../js/jquery-3.2.0.min.js');
@@ -22,17 +23,33 @@ require('../js/script.js');
 })
 export class LeaderboardComponent implements OnInit {
   playerList: any;
+  playerRank: any;
+  playerId: any;
   private subscription: Subscription;
+  
 
   constructor(private leaderboardService: LeaderboardService,
+    private profileService: ProfileService,
     private router: Router,
     private http: Http ) { }
 
   ngOnInit() {
+this.profileService.fetchCustomer().subscribe(customer=>{
+      this.playerId = customer.id;
+      console.log(customer.id);
+      
+})
+
     this.subscription = Observable.timer(0, 120000)
       .subscribe(() => {
         this.leaderboardService.fetchCustomers().subscribe(playerList => {
           this.playerList = playerList
+          for(var i=0;i<playerList.length;i++){
+            ;
+            if(playerList[i].id==this.playerId){
+              this.playerRank=playerList[i].rank;
+            }
+          }
           console.log(playerList)
         },
         err => {
@@ -40,6 +57,7 @@ export class LeaderboardComponent implements OnInit {
           return false
         })
       })
+
   }
 
   ngOnDestroy() {
