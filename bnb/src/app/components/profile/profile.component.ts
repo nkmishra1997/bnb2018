@@ -31,7 +31,7 @@ export class ProfileComponent implements OnInit {
               private http : Http ) { }
 
   ngOnInit() {
-    this.subscription = Observable.timer(0, 10000)
+    this.subscription = Observable.timer(0, 60000)
       .subscribe(() => {
         this.profileService.fetchCustomer().subscribe((Player) => {
           this.player = Player;
