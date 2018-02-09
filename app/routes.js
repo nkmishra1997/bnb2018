@@ -1,6 +1,7 @@
 module.exports = function(app, passport) {
 var controller = require('./controller.js')
 var path = require("path");
+const session      = require('express-session');
 
 // normal routes ===============================================================
 
@@ -126,12 +127,12 @@ app.route('/repayloan')
 
         // handle the callback after facebook has authenticated the user
         app.get('/auth/facebook/callback',
-            passport.authenticate('facebook', function(req, res) {
+            passport.authenticate('facebook'), function(req, res) {
                 // Explicitly save the session before redirecting!
                 req.session.save(() => {
                   res.redirect('/market');
                 })
-              }));
+              });
 app.get('/auth/userdata', isLoggedIn,function(req, res) {
     Donator.findById(req.user, function(err, fulluser) {
         if (err) throw err;
@@ -150,12 +151,12 @@ app.get('/auth/userdata', isLoggedIn,function(req, res) {
 
         // handle the callback after facebook has authorized the user
         app.get('/connect/facebook/callback',
-            passport.authorize('facebook',function(req, res) {
+            passport.authorize('facebook'),function(req, res) {
                 // Explicitly save the session before redirecting!
                 req.session.save(() => {
                   res.redirect('/market');
                 })
-              }));
+              });
 
 };
 // route middleware to ensure user is logged in
