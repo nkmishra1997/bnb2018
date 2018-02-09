@@ -41,7 +41,7 @@ app.route('/admin/addCompany')
     .post(isLoggedIn, isAdmin, controller.addCompany);
 
 app.route('/admin/addNews')
-    .post(passport.authenticate('facebook-token'), isAdmin,controller.addNews);
+    .post(isLoggedIn, isAdmin,controller.addNews);
 
 // app.route('/admin/newsDetail/:id')
 //     .get(isLoggedIn, isAdmin,controller.newsDetails);
