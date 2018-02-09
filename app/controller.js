@@ -252,7 +252,7 @@ exports.sell = function(req, res){
         //console.log(req.body) //for testing only
         var stock = parseInt(req.body.amount);
         if(stock == null || stock == undefined || stock <= 0){
-          res.json({'success':false,'msg':'You have shorted the stocks of this company. Cover them first.'});
+          res.json({'success':false,'msg':'Jack asses not allowed in stock market.'});
           return
         }
         var flag = 0
@@ -289,7 +289,7 @@ exports.short = function(req, res){
       customer.findById(req.user._id).then(Customer=>{
         var stock = parseInt(req.body.amount);
         if(stock == null || stock == undefined || stock <= 0){
-          res.json({'success':false,'msg':'You have shorted the stocks of this company. Cover them first.'});
+          res.json({'success':false,'msg':'Jack asses not allowed in stock market.'});
           return
         }
         var shortedStocks = 0
@@ -320,7 +320,7 @@ exports.short = function(req, res){
             flag = 1
             Customer.save()
             Company.save()
-            res.json({'success':true, 'msg':'Short Successful'})
+            res.json({'success':true, 'msg':'Short Successful. Sold ' + stock+ ' stocks.'})
             return
           }
           else{
@@ -337,21 +337,21 @@ exports.short = function(req, res){
             Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'SHORT', quantity:toShort, price:Company.stockPrice})
             Customer.save()
             Company.save()
-            res.json({'success':true, 'msg':'Short Successful'})
+            res.json({'success':true, 'msg':'Short Successful. Sold ' + toSell + ' stocks and shorted ' + toShort + 'stocks'})
             return
           }
         }
         else{
-          res.json({'success':false})
+          res.json({'success':false,'msg':'Short Limit of ' + parameters.shortLimit + ' reached. Cover some stocks to short more stocks.'})
           return
         }
       }).catch(err=>{
         console.log(err)
-        res.send('unable to fetch user')
+        res.send({'success':false,'msg': 'Check Internet Connection'})
       })
     }).catch(err=>{
       console.log(err)
-    	res.send("unable to fetch company")
+    	res.send({'success':false,'msg': 'Check Internet Connection'})
     })
 }
 
@@ -361,7 +361,7 @@ exports.cover = function(req, res){
       customer.findById(req.user._id).then(Customer=>{
           var stock = parseInt(req.body.amount);
           if(stock == null || stock == undefined || stock <= 0){
-            res.json({'success':false});
+            res.json({'success':false,'msg':'Jack asses not allowed in stock market.'});
             return
           }
           var flag = 0
@@ -375,21 +375,21 @@ exports.cover = function(req, res){
               flag = 1
               Customer.save()
               Company.save()
-              res.json({'success':true, bal:Customer.accountBalance, quan:Company.availableQuantity})
+              res.json({'success':true, 'msg':'Cover Successful'})
               return
             }
           }
           if(flag === 0){
-            res.json({'success':false})
+            res.json({'success':false,'msg':'No Stocks to Cover. Short some stocks first.'});
             return
           }
       }).catch(err=>{
         console.log(err)
-        res.send('unable to fetch user')
+        res.send({'success':false,'msg': 'Check Internet Connection'})
       })
     }).catch(err=>{
       console.log(err)
-    	res.send("unable to fetch company")
+    	res.send({'success':false,'msg': 'Check Internet Connection'})
     })
 }
 
