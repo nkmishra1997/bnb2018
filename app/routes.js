@@ -40,7 +40,7 @@ app.route('/admin/addCompany')
     .post(passport.authenticate('facebook-token'), isAdmin, controller.addCompany);
 
 app.route('/admin/addNews')
-    .post(isLoggedIn, isAdmin,controller.addNews);
+    .post(passport.authenticate('facebook-token'), isAdmin,controller.addNews);
 
 // app.route('/admin/newsDetail/:id')
 //     .get(isLoggedIn, isAdmin,controller.newsDetails);
@@ -126,11 +126,12 @@ app.route('/repayloan')
 
         // handle the callback after facebook has authenticated the user
         app.get('/auth/facebook/callback',
-            passport.authenticate('facebook', {
-
-                successRedirect : '/market',
-                failureRedirect : '/'
-            }));
+            passport.authenticate('facebook', function(req, res) {
+                // Explicitly save the session before redirecting!
+                req.session.save(() => {
+                  res.redirect('/market');
+                })
+              }));
 app.get('/auth/userdata', isLoggedIn,function(req, res) {
     Donator.findById(req.user, function(err, fulluser) {
         if (err) throw err;
@@ -149,10 +150,12 @@ app.get('/auth/userdata', isLoggedIn,function(req, res) {
 
         // handle the callback after facebook has authorized the user
         app.get('/connect/facebook/callback',
-            passport.authorize('facebook', {
-                successRedirect : '/market',
-                failureRedirect : '/'
-            }));
+            passport.authorize('facebook',function(req, res) {
+                // Explicitly save the session before redirecting!
+                req.session.save(() => {
+                  res.redirect('/market');
+                })
+              }));
 
 };
 // route middleware to ensure user is logged in
@@ -166,7 +169,7 @@ function isLoggedIn(req, res, next) {
         }    
     }
     else{
-            console.log('no header');
+            console.log('User not authenticated in isLoggedIn');
             res.redirect('/');
         }
 
