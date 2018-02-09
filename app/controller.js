@@ -20,7 +20,7 @@ exports.companyList = function(req, res){
       if(element.isCrypto==false){
      var trend = 0;
      if(element.history.length>1){
-      trend =  (((element.history[element.history.length-1].stockPrice-element.stockPrice)/element.stockPrice)*100).toFixed(2)
+      trend =  (((element.history[element.history.length-2].stockPrice-element.history[element.history.length-1].stockPrice)/element.history[element.history.length-1].stockPrice)*100).toFixed(2)
      }
       var company = {
         
@@ -50,7 +50,7 @@ exports.cryptoList = function(req, res){
       if(element.isCrypto==true){
         var trend = 0;
      if(element.history.length>1){
-      trend =  (((element.history[element.history.length-1].stockPrice-element.stockPrice)/element.stockPrice)*100).toFixed(2)
+      trend =  (((element.history[element.history.length-2].stockPrice-element.history[element.history.length-1].stockPrice)/element.history[element.history.length-1].stockPrice)*100).toFixed(2)
      }
       var crypto = {
         id: element._id,

@@ -38,10 +38,10 @@ app.route('/admin/newslist')
     .get(isLoggedIn, isAdmin,controller.adminNewsList);
 
 app.route('/admin/addCompany')
-    .post(passport.authenticate('facebook-token'), isAdmin, controller.addCompany);
+    .post(isLoggedIn, isAdmin, controller.addCompany);
 
 app.route('/admin/addNews')
-    .post(passport.authenticate('facebook-token'), isAdmin,controller.addNews);
+    .post(isLoggedIn, isAdmin,controller.addNews);
 
 // app.route('/admin/newsDetail/:id')
 //     .get(isLoggedIn, isAdmin,controller.newsDetails);
@@ -53,22 +53,22 @@ app.route('/admin/userDetails/:id')
     .get(isLoggedIn, isAdmin,controller.customerDetail);
 
 app.route('/admin/modifyCompany/:id')
-    .post(passport.authenticate('facebook-token'), isAdmin,controller.modifyCompany);
+    .post(isLoggedIn, isAdmin,controller.modifyCompany);
 
 app.route('/admin/modifyNews/:id')
-    .post(passport.authenticate('facebook-token'), isAdmin,controller.modifyNews);
+    .post(isLoggedIn, isAdmin,controller.modifyNews);
 
 app.route('/admin/deleteCompany/:id')
-    .delete(passport.authenticate('facebook-token'), isAdmin, controller.deleteCompany);
+    .delete(isLoggedIn, isAdmin, controller.deleteCompany);
 
 app.route('/admin/deleteNews/:id')
     .post(isLoggedIn, isAdmin,controller.deleteNews);
 
 app.route('/admin/modifyUser/:id')
-    .post(passport.authenticate('facebook-token'), isAdmin, controller.modifyUser);
+    .post(isLoggedIn, isAdmin, controller.modifyUser);
 
 app.route('/admin/deleteUser/:id')
-    .post(passport.authenticate('facebook-token'), isAdmin, controller.deleteUser);
+    .post(isLoggedIn, isAdmin, controller.deleteUser);
 
 
 
