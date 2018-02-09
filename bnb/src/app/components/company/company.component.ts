@@ -244,10 +244,10 @@ private subscription: Subscription;
     this.companyService.buy(this.id,form).subscribe(Info => {
       this.info = Info;
       if(this.info.success){
-        this.flashMessage.show('Buy successful', {cssClass: 'alert-success', timeout: 3000});
+        this.flashMessage.show(this.info.msg, {cssClass: 'alert-success', timeout: 3000});
       }
       if(!this.info.success){
-        this.flashMessage.show('Buy unsuccessful', {cssClass: 'alert-danger', timeout: 3000});
+        this.flashMessage.show(this.info.msg, {cssClass: 'alert-danger', timeout: 3000});
       }
       this.refreshPage();
     },
@@ -264,10 +264,10 @@ private subscription: Subscription;
     this.companyService.sell(this.id,form).subscribe(Info => {
       this.info = Info;
       if(this.info.success){
-        this.flashMessage.show('Sell successful', {cssClass: 'alert-success', timeout: 3000});
+        this.flashMessage.show(this.info.msg, {cssClass: 'alert-success', timeout: 3000});
       }
       if(!this.info.success){
-        this.flashMessage.show('Sell unsuccessful', {cssClass: 'alert-danger', timeout: 3000});
+        this.flashMessage.show(this.info.msg, {cssClass: 'alert-danger', timeout: 3000});
       }
       this.refreshPage();
     },
@@ -284,10 +284,10 @@ private subscription: Subscription;
     this.companyService.short(this.id,form).subscribe(Info => {
       this.info = Info;
       if(this.info.success){
-        this.flashMessage.show('Short successful', {cssClass: 'alert-success', timeout: 3000});
+        this.flashMessage.show(this.info.msg, {cssClass: 'alert-success', timeout: 3000});
       }
       if(!this.info.success){
-        this.flashMessage.show('Short unsuccessful', {cssClass: 'alert-danger', timeout: 3000});
+        this.flashMessage.show(this.info.msg, {cssClass: 'alert-danger', timeout: 3000});
       }
       this.refreshPage();
     },
@@ -304,10 +304,10 @@ private subscription: Subscription;
     this.companyService.cover(this.id,form).subscribe(Info => {
       this.info = Info;
       if(this.info.success){
-        this.flashMessage.show('Cover successful', {cssClass: 'alert-success', timeout: 3000});
+        this.flashMessage.show(this.info.msg, {cssClass: 'alert-success', timeout: 3000});
       }
       if(!this.info.success){
-        this.flashMessage.show('Cover unsuccessful', {cssClass: 'alert-danger', timeout: 3000});
+        this.flashMessage.show(this.info.msg, {cssClass: 'alert-danger', timeout: 3000});
       }
       this.refreshPage();
 
