@@ -23,9 +23,9 @@ const companySchema = new Schema({
     type: Number,
     default:0,
     min: 0.0,
+    max: 5000,
     required:true
   },
-
   availableQuantity: {
     type: Number,
     default: 0,
@@ -35,16 +35,16 @@ const companySchema = new Schema({
     //max: company.totalQuantity
   },
 
+  annualReport: {
+    type: String,
+  },
+
   totalQuantity: {
     type: Number,
     default:0,
     min: 0.0,
     max: parameters.maxNumberOfShares,
     required:true
-  },
-
-  annualGrowthRate: {
-    type: Number
   },
 
   marketcap: {

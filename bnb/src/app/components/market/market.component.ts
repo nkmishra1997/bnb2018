@@ -22,8 +22,10 @@ require('../js/script.js');
 })
 export class MarketComponent implements OnInit {
   companies: any;
+  cryptocompanies: any;
   customer: any;
   user: any;
+  isInc: boolean;
   private subscription: Subscription;
   constructor(private marketService: MarketService,
               private router: Router,
@@ -40,10 +42,18 @@ export class MarketComponent implements OnInit {
         console.log(err);
         return false;
       });
-      this.subscription = Observable.timer(0, 10000)
+      this.subscription = Observable.timer(0, 60000)
       .subscribe(() => {
         this.marketService.fetchCompanies().subscribe(Companies => {
-          this.companies = Companies; console.log("company fetched");
+          this.companies = Companies; console.log("Companies fetched");
+        },
+        err => {
+          console.log(err);
+          return false;
+        });
+
+        this.marketService.fetchcryptoCompanies().subscribe(Companies => {
+          this.cryptocompanies = Companies; console.log("company fetched");
         },
         err => {
           console.log(err);
@@ -51,6 +61,7 @@ export class MarketComponent implements OnInit {
         });
       });
   }
+  
 
   ngOnDestroy() {
     this.subscription.unsubscribe();

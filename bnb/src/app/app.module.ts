@@ -21,12 +21,20 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { BottomNavComponent } from './components/bottom-nav/bottom-nav.component';
 import { LeaderboardComponent } from './components/leaderboard/leaderboard.component';
 
+import { AdminnewslistComponent } from './components/adminnewslist/adminnewslist.component';
+import { AdminService } from './services/admin.service';
+import { AdminaddnewsComponent } from './components/adminaddnews/adminaddnews.component';
+
+import { FlashMessagesModule } from 'angular2-flash-messages';
+
 const appRoutes: Routes = [
   { path:'news', component : NewsComponent },
   { path:'market', component : MarketComponent, },
   { path:'company/:id', component : CompanyComponent },
   { path: 'profile', component : ProfileComponent},
-  { path: 'leaderboard', component : LeaderboardComponent}
+  { path: 'leaderboard', component : LeaderboardComponent},
+  { path: 'admin/news', component : AdminnewslistComponent},
+  { path: 'admin/addnews', component : AdminaddnewsComponent}
   ]
 
 @NgModule({
@@ -39,16 +47,19 @@ const appRoutes: Routes = [
     ProfileComponent,
     NavbarComponent,
     LeaderboardComponent,
-    BottomNavComponent
+    BottomNavComponent,
+    AdminnewslistComponent,
+    AdminaddnewsComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    FlashMessagesModule
   ],
-  providers: [AuthService, NewsService, MarketService, CompanyService, ProfileService, LeaderboardService],
+  providers: [AuthService, NewsService, MarketService, CompanyService, ProfileService, LeaderboardService, AdminService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

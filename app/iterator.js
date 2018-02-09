@@ -12,7 +12,7 @@ news.find({}, function(err, News){
 
     if (err) {
         console.log(err);
-        res.send("unable to load news");
+        // res.send("unable to load news");
     }
     else{ 
         var k=0;

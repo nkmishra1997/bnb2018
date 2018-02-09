@@ -5,33 +5,60 @@
       <div class="bar"></div>
       <div class="bar"></div>
     </div>
-    <div class="contentWrapper">
-    <h1>Balance: {{customer?.accountBalance}}</h1>
-    </div>
 
     <!-- Page content -->
     <div class="contentWrapper">
-      <div class="row">
-        <h1>MARKET</h1>
-        <!--<h4>Bootstrap comes with multiple useful table variants.</h4>-->
-      </div>
-
+        <div class="row">
+            <h1>Balance: {{customer?.accountBalance}}</h1>
+        </div>
+        <div class="row">
+            <h1>MARKET</h1>
+            <!--<h4>Bootstrap comes with multiple useful table variants.</h4>-->
+          </div>
+          <div class="row">
+            <h1>Crypto Currency</h1>
+          </div>
+          <div *ngIf="cryptocompanies" class="row">
+            <div class="bootstrapTables cursors">
+              <div class="col-sm-12 col-xs-12 table-responsive">
+    
+                <table class="hover-table table table-hover">
+                  <tr>
+                    <th>Symbol</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Trend %</th>
+                    <th>Volume</th>
+                  </tr>
+                  <tr *ngFor="let company of cryptocompanies;"  [routerLink]="['/company', company.id]">
+                    <td>{{company.symbol}}</td>
+                    <td>{{company.name}}</td>
+                    <td>{{company.stockPrice}}</td>
+                    <td>{{company.annualGrowthRate}}</td>
+                    <td>{{company.availableQuantity}}</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <h1>Companies</h1>
+          </div>
       <div *ngIf="companies" class="row">
         <div class="bootstrapTables cursors">
           <div class="col-sm-12 col-xs-12 table-responsive">
 
-            <h3>Hover Row</h3>
             <table class="hover-table table table-hover">
               <tr>
                 <th>Symbol</th>
-                <th>Company Name</th>
+                <th>Name</th>
                 <th>Price</th>
                 <th>Trend %</th>
                 <th>Volume</th>
               </tr>
-              <tr *ngFor="let company of companies;">
-                <td [routerLink]="['/company', company.id]">{{company.symbol}}</td>
-                <td [routerLink]="['/company', company.id]">{{company.name}}</td>
+              <tr *ngFor="let company of companies;" [routerLink]="['/company', company.id]">
+                <td>{{company.symbol}}</td>
+                <td>{{company.name}}</td>
                 <td>{{company.stockPrice}}</td>
                 <td>{{company.annualGrowthRate}}</td>
                 <td>{{company.availableQuantity}}</td>

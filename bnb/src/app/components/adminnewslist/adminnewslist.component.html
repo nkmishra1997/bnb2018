@@ -1,0 +1,40 @@
+<br><br>
+<h2 class="page-header">News</h2>
+<div *ngIf="news">
+  <div *ngFor="let News of news | reverse;">
+   <ul class="list-group">
+     <li class="list-group-item"><b>News Text: </b>{{News.newsText}}
+      <span class="pull-right">
+          <a (click)="deleteNews(News._id)" class="btn btn-md btn-danger align-middle" style="display:inline;"><span class="fa fa-trash-o fa-lg"></span>  Delete</a>
+      </span>
+     </li>
+   </ul>
+  </div>
+  <hr>
+  <div>
+    <a [routerLink]="['/admin/addnews']" class="btn btn-primary btn-md btn-block" role="button">Add New News</a>
+  </div>
+</div>
+
+<br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>

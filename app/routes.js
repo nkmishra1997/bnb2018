@@ -1,6 +1,7 @@
 module.exports = function(app, passport) {
 var controller = require('./controller.js')
 var path = require("path");
+const session      = require('express-session');
 
 // normal routes ===============================================================
 
@@ -34,16 +35,16 @@ app.route('/admin/userlist')
     .get(isLoggedIn, isAdmin, controller.customerList);
 
 app.route('/admin/newslist')
-    .get(isLoggedIn, isAdmin,controller.newsList);
+    .get(isLoggedIn, isAdmin,controller.adminNewsList);
 
 app.route('/admin/addCompany')
-    .post(passport.authenticate('facebook-token'), isAdmin, controller.addCompany);
+    .post(isLoggedIn, isAdmin, controller.addCompany);
 
 app.route('/admin/addNews')
-    .post(passport.authenticate('facebook-token'), isAdmin,controller.addNews);
+    .post(isLoggedIn, isAdmin,controller.addNews);
 
-app.route('/admin/newsDetail/:id')
-    .get(isLoggedIn, isAdmin,controller.newsDetails);
+// app.route('/admin/newsDetail/:id')
+//     .get(isLoggedIn, isAdmin,controller.newsDetails);
 
 app.route('/admin/companyDetail/:id')
     .get(isLoggedIn, isAdmin, controller.companyDetails);
@@ -52,22 +53,22 @@ app.route('/admin/userDetails/:id')
     .get(isLoggedIn, isAdmin,controller.customerDetail);
 
 app.route('/admin/modifyCompany/:id')
-    .post(passport.authenticate('facebook-token'), isAdmin,controller.modifyCompany);
+    .post(isLoggedIn, isAdmin,controller.modifyCompany);
 
 app.route('/admin/modifyNews/:id')
-    .post(passport.authenticate('facebook-token'), isAdmin,controller.modifyNews);
+    .post(isLoggedIn, isAdmin,controller.modifyNews);
 
 app.route('/admin/deleteCompany/:id')
-    .delete(passport.authenticate('facebook-token'), isAdmin, controller.deleteCompany);
+    .delete(isLoggedIn, isAdmin, controller.deleteCompany);
 
 app.route('/admin/deleteNews/:id')
-    .post(passport.authenticate('facebook-token'), isAdmin,controller.deleteNews);
+    .post(isLoggedIn, isAdmin,controller.deleteNews);
 
 app.route('/admin/modifyUser/:id')
-    .post(passport.authenticate('facebook-token'), isAdmin, controller.modifyUser);
+    .post(isLoggedIn, isAdmin, controller.modifyUser);
 
 app.route('/admin/deleteUser/:id')
-    .post(passport.authenticate('facebook-token'), isAdmin, controller.deleteUser);
+    .post(isLoggedIn, isAdmin, controller.deleteUser);
 
 
 
@@ -77,6 +78,9 @@ app.route('/admin/deleteUser/:id')
 
 app.route('/companylist')
     .get(isLoggedIn,controller.companyList);
+
+app.route('/cryptolist')
+    .get(isLoggedIn,controller.cryptoList);
 
 app.route('/companydetail/:id')
     .get(isLoggedIn,controller.companyDetails);
@@ -123,11 +127,12 @@ app.route('/repayloan')
 
         // handle the callback after facebook has authenticated the user
         app.get('/auth/facebook/callback',
-            passport.authenticate('facebook', {
-
-                successRedirect : '/market',
-                failureRedirect : '/'
-            }));
+            passport.authenticate('facebook'), function(req, res) {
+                // Explicitly save the session before redirecting!
+                req.session.save(() => {
+                  res.redirect('/market');
+                })
+              });
 app.get('/auth/userdata', isLoggedIn,function(req, res) {
     Donator.findById(req.user, function(err, fulluser) {
         if (err) throw err;
@@ -146,10 +151,12 @@ app.get('/auth/userdata', isLoggedIn,function(req, res) {
 
         // handle the callback after facebook has authorized the user
         app.get('/connect/facebook/callback',
-            passport.authorize('facebook', {
-                successRedirect : '/market',
-                failureRedirect : '/'
-            }));
+            passport.authorize('facebook'),function(req, res) {
+                // Explicitly save the session before redirecting!
+                req.session.save(() => {
+                  res.redirect('/market');
+                })
+              });
 
 };
 // route middleware to ensure user is logged in
@@ -163,7 +170,7 @@ function isLoggedIn(req, res, next) {
         }    
     }
     else{
-            console.log('no header');
+            console.log('User not authenticated in isLoggedIn');
             res.redirect('/');
         }
 

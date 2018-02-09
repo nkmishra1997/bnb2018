@@ -12,6 +12,7 @@ const morgan       = require('morgan');
 const cookieParser = require('cookie-parser');
 const session      = require('express-session');
 const configDB = require('./config/database.js');
+const circDp = require('./circDependency')
 
 // configuration ===============================================================
 
@@ -50,12 +51,12 @@ app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-let job = require('./app/random_cron')(cron);
-let job1 = require('./app/highnews_impact')(cron);
-let job4 = require('./app/newsDepublishing')(cron);
-let job3 = require('./app/newsPublishingcron')(cron);
-// let job2 = require('./app/lownews_impact')(cron);
-
+// let job = require('./app/random_cron')(cron);
+// let job4 = require('./app/newsPublishingcron')(cron);
+// let job3 = require('./app/newseffect')(cron);
+// let job1 = require('./app/highnews_impact')(cron);
+// let job2 = require('./app/newsDepublishing')(cron);
+// let worth = require('./app/worth_calculator')(cron);
 
 app.use(express.static('views'));
 app.get('/', function(req, res) {

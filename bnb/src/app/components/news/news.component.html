@@ -12,15 +12,17 @@
         <h4>Awesome news about the market are here.</h4>
       </div>
       <div *ngIf="news" class="row">
-          <div *ngFor="let News of news | reverse;" class="col-md-6 col-sm-6 col-xs-12">
+          <div *ngFor="let News of news | reverse;" class="col-md-12 col-sm-12 col-xs-12">
 
             <div class="users-card">
-              <h5>News Text: {{News.newsText}}</h5>
+              <div style="min-height:33%;">
+                <h5>{{News.newsText}}</h5>
+              </div>
               <div class="users-contact row">
                 <div class="footer btn-message col-sm-6 col-xs-12">{{News.publishedOn | date}}</div>
                 <div class="footer btn-profile col-sm-6 col-xs-12">{{News.publishedOn | date:'hh:mm:ss a'}}</div>
               </div>
-            </div>
+            </div><p><br></p>
           </div>
         </div>
             <br>
@@ -28,28 +30,23 @@
             <br>
             <br>
             <br>
+            <br>            <br>
+            <br>
+            <br>            <br>
+            <br>
+            <br>            <br>
+            <br>
+            <br>            <br>
+            <br>
+            <br>            <br>
+            <br>
+            <br>            
+            <br>
+            <br>            
+            <br>
+            <br>            
+            <br>
+            <br>         
             <br>
             <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-
     </div>
