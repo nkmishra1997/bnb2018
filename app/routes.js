@@ -163,7 +163,8 @@ app.get('/auth/userdata', isLoggedIn,function(req, res) {
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
         if(req.user.ban==false){
-        return next();}
+            return next();
+        }
         else{
             console.log('You are banned');
             res.redirect('/');

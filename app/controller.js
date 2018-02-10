@@ -20,7 +20,7 @@ exports.companyList = function(req, res){
       if(element.isCrypto==false){
      var trend = 0;
      if(element.history.length>1){
-      trend =  (((element.history[element.history.length-2].stockPrice-element.history[element.history.length-1].stockPrice)/element.history[element.history.length-1].stockPrice)*100).toFixed(2)
+      trend =  (((element.history[element.history.length-1].stockPrice-element.history[element.history.length-2].stockPrice)/element.history[element.history.length-2].stockPrice)*100).toFixed(2)
      }
       var company = {
         
@@ -50,7 +50,7 @@ exports.cryptoList = function(req, res){
       if(element.isCrypto==true){
         var trend = 0;
      if(element.history.length>1){
-      trend =  (((element.history[element.history.length-2].stockPrice-element.history[element.history.length-1].stockPrice)/element.history[element.history.length-1].stockPrice)*100).toFixed(2)
+      trend =  (((element.history[element.history.length-1].stockPrice-element.history[element.history.length-2].stockPrice)/element.history[element.history.length-2].stockPrice)*100).toFixed(2)
      }
       var crypto = {
         id: element._id,
@@ -192,7 +192,7 @@ exports.buy = function(req, res){
 
         var stock = parseInt(req.body.amount);
         if(stock == null || stock == undefined || stock <= 0){
-          res.json({'success':false});
+          res.json({'success':false,'msg':'Jack asses not allowed in stock market.'});
           return
         }
         var totalHeld = 0
@@ -213,7 +213,7 @@ exports.buy = function(req, res){
               Customer.portfolio[index].stockHeld += stock
             }
             else{
-              res.json({'success':false})
+              res.json({'success':false,'msg':'You have shorted the stocks of this company. Cover them first.'})
               return
             }
           }
@@ -222,19 +222,25 @@ exports.buy = function(req, res){
           Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'BUY', quantity:stock, price:Company.stockPrice})
           Customer.save()
           Company.save()
-          res.json({'success':true})
+          res.json({'success':true,'msg':'Buy Successful'})
           return
         }
         else{
-          res.json({'success':false})
+          if(stock>Math.floor(Customer.accountBalance / Company.stockPrice)){
+            res.json({'success':false,'msg':'Insufficient account balance to buy ' + stock + ' stocks'})
+          }
+          else if(stock > parameters.heldLimit-totalHeld){
+            res.json({'success':false,'msg':'Buy Limit of ' + parameters.heldLimit + ' stocks reached. Sell Some Stocks to continue buying.'})
+          }
+          res.json({'success':false,'msg': 'Buy Unsuccessful. Retry again'})
         }
       }).catch(err=>{
         console.log(err)
-        res.send('unable to fetch user')
+        res.json({'success':false,'msg': 'Check Internet Connection'})
       })
     }).catch(err=>{
       console.log(err)
-    	res.send("unable to fetch company")
+    	res.json({'success':false,'msg': 'Check Internet Connection'})
     })
 }
 
@@ -246,7 +252,7 @@ exports.sell = function(req, res){
         //console.log(req.body) //for testing only
         var stock = parseInt(req.body.amount);
         if(stock == null || stock == undefined || stock <= 0){
-          res.json({'success':false});
+          res.json({'success':false,'msg':'Jack asses not allowed in stock market.'});
           return
         }
         var flag = 0
@@ -259,21 +265,21 @@ exports.sell = function(req, res){
             flag = 1
             Customer.save()
             Company.save()
-            res.json({'success':true})
+            res.json({'success':true,'msg':'Sell Successful'})
             return
           }
         }
         if(flag == 0){
-          res.json({'success':false});
+          res.json({'success':false,'msg':'No Stocks to sell. Buy some stocks first.'});
           return
         }
       }).catch(err=>{
         console.log(err)
-        res.send('unable to fetch user')
+        res.json({'success':false,'msg': 'Check Internet Connection'})
       })
     }).catch(err=>{
       console.log(err)
-    	res.send("unable to fetch company")
+    	res.json({'success':false,'msg': 'Check Internet Connection'})
     })
 }
 
@@ -283,7 +289,7 @@ exports.short = function(req, res){
       customer.findById(req.user._id).then(Customer=>{
         var stock = parseInt(req.body.amount);
         if(stock == null || stock == undefined || stock <= 0){
-          res.json({'success':false});
+          res.json({'success':false,'msg':'Jack asses not allowed in stock market.'});
           return
         }
         var shortedStocks = 0
@@ -294,14 +300,14 @@ exports.short = function(req, res){
             index = i
           }
         }
-        if(index == -1 && stock < parameters.shortLimit-shortedStocks ){
+        if(index == -1 && stock <= parameters.shortLimit-shortedStocks ){
           Customer.portfolio.push({company : Company._id, stockHeld : 0, stockShorted : stock})
           Customer.accountBalance += stock * Company.stockPrice
           Company.availableQuantity -= stock
           Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'SHORT', quantity:stock, price:Company.stockPrice})
           Customer.save()
           Company.save()
-          res.json({'success':true, bal:Customer.accountBalance, quan:Company.availableQuantity})
+          res.json({'success':true, 'msg':'Short Successful'})
           return
         }
         else if (stock< parameters.shortLimit-shortedStocks){
@@ -314,7 +320,7 @@ exports.short = function(req, res){
             flag = 1
             Customer.save()
             Company.save()
-            res.json({'success':true})
+            res.json({'success':true, 'msg':'Short Successful. Sold ' + stock+ ' stocks.'})
             return
           }
           else{
@@ -331,21 +337,21 @@ exports.short = function(req, res){
             Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'SHORT', quantity:toShort, price:Company.stockPrice})
             Customer.save()
             Company.save()
-            res.json({'success':true})
+            res.json({'success':true, 'msg':'Short Successful. Sold ' + toSell + ' stocks and shorted ' + toShort + 'stocks'})
             return
           }
         }
         else{
-          res.json({'success':false})
+          res.json({'success':false,'msg':'Short Limit of ' + parameters.shortLimit + ' reached. Cover some stocks to short more stocks.'})
           return
         }
       }).catch(err=>{
         console.log(err)
-        res.send('unable to fetch user')
+        res.json({'success':false,'msg': 'Check Internet Connection'})
       })
     }).catch(err=>{
       console.log(err)
-    	res.send("unable to fetch company")
+    	res.json({'success':false,'msg': 'Check Internet Connection'})
     })
 }
 
@@ -355,35 +361,40 @@ exports.cover = function(req, res){
       customer.findById(req.user._id).then(Customer=>{
           var stock = parseInt(req.body.amount);
           if(stock == null || stock == undefined || stock <= 0){
-            res.json({'success':false});
+            res.json({'success':false,'msg':'Jack asses not allowed in stock market.'});
             return
           }
           var flag = 0
           var stock = parseInt(req.body.amount)
           for(var i=0;i<Customer.portfolio.length;i++){
             if(Customer.portfolio[i].company.toString() === Company._id.toString() && stock<=Customer.portfolio[i].stockShorted){
-              Customer.portfolio[i].stockShorted -= stock
-              Customer.accountBalance -= stock * Company.stockPrice
-              Company.availableQuantity += stock//check
-              Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'COVER', quantity:stock, price:Company.stockPrice})
-              flag = 1
-              Customer.save()
-              Company.save()
-              res.json({'success':true, bal:Customer.accountBalance, quan:Company.availableQuantity})
-              return
+              if(Customer.accountBalance >= stock * Company.stockPrice){
+                Customer.portfolio[i].stockShorted -= stock
+                Customer.accountBalance -= stock * Company.stockPrice
+                Company.availableQuantity += stock//check
+                Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'COVER', quantity:stock, price:Company.stockPrice})
+                flag = 1
+                Customer.save()
+                Company.save()
+                res.json({'success':true, 'msg':'Cover Successful'})
+                return
+              }
+              else{
+                res.json({'success':false, 'msg':'Insufficient balance.'})
+              }
             }
           }
           if(flag === 0){
-            res.json({'success':false})
+            res.json({'success':false,'msg':'No Stocks to Cover. Short some stocks first.'});
             return
           }
       }).catch(err=>{
         console.log(err)
-        res.send('unable to fetch user')
+        res.json({'success':false,'msg': 'Check Internet Connection'})
       })
     }).catch(err=>{
       console.log(err)
-    	res.send("unable to fetch company")
+    	res.json({'success':false,'msg': 'Check Internet Connection'})
     })
 }
 
