@@ -204,7 +204,7 @@ exports.buy = function(req, res){
           }
         }
 
-        if (0 < stock && stock < Math.min(Math.floor(Customer.accountBalance / Company.stockPrice), Company.availableQuantity, parameters.heldLimit-totalHeld)){
+        if (0 < stock && stock <= Math.min(Math.floor(Customer.accountBalance / Company.stockPrice), Company.availableQuantity, parameters.heldLimit-totalHeld)){
           if(index === -1){
             Customer.portfolio.push({company : Company._id, stockHeld : stock, stockShorted : 0})
           }
@@ -300,7 +300,7 @@ exports.short = function(req, res){
             index = i
           }
         }
-        if(index == -1 && stock < parameters.shortLimit-shortedStocks ){
+        if(index == -1 && stock <= parameters.shortLimit-shortedStocks ){
           Customer.portfolio.push({company : Company._id, stockHeld : 0, stockShorted : stock})
           Customer.accountBalance += stock * Company.stockPrice
           Company.availableQuantity -= stock
