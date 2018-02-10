@@ -236,11 +236,11 @@ exports.buy = function(req, res){
         }
       }).catch(err=>{
         console.log(err)
-        res.send({'success':false,'msg': 'Check Internet Connection'})
+        res.json({'success':false,'msg': 'Check Internet Connection'})
       })
     }).catch(err=>{
       console.log(err)
-    	res.send({'success':false,'msg': 'Check Internet Connection'})
+    	res.json({'success':false,'msg': 'Check Internet Connection'})
     })
 }
 
@@ -275,11 +275,11 @@ exports.sell = function(req, res){
         }
       }).catch(err=>{
         console.log(err)
-        res.send({'success':false,'msg': 'Check Internet Connection'})
+        res.json({'success':false,'msg': 'Check Internet Connection'})
       })
     }).catch(err=>{
       console.log(err)
-    	res.send({'success':false,'msg': 'Check Internet Connection'})
+    	res.json({'success':false,'msg': 'Check Internet Connection'})
     })
 }
 
@@ -347,11 +347,11 @@ exports.short = function(req, res){
         }
       }).catch(err=>{
         console.log(err)
-        res.send({'success':false,'msg': 'Check Internet Connection'})
+        res.json({'success':false,'msg': 'Check Internet Connection'})
       })
     }).catch(err=>{
       console.log(err)
-    	res.send({'success':false,'msg': 'Check Internet Connection'})
+    	res.json({'success':false,'msg': 'Check Internet Connection'})
     })
 }
 
@@ -385,11 +385,11 @@ exports.cover = function(req, res){
           }
       }).catch(err=>{
         console.log(err)
-        res.send({'success':false,'msg': 'Check Internet Connection'})
+        res.json({'success':false,'msg': 'Check Internet Connection'})
       })
     }).catch(err=>{
       console.log(err)
-    	res.send({'success':false,'msg': 'Check Internet Connection'})
+    	res.json({'success':false,'msg': 'Check Internet Connection'})
     })
 }
 
