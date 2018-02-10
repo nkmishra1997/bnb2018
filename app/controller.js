@@ -368,15 +368,20 @@ exports.cover = function(req, res){
           var stock = parseInt(req.body.amount)
           for(var i=0;i<Customer.portfolio.length;i++){
             if(Customer.portfolio[i].company.toString() === Company._id.toString() && stock<=Customer.portfolio[i].stockShorted){
-              Customer.portfolio[i].stockShorted -= stock
-              Customer.accountBalance -= stock * Company.stockPrice
-              Company.availableQuantity += stock//check
-              Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'COVER', quantity:stock, price:Company.stockPrice})
-              flag = 1
-              Customer.save()
-              Company.save()
-              res.json({'success':true, 'msg':'Cover Successful'})
-              return
+              if(Customer.accountBalance >= stock * Company.stockPrice){
+                Customer.portfolio[i].stockShorted -= stock
+                Customer.accountBalance -= stock * Company.stockPrice
+                Company.availableQuantity += stock//check
+                Customer.activity.push({company:Company._id, timeStamp:Date.now(), action:'COVER', quantity:stock, price:Company.stockPrice})
+                flag = 1
+                Customer.save()
+                Company.save()
+                res.json({'success':true, 'msg':'Cover Successful'})
+                return
+              }
+              else{
+                res.json({'success':false, 'msg':'Insufficient balance.'})
+              }
             }
           }
           if(flag === 0){
